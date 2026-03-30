@@ -166,16 +166,20 @@ Design the squad with appropriate agents:
 - Every squad needs a reviewer agent for quality control
 - YAGNI — never create agents that aren't strictly necessary
 
-### Agent Naming Convention
+### Agent Naming Convention (MANDATORY — never skip)
 
 Read the user's preferred language from `_opensquad/_memory/preferences.md` → **Output Language**.
 
-Every agent MUST have a humorous, memorable two-word name following these rules:
+**EVERY agent MUST have a two-word name: "FirstName LastName".** An agent with only a first name (e.g., "Igor", "Diana", "Victor") is a BUG. Both words are always required.
+
+Rules:
 - **Format:** "FirstName LastName" — both words start with the SAME letter (alliteration)
 - **First name:** A common human name in the user's Output Language
-- **Last name:** A playful, witty reference to the agent's specialty or profession
+- **Last name:** A playful, witty reference to the agent's specialty or profession — this is what gives the agent personality and tells the user what they do
 - **Uniqueness:** Each agent in the squad MUST use a different initial letter
 - **Icon:** Each agent also gets an emoji icon that represents their role
+
+Self-check before finalizing: go through every agent name and verify it has EXACTLY two words. If any name is missing the last name, fix it before presenting the design.
 
 Examples by language (DO NOT reuse these — generate original names every time):
 

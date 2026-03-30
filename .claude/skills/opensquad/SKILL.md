@@ -81,9 +81,12 @@ When the user runs `/opensquad create`:
    - If yes: read it, show summary, ask user to continue or redo
    - If no: proceed with discovery
 
-2. Dispatch Discovery subagent:
+2. **Collision guard:** List all existing subdirectories in `squads/` and pass the list of existing squad names to the Discovery subagent. This is mandatory — never skip this step.
+
+3. Dispatch Discovery subagent:
    - Read `_opensquad/core/prompts/discovery.prompt.md`
    - Also provide: `_opensquad/_memory/company.md`, `_opensquad/_memory/preferences.md`
+   - **Provide the list of existing squad folder names** so the agent can avoid collisions
    - Follow the discovery prompt instructions (intelligent wizard, one question at a time)
    - Output: `squads/{code}/_build/discovery.yaml`
 

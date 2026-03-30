@@ -120,22 +120,24 @@ Use the `image-creator` skill to render each HTML template as a PNG image:
 
 ### Step 5: Present to User
 
-Present the 3 template options to the user with the file paths so they can open and review:
+Present the 3 template options to the user using **clickable markdown links with absolute file paths** so they can open and review:
 
 > "Here are 3 template options for your squad's visual identity:
 >
-> A: `squads/{code}/_build/template-a.png`
-> B: `squads/{code}/_build/template-b.png`
-> C: `squads/{code}/_build/template-c.png`
+> - [preview-a.png]({absolute_path}/squads/{code}/_build/template-a.png) — Template A
+> - [preview-b.png]({absolute_path}/squads/{code}/_build/template-b.png) — Template B
+> - [preview-c.png]({absolute_path}/squads/{code}/_build/template-c.png) — Template C
 >
-> Open the images and tell me which one you prefer. I can also mix elements from different templates or adjust colors, fonts, and layout."
+> Click the links above to open each image. Tell me which one you prefer. I can also mix elements from different templates or adjust colors, fonts, and layout."
+
+**Important:** Always use the full absolute path (e.g., `d:\Coding Projects\opensquad\squads\my-squad\_build\template-a.png`) inside the markdown link — relative paths are not clickable in the IDE.
 
 ## Iteration Loop
 
-1. Present template images with file paths
+1. Present template images with clickable markdown links using absolute file paths
 2. Wait for user feedback in terminal
 3. Generate new version based on feedback — save as `template-v2.html`, render as `template-v2.png`, etc.
-4. Present updated image path to user
+4. Present updated image with clickable markdown link using absolute file path
 5. Repeat until user approves
 
 ## Saving the Approved Template

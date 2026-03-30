@@ -418,6 +418,14 @@ Reject and redo if ANY of these are true:
 
 Run these validation gates before declaring the squad complete. Read every generated file and verify programmatically. Never fabricate success — if a check fails, fix it.
 
+### Gate 0: Agent Naming (BLOCKING)
+
+For EACH agent in `design.yaml`, verify:
+- [ ] Agent `name` has EXACTLY two words (FirstName LastName) — e.g., "Pedro Pesquisa", not "Pedro"
+- [ ] Both words start with the same letter (alliteration)
+
+If ANY agent has a single-word name (missing last name), this is a critical bug. Fix it by generating an alliterative last name that references the agent's role, then update the name in `design.yaml` and all generated files.
+
 ### Gate 1: Agent Completeness (BLOCKING)
 
 For EACH `.agent.md` file, verify:

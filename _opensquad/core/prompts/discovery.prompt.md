@@ -251,6 +251,8 @@ target_formats:  # content squads only; empty list for others
 
 The `squad_code` must be a short, URL-safe slug derived from the squad's purpose (e.g., `content-calendar`, `competitor-tracker`, `lead-notify`).
 
+**CRITICAL — Name uniqueness:** The `squad_code` MUST NEVER match any existing folder name in `squads/`. You will receive a list of existing squad names. If the slug you derive already exists, append a numeric suffix (`-2`, `-3`, etc.) to guarantee uniqueness. Never reuse an existing squad folder name — doing so would overwrite another squad's files.
+
 ---
 
 ## Rules
