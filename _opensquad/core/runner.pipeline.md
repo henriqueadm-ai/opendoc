@@ -306,7 +306,8 @@ Apply this transformation consistently for every write in this step.
 
 #### If `type: checkpoint`
 - Present the checkpoint message to the user
-- If the checkpoint requires a choice (numbered list), present options as a numbered list and tell the user to reply with a number
+- If the checkpoint requires a choice (numbered list), present options as a numbered list
+- **Always include the file path** of any generated content the user needs to review. Example: "Review the content at `squads/{name}/output/{run_id}/v1/content.md` and let me know if it looks good."
 - Wait for user input before proceeding
 - Save the user's choice/response for the next step
 - **If the step frontmatter contains `outputFile`**: after collecting the user's full response,

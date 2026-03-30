@@ -523,6 +523,8 @@ To run it: /opensquad run {code}
 To modify it: /opensquad edit {code}
 ```
 
+Include the file paths of key generated files (agent files, pipeline steps, reference materials) so the user can open and review them before running the squad.
+
 ---
 
 ## Rules

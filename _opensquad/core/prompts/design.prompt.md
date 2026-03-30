@@ -343,6 +343,8 @@ Does this look good?
 
 Wait for user approval. If they want changes, adjust and re-present.
 
+**File references:** When presenting the design for approval, if any reference documents have been generated (research-brief, design.yaml, etc.), include their file paths so the user can open and review them.
+
 ---
 
 ## Phase G.5: Template Selection (Optional)
