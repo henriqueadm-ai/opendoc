@@ -18,7 +18,7 @@ const CANONICAL_SOURCES = [
   { src: join(PACKAGE_ROOT, 'dashboard'), dest: 'dashboard' },
 ];
 
-const DASHBOARD_EXCLUDES = ['node_modules', 'tsconfig.tsbuildinfo', 'teams'];
+const DASHBOARD_EXCLUDES = ['node_modules', 'dist', 'tsconfig.tsbuildinfo', 'teams'];
 
 const LANGUAGES = [
   { label: 'Português (Brasil)', value: 'Português (Brasil)' },
@@ -81,6 +81,7 @@ export async function init(targetDir, options = {}) {
   await copyCanonicalSources(targetDir);
   await copyIdeTemplates(ides, targetDir);
   await installAllSkills(targetDir);
+  await mkdir(join(targetDir, 'teams'), { recursive: true });
   if (!options._skipPrompts) {
     await installDependencies(targetDir);
   }

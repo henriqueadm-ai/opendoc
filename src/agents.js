@@ -81,7 +81,7 @@ export async function getAgentMeta(id) {
 }
 
 function validateAgentId(id) {
-  if (!/^[a-z0-9][a-z0-9-]*$/.test(id)) {
+  if (!/^[a-z0-9][a-z0-9_-]*$/.test(id)) {
     throw new Error(`Invalid agent id: '${id}'`);
   }
 }
