@@ -56,7 +56,7 @@ Cada skill, guia de best practices ou agent adicionado ao projeto aumenta o tama
 
 Antes de começar a codar, vale se perguntar: **"Isso ajuda um empreendedor fazer mais em menos tempo, ou adiciona fricção?"**
 
-O conectese roda com `npx conectese init` e pronto. Essa simplicidade é intencional. Contribuições que vão em outra direção provavelmente não serão incorporadas - mas a gente sempre pode conversar. Abra uma [issue](https://github.com/renatoasse/conectese/issues) antes para alinhar.
+O conectese roda com `npx conectese init` e pronto. Essa simplicidade é intencional. Contribuições que vão em outra direção provavelmente não serão incorporadas - mas a gente sempre pode conversar. Abra uma [issue](https://github.com/henriqueadm-ai/conectese/issues) antes para alinhar.
 
 Exemplos do que geralmente não se encaixa:
 
@@ -191,7 +191,7 @@ Para melhorias de performance, inclua benchmarks antes/depois no PR.
 
 ## Reportando bugs
 
-Abra uma [issue](https://github.com/renatoasse/conectese/issues) com:
+Abra uma [issue](https://github.com/henriqueadm-ai/conectese/issues) com:
 
 - **Descrição clara** do problema
 - **Passos para reproduzir** (passo a passo)
@@ -200,14 +200,14 @@ Abra uma [issue](https://github.com/renatoasse/conectese/issues) com:
 
 ## Sugerindo features
 
-Antes de abrir um PR com uma feature nova, abra uma [issue](https://github.com/renatoasse/conectese/issues) para discutir a ideia. Isso evita trabalho duplicado e garante alinhamento com a direção do projeto.
+Antes de abrir um PR com uma feature nova, abra uma [issue](https://github.com/henriqueadm-ai/conectese/issues) para discutir a ideia. Isso evita trabalho duplicado e garante alinhamento com a direção do projeto.
 
 Lembre-se da [Regra de Ouro](#a-regra-de-ouro-verticalize-não-complique): prefira criar skills, agents e guias - não mudar a arquitetura.
 
 ## Setup de Desenvolvimento
 
 ```bash
-git clone https://github.com/renatoasse/conectese.git
+git clone https://github.com/henriqueadm-ai/conectese.git
 cd conectese
 npm install
 node --test
@@ -267,7 +267,7 @@ Inclua na descrição:
 
 ## Precisa de ajuda?
 
-- Abra uma [issue](https://github.com/renatoasse/conectese/issues) com sua dúvida
+- Abra uma [issue](https://github.com/henriqueadm-ai/conectese/issues) com sua dúvida
 
 Tentaremos responder PRs e issues em até **5 dias úteis**.
 
@@ -315,7 +315,7 @@ Every skill, best-practice guide, or agent added to the project increases the co
 
 Before you start coding, ask yourself: **"Does this change keep conectese simple for non-technical users?"**
 
-conectese runs with `npx conectese init` and that's it. That simplicity is intentional. Contributions that go in a different direction probably won't be merged - but we can always talk. Open an [issue](https://github.com/renatoasse/conectese/issues) first to align.
+conectese runs with `npx conectese init` and that's it. That simplicity is intentional. Contributions that go in a different direction probably won't be merged - but we can always talk. Open an [issue](https://github.com/henriqueadm-ai/conectese/issues) first to align.
 
 Examples of what generally doesn't fit:
 
@@ -450,7 +450,7 @@ For performance improvements, include before/after benchmarks in the PR.
 
 ## Reporting Bugs
 
-Open an [issue](https://github.com/renatoasse/conectese/issues) with:
+Open an [issue](https://github.com/henriqueadm-ai/conectese/issues) with:
 
 - **Clear description** of the problem
 - **Steps to reproduce** (step by step)
@@ -459,14 +459,14 @@ Open an [issue](https://github.com/renatoasse/conectese/issues) with:
 
 ## Suggesting Features
 
-Before opening a PR with a new feature, open an [issue](https://github.com/renatoasse/conectese/issues) to discuss the idea. This avoids duplicate work and ensures alignment with the project direction.
+Before opening a PR with a new feature, open an [issue](https://github.com/henriqueadm-ai/conectese/issues) to discuss the idea. This avoids duplicate work and ensures alignment with the project direction.
 
 Remember the [Golden Rule](#the-golden-rule-verticalize-dont-complicate): prefer creating skills, agents, and guides - not changing the architecture.
 
 ## Development Setup
 
 ```bash
-git clone https://github.com/renatoasse/conectese.git
+git clone https://github.com/henriqueadm-ai/conectese.git
 cd conectese
 npm install
 node --test
@@ -526,7 +526,7 @@ Include in your description:
 
 ## Need Help?
 
-- Open an [issue](https://github.com/renatoasse/conectese/issues) with your question
+- Open an [issue](https://github.com/henriqueadm-ai/conectese/issues) with your question
 
 We respond to PRs and issues within **5 business days**.
 

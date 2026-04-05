@@ -1,7 +1,17 @@
 tests/
 test-results/
-temp/squads/
-.claude/settings.local.json
+temp/
 dashboards/test-results/
 docs/
 .github/
+.claude/
+
+# Security and Keys
+.env
+.env.*
+
+# Sensitive User Data
+PROCESSOS/
+ADMINISTRATIVO/
+_conectese/
+squads/

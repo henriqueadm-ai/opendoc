@@ -2,9 +2,12 @@ import { useSquadSocket } from "@/hooks/useSquadSocket";
 import { SquadSelector } from "@/components/SquadSelector";
 import { PhaserGame } from "@/office/PhaserGame";
 import { StatusBar } from "@/components/StatusBar";
+import { IngestionModal } from "@/components/IngestionModal";
+import { useState } from "react";
 
 export function App() {
   useSquadSocket();
+  const [showIngestion, setShowIngestion] = useState(false);
 
   return (
     <div
@@ -28,9 +31,45 @@ export function App() {
           fontSize: 13,
           fontWeight: 600,
           letterSpacing: 0.5,
+          justifyContent: "space-between",
         }}
       >
-        conectese Dashboard
+        <div>conectese Dashboard</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ 
+            display: "flex", 
+            alignItems: "center", 
+            gap: 6, 
+            background: "rgba(34, 197, 94, 0.15)", 
+            color: "rgb(34, 197, 94)", 
+            padding: "4px 8px", 
+            borderRadius: 4,
+            fontSize: 11,
+            fontWeight: 700,
+            textTransform: "uppercase"
+          }}>
+            <span style={{ fontSize: 13 }}>🛡️</span>
+            Anti-Hallucination: STRICT
+          </div>
+          <button 
+            onClick={() => setShowIngestion(true)}
+            style={{
+              padding: "4px 12px",
+              background: "var(--accent, #3b82f6)",
+              color: "white",
+              border: "none",
+              borderRadius: 4,
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 6
+            }}
+          >
+            <span>📁</span> Novo Caso
+          </button>
+        </div>
       </header>
 
       {/* Main content */}
@@ -41,6 +80,9 @@ export function App() {
 
       {/* Footer */}
       <StatusBar />
+
+      {/* Overlays */}
+      {showIngestion && <IngestionModal onClose={() => setShowIngestion(false)} />}
     </div>
   );
 }

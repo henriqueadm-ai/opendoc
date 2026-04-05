@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Instruções | Conecte.se</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0A111F;
+            --bg-card: rgba(16, 26, 45, 0.7);
+            --gold: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.3);
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --sidebar-w: 280px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 15% 50%, rgba(26, 43, 76, 0.3), transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.05), transparent 25%);
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-w);
+            background: rgba(10, 17, 31, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            position: fixed;
+            height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            display: block;
+            padding: 8px 0;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--gold);
+            padding-left: 10px;
+        }
+        
+        .nav-links a.active::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--gold);
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            padding: 4rem 6rem;
+            width: calc(100% - var(--sidebar-w));
+            box-sizing: border-box;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3 {
+            color: white;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-tag {
+            color: var(--gold);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+            margin-bottom: 4rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+        
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .mockup-img {
+            width: 100%;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Code snippets */
+        .code-block {
+            background: #05080f;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #a5b4fc;
+            border: 1px solid rgba(255,255,255,0.05);
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .code-block::after {
+            content: 'Terminal';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--bg-dark);
+            padding: 0 10px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Step Counters */
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .step-number {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            Conecte<span>.se</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#visao-geral" class="active">Visão Geral</a></li>
+            <li><a href="#instalacao">Guia de Instalação</a></li>
+            <li><a href="#funcoes">Funções do Terminal</a></li>
+            <li><a href="#ingestao">Ingestão de Processos</a></li>
+            <li><a href="#analise">Análise e Transcrição</a></li>
+            <li><a href="#exportacao">Exportação Visual Law</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        
+        <!-- VISÃO GERAL -->
+        <section id="visao-geral" class="glass-card fade-in">
+            <span class="section-tag">Introdução</span>
+            <h1>A Revolução na Análise Processual</h1>
+            <p>Bem-vindo ao manual oficial do escritório para a plataforma Conecte.se. Sua equipe ágil movida a inteligência artificial para ler processos interligados, transcrever mídias faticamente e redigir contestações em questão de minutos.</p>
+            
+            <img src="./assets/cover.png" alt="Conectese AI Cover" class="hero-img">
+            
+            <p>O Conecte.se elimina as horas exaustivas lendo PDFs truncados e ouvindo horas de audiências, abstraindo tudo para insights fundamentados.</p>
+        </section>
+
+        <!-- INSTALAÇÃO -->
+        <section id="instalacao" class="glass-card fade-in">
+            <span class="section-tag">Setup Rápido</span>
+            <h2>Guia de Instalação (NPM)</h2>
+            <p>Graças a uma arquitetura limpa em Node.js (sem instalações complexas de Python ou C++), o Conecte.se roda de forma fluida em qualquer sistema (Windows, Mac ou Linux).</p>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                    <h3>Instale o pacote base</h3>
+                    <p>Abra seu Terminal/Prompt de Comando na pasta onde deseja armazenar os dados de seus processos e digite:</p>
+                    <div class="code-block">npx conectese init</div>
+                    <img src="./assets/real_install_terminal.png" alt="Real Terminal NPM Install" class="mockup-img" style="margin-top: 15px;">
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                    <h3>Setup Inicial e Chaves</h3>
+                    <p>Para proteger as informações do escritório, rodaremos o setup de perfil empresarial que configurará sua identidade no contrato visual:</p>
+                    <div class="code-block">npm run conectese:setup</div>
+                    <p>Isto perguntará seus dados (Logo, OAB, Whats App) salvando-os de forma irreversivelmente sigilosa em seu `.env`.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- FUNÇÕES DISPONÍVEIS -->
+        <section id="funcoes" class="glass-card fade-in">
+            <span class="section-tag">CLI Commands</span>
+            <h2>Funções Disponíveis via Terminal</h2>
+            <p>Após a conclusão do processo de configuração (<code>npx conectese init</code>), você obtém acesso instantâneo às nossas Skills instaladas executando o comando <code>npx conectese skills</code>, exibindo os agentes e motores disponíveis no sistema.</p>
+            
+            <img src="./assets/real_functions_terminal.png" alt="Conectese Real CLI Skills Output" class="mockup-img">
+            
+            <div class="step">
+                <div class="step-number">🎙️</div>
+                <div>
+                    <h3>Media Transcriber</h3>
+                    <p>Comando para transcrição direta de provas em MP3/MP4, detectando automaticamente diferentes vozes (diarização) e minutagens com precisão extrema sem necessidade de servidores na nuvem pesados.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">🛡️</div>
+                <div>
+                    <h3>LGPD Anonymizer</h3>
+                    <p>Higienização automatizada. Processa petições iniciais sensíveis, ocultando CPFs, Nomes Completos e Endereços para poder salvar no formato seguro para LGPD antes mesmo de qualquer inteligência processar o caso.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">⚖️</div>
+                <div>
+                    <h3>Legal Researcher</h3>
+                    <p>Agente robótico focado em buscar Acórdãos e Precedentes web (ex: Jusbrasil/TRFs) para fundamentar suas petições com a jurisprudência mais aderente ao caso baseando-se nos fatos ingeridos.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">🎨</div>
+                <div>
+                    <h3>Visual Law Generator</h3>
+                    <p>Geração expressa de documentos <code>.docx</code> utilizando técnicas modernas de Legal Design para criar petições, fluxogramas e relatórios altamente diagramados em um estalar de dedos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INGESTÃO -->
+        <section id="ingestao" class="glass-card fade-in">
+            <span class="section-tag">Passo 1</span>
+            <h2>Ingestão de Processos e Arquivos</h2>
+            <p>Após instalar e ativar seu painel (`npm run start`), o seu "Dashboard" ficará disponível no navegador.</p>
+            
+            <img src="./assets/upload.png" alt="Drag and Drop Upload Area" class="mockup-img">
+            
+            <h3>A Área de Depósito (Drag and Drop)</h3>
+            <p>Arraste os documentos cruciais do cliente diretamente para a tela. Aceitamos PDFs de processos inteiros, prints de tela, arquivos do Word e até <strong>arquivos de Mídia (.MP3, .MP4)</strong>.</p>
+            <p>A inteligência do sistema organiza tudo sozinho. Nos bastidores, será criada uma pasta criptografada `PROCESSOS/DD_MM_AAAA_NNNN` que abrigará este caso específico.</p>
+        </section>
+
+        <!-- ANÁLISE -->
+        <section id="analise" class="glass-card fade-in">
+            <span class="section-tag">Passo 2</span>
+            <h2>O Trabalho dos Agentes (Pipeline)</h2>
+            <p>Ao aprovar os fatos, você engatilhará nossa orquestra de 10 Agentes Cognitivos. Sente-se e observe o progresso de cada pensamento na tela interativa.</p>
+            
+            <img src="./assets/processing.png" alt="AI Agent Pipeline" class="mockup-img">
+            
+            <ul>
+                <li style="margin-bottom: 15px;"><strong>O Transcritor (media-transcriber):</strong> Houve áudio anexado? Ele não foge. Ouve tudo e cria uma minutagem fidedigna dos locutores em Markdown.</li>
+                <li style="margin-bottom: 15px;"><strong>A Anonimização (LGPD):</strong> O sistema mascara todos os documentos brutos para que informações sigilosas se tornem [PESSOA_1] antes de saírem ou formarem banco.</li>
+                <li style="margin-bottom: 15px;"><strong>A Pesquisa (legal-researcher):</strong> O robô faz web-scraping automático (ex: varreduras precisas em Jusbrasil) atrás da jurisprudência mais quente baseada no objeto dos fatos.</li>
+            </ul>
+        </section>
+
+        <!-- EXPORTAÇÃO -->
+        <section id="exportacao" class="glass-card fade-in">
+            <span class="section-tag">Passo 3</span>
+            <h2>O Resultado Final: Visual Law</h2>
+            <p>No final do pipeline, o agente `document-generator` consome até 10 páginas de insights densos formatados durante a Orquestração e devolve... O Documento.</p>
+            
+            <img src="./assets/visual_law.png" alt="Visual Law Document Render" class="mockup-img">
+            
+            <p>Um arquivo luxuoso `documento_pronto.docx` estará aguardando na pasta de Processos. Ele trará os logotipos enviados na instalação de forma elegante no rodapé e cabeçalho, pronto param o peticionamento eletronico (PJe) ou envio direto para assinatura ao seu cliente.</p>
+        </section>
+
+    </main>
+
+    <script>
+        // Smooth scroll e highlights
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>

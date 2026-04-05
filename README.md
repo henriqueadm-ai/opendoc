@@ -1,6 +1,6 @@
 # conectese
 
-Crie equipes (squads) de agentes de IA focadas no ambiente jurídico — direto da sua IDE.
+Crie equipes (times) de agentes de IA focadas no ambiente jurídico — direto da sua IDE.
 
 O conectese é um framework de orquestração multi-agente voltado inteiramente para **Advogados Especializados e Escritórios de Advocacia**. Descreva a necessidade do seu caso em linguagem natural, e o conectese cria uma equipe de agentes e analistas jurídicos de IA que trabalham juntos para melhorar a análise processual, garantir a privacidade (LGPD) e dar suporte na sua tomada de decisão.
 
@@ -8,11 +8,11 @@ O conectese é um framework de orquestração multi-agente voltado inteiramente 
 
 [conecte.se](https://conecte.se) - **Contato:** carlos@conecte.se
 
-## O que é um Squad Jurídico?
+## O que é um time Conectese Jurídico?
 
-Um squad jurídico é uma equipe de agentes de IA que colaboram para destrinchar e solucionar um caso ou analisar um conjunto probatório. Cada agente tem um papel específico (como extração, anonimização e formação de tese). Eles executam em pipeline com *checkpoints* onde o agente pausa e pede sua aprovação antes de tomar qualquer decisão sensível.
+Um time jurídico é uma equipe de agentes de IA que colaboram para destrinchar e solucionar um caso ou analisar um conjunto probatório. Cada agente tem um papel específico (como extração, anonimização e formação de tese). Eles executam em pipeline com *checkpoints* onde o agente pausa e pede sua aprovação antes de tomar qualquer decisão sensível.
 
-Exemplo do nosso **Pipeline OpenLaw**:
+Exemplo do nosso **Pipeline Conectese**:
 
 - **Extrator de Dados** lê peças e provas processuais brutas
 - **Especialista LGPD (Anonimizador)** higieniza os dados e mascara informações pessoais e sensíveis
@@ -76,12 +76,12 @@ O Escritório Virtual é uma interface visual 2D que mostra seus agentes trabalh
 **Passo 2 — Sirva localmente** (no terminal):
 
 ```bash
-npx serve squads/<nome-do-squad>/dashboard
+npx serve squads/<nome-do-time>/dashboard
 ```
 
 **Passo 3 —** Abra `http://localhost:3000` no seu navegador.
 
-## Criando seu Squad
+## Criando sua Conexão
 
 Abra o menu:
 
@@ -91,14 +91,14 @@ Abra o menu:
 
 O **Conectese** vai te mostrar as opções disponíveis. 
 
-Para criar um novo squad personalizado, o **Arquiteto** fará algumas perguntas sobre qual a área do seu escritório e o tipo de casos, e projetará o squad ideal configurando tudo. Você sempre aprova o design (a "tese") antes de qualquer execução.
+Para criar um novo time personalizado, o **Arquiteto** fará algumas perguntas sobre qual a área do seu escritório e o tipo de casos, e projetará o time ideal configurando tudo. Você sempre aprova o design (a "tese") antes de qualquer execução.
 
-## Executando um Squad
+## Executando uma conexão
 
 Você pode executar a triagem de um caso pedindo diretamente:
 
 ```
-/conectese rode o squad <nome-do-squad>
+/conectese rode o time <nome-do-time>
 ```
 
 A equipe de IA inicia, pausando nos checkpoints onde os analistas jurídicos pedirão o input estratégico do Advogado (Human-in-the-Loop).
@@ -107,10 +107,10 @@ A equipe de IA inicia, pausando nos checkpoints onde os analistas jurídicos ped
 
 ```
 /conectese
-/conectese crie um Squad que receba sentenças de primeiro grau e levante possibilidades de embargo ou apelação
-/conectese quero um Squad focado em Direito Tributário que analise autos de infração e sugira defesas
-/conectese crie um Squad que higieniza dados LGPD de processos de Direito de Família e gera resumos seguros
-/conectese roda o squad analise-tributaria
+/conectese crie um Time que receba sentenças de primeiro grau e levante possibilidades de embargo ou apelação
+/conectese quero um Time focado em Direito Tributário que analise autos de infração e sugira defesas
+/conectese crie um Time que higieniza dados LGPD de processos de Direito de Família e gera resumos seguros
+/conectese roda o time analise-tributaria
 ```
 
 ## Comandos
@@ -119,9 +119,9 @@ A equipe de IA inicia, pausando nos checkpoints onde os analistas jurídicos ped
 |---------|-----------|
 | `/conectese` | Abre o menu principal |
 | `/conectese help` | Mostra todos os comandos |
-| `/conectese create` | Cria um novo squad / equipe de IA |
-| `/conectese run <nome>` | Analisa um caso no squad |
-| `/conectese list` | Lista seus squads de IA |
+| `/conectese create` | Cria um novo time / equipe de IA |
+| `/conectese run <nome>` | Analisa um caso no time |
+| `/conectese list` | Lista seus times de IA |
 | `/conectese edit <nome>` | Modifica as diretrizes de uma equipe |
 | `/conectese skills` | Navega pelas habilidades jurídicas instaladas |
 | `/conectese install <nome>` | Instala uma habilidade do catálogo |
@@ -154,7 +154,7 @@ MIT — use como quiser.
 
 # conectese (English)
 
-Create AI squads specialized in the Legal environment — right from your IDE.
+Create AI teams specialized in the Legal environment — right from your IDE.
 
 conectese is a multi-agent orchestration framework geared entirely towards **Lawyers, Law Firms, and Corporate Legal Departments**. Describe your case needs in plain language, and conectese creates a team of AI legal analysts and agents who work together to enhance procedural analysis, guarantee privacy (GDPR/LGPD), and support your decision-making.
 
@@ -162,9 +162,9 @@ conectese is a multi-agent orchestration framework geared entirely towards **Law
 
 [conecte.se](https://conecte.se) - **Contact:** carlos@conecte.se
 
-## What is a Legal Squad?
+## What is a Legal Team?
 
-A legal squad is a team of AI agents that collaborate to dissect a lawsuit, draft legal documents, or anonymize evidence. They run in a pipeline with checkpoints where the agent pauses and asks for the Head Human Lawyer's approval before proceeding with sensitive decisions.
+A legal team is a team of AI agents that collaborate to dissect a lawsuit, draft legal documents, or anonymize evidence. They run in a pipeline with checkpoints where the agent pauses and asks for the Head Human Lawyer's approval before proceeding with sensitive decisions.
 
 Example:
 
@@ -211,35 +211,35 @@ The Virtual Office is a 2D interface showing your AI legal team working in real 
 
 **Step 2 — Serve it locally** (in terminal):
 ```bash
-npx serve squads/<squad-name>/dashboard
+npx serve squads/<team-name>/dashboard
 ```
 
 **Step 3 —** Open `http://localhost:3000` in your browser.
 
-## Creating your Squad
+## Creating your Team
 
 Describe what you need:
 
 ```
-/conectese create "A squad that reviews M&A contracts and flags liabilities"
+/conectese create "A team that reviews M&A contracts and flags liabilities"
 ```
 
-The **Architect** asks a few questions, designs the legal squad, and sets everything up safely. You approve the design before execution.
+The **Architect** asks a few questions, designs the legal team, and sets everything up safely. You approve the design before execution.
 
-## Running a Squad
+## Running a Team
 
 ```
-/conectese run <squad-name>
+/conectese run <team-name>
 ```
 
-The squad runs automatically, pausing at critical junctures if legal interpretation is ambiguous to ask for your strategic guidance.
+The team runs automatically, pausing at critical junctures if legal interpretation is ambiguous to ask for your strategic guidance.
 
 ## Examples
 
 ```
-/conectese create "Squad that reads 1st degree sentences and draft grounds for appeal"
-/conectese create "Squad that sanitizes GDPR/LGPD data on family court proceedings"
-/conectese create "Squad that audits labor contracts against current regulations"
+/conectese create "Team that reads 1st degree sentences and draft grounds for appeal"
+/conectese create "Team that sanitizes GDPR/LGPD data on family court proceedings"
+/conectese create "Team that audits labor contracts against current regulations"
 ```
 
 ## Token Cost

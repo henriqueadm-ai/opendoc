@@ -1,6 +1,6 @@
 {
   "name": "conectese",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Multi-agent orchestration framework — create AI squads that work together",
   "type": "module",
   "bin": {
@@ -9,6 +9,7 @@
   "scripts": {
     "test": "node --test tests/*.test.js",
     "lint": "eslint src/ bin/ tests/",
+    "setup-admin": "node bin/setup_admin.js",
     "version": "node -e \"require('fs').writeFileSync('templates/_conectese/.conectese-version', require('./package.json').version + '\\n')\" && git add templates/_conectese/.conectese-version"
   },
   "keywords": [
@@ -18,14 +19,14 @@
     "orchestration",
     "squads"
   ],
-  "author": "Renato Asse (https://github.com/renatoasse)",
-  "homepage": "https://github.com/renatoasse/conectese#readme",
+  "author": "Carlos Henrique (https://github.com/henriqueadm-ai)",
+  "homepage": "https://github.com/henriqueadm-ai/conectese#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/renatoasse/conectese.git"
+    "url": "git+https://github.com/henriqueadm-ai/conectese.git"
   },
   "bugs": {
-    "url": "https://github.com/renatoasse/conectese/issues"
+    "url": "https://github.com/henriqueadm-ai/conectese/issues"
   },
   "license": "MIT",
   "engines": {
@@ -43,7 +44,16 @@
   "dependencies": {
     "@inquirer/checkbox": "^5.1.0",
     "@inquirer/input": "^5.0.0",
-    "@inquirer/select": "^5.1.0"
+    "@inquirer/select": "^5.1.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "cheerio": "^1.2.0",
+    "cloudscraper": "^4.6.0",
+    "dotenv": "^17.4.0",
+    "html-to-docx": "^1.8.0",
+    "marked": "^17.0.5",
+    "puppeteer": "^24.40.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

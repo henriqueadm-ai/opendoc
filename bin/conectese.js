@@ -67,7 +67,7 @@ if (command === 'init') {
     npx conectese agents update           Update all agents
     npx conectese runs [squad-name]     View execution history
 
-  Learn more: https://github.com/renatoasse/conectese
+  Learn more: https://github.com/henriqueadm-ai/conectese
   `);
   if (command) process.exitCode = 1;
 }

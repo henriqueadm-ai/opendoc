@@ -71,4 +71,4 @@ Monitor your usage in your IDE or AI provider dashboard.
 
 ## Reporting Security Issues
 
-If you find a security vulnerability in conectese, please open an issue at [github.com/renatoasse/conectese/issues](https://github.com/renatoasse/conectese/issues) or contact the maintainer directly.
+If you find a security vulnerability in conectese, please open an issue at [github.com/henriqueadm-ai/conectese/issues](https://github.com/henriqueadm-ai/conectese/issues) or contact the maintainer directly.

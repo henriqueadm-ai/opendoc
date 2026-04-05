@@ -162,18 +162,101 @@ export function squadWatcherPlugin(): Plugin {
         server.config.logger.error(`[squad-watcher] failed to create squads dir: ${err.message}`);
       });
 
-      // REST API fallback — serves snapshot over HTTP for polling clients
+      // REST API fallback & File Upload
       server.middlewares.use(async (req, res, next) => {
-        if (req.url !== "/api/snapshot") return next();
-        try {
-          const snapshot = await buildSnapshot(squadsDir);
-          res.setHeader("Content-Type", "application/json");
-          res.setHeader("Cache-Control", "no-cache");
-          res.end(JSON.stringify(snapshot));
-        } catch {
-          res.writeHead(500);
-          res.end("Internal Server Error");
+        if (req.url === "/api/snapshot" && req.method === "GET") {
+          try {
+            const snapshot = await buildSnapshot(squadsDir);
+            res.setHeader("Content-Type", "application/json");
+            res.setHeader("Cache-Control", "no-cache");
+            res.end(JSON.stringify(snapshot));
+          } catch {
+            res.writeHead(500);
+            res.end("Internal Server Error");
+          }
+          return;
         }
+
+        if (req.url === "/api/upload" && req.method === "POST") {
+          import("busboy").then(({ default: Busboy }) => {
+            const busboy = Busboy({ headers: req.headers });
+            let caseId = "";
+            let processosDir = path.resolve(process.cwd(), "../PROCESSOS");
+            if (!fs.existsSync(processosDir)) {
+              processosDir = path.resolve(process.cwd(), "PROCESSOS");
+            }
+            
+            const filePromises: Promise<void>[] = [];
+
+            busboy.on("field", (fieldname, val) => {
+              if (fieldname === "caseId") {
+                caseId = val.replace(/[^a-zA-Z0-9_-]/g, ""); // sanitize
+              }
+            });
+
+            busboy.on("file", (_fieldname, file, info) => {
+              const { filename } = info;
+              if (!caseId) {
+                const today = new Date();
+                const dd = String(today.getDate()).padStart(2, "0");
+                const mm = String(today.getMonth() + 1).padStart(2, "0");
+                const yyyy = today.getFullYear();
+                const prefix = `${dd}_${mm}_${yyyy}_`;
+                
+                let maxNum = 0;
+                try {
+                  const dirs = fs.readdirSync(processosDir, { withFileTypes: true });
+                  for (const dir of dirs) {
+                    if (dir.isDirectory() && dir.name.startsWith(prefix)) {
+                      const numStr = dir.name.substring(prefix.length);
+                      const num = parseInt(numStr, 10);
+                      if (!isNaN(num) && num > maxNum) {
+                        maxNum = num;
+                      }
+                    }
+                  }
+                } catch {
+                  // Directroy might not exist yet
+                }
+                
+                const sequential = String(maxNum + 1).padStart(4, "0");
+                caseId = `${prefix}${sequential}`;
+              }
+              const targetDir = path.join(processosDir, caseId);
+              
+              filePromises.push(
+                fsp.mkdir(targetDir, { recursive: true }).then(() => {
+                  const saveTo = path.join(targetDir, filename.replace(/[^a-zA-Z0-9_.-]/g, "_"));
+                  return new Promise((resolve, reject) => {
+                    const writeStream = fs.createWriteStream(saveTo);
+                    file.pipe(writeStream);
+                    writeStream.on("finish", resolve);
+                    writeStream.on("error", reject);
+                  });
+                })
+              );
+            });
+
+            busboy.on("finish", async () => {
+              try {
+                await Promise.all(filePromises);
+                res.writeHead(200, { Connection: "close", "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: true, caseId }));
+              } catch (err: any) {
+                res.writeHead(500, { Connection: "close", "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: false, error: err.message }));
+              }
+            });
+
+            req.pipe(busboy);
+          }).catch(err => {
+             res.writeHead(500);
+             res.end(JSON.stringify({ error: err.message }));
+          });
+          return;
+        }
+
+        return next();
       });
 
       // File watcher using chokidar — reliable cross-platform, handles partial writes

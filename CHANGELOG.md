@@ -18,7 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 
 ## [0.1.13] - 2026-03-30
 
-Major release with security, transparency, and token optimization improvements — inspired by the thorough audit from [@morpheus-zion](https://github.com/morpheus-zion) in [#18](https://github.com/renatoasse/conectese/issues/18). Thank you for the contribution that directly shaped this release.
+Major release with security, transparency, and token optimization improvements — inspired by the thorough audit from [@morpheus-zion](https://github.com/morpheus-zion) in [#18](https://github.com/henriqueadm-ai/conectese/issues/18). Thank you for the contribution that directly shaped this release.
 
 ### Added
 - SECURITY.md covering browser sessions, image hosting, skills, checkpoints, and tokens
@@ -179,15 +179,15 @@ _Tag-only release._
 - SquadOS skill entry point and CLAUDE.md instructions
 - 30 template files with full test coverage
 
-[Unreleased]: https://github.com/renatoasse/conectese/compare/v0.1.13...HEAD
-[0.1.13]: https://github.com/renatoasse/conectese/compare/v0.1.12...v0.1.13
-[0.1.12]: https://github.com/renatoasse/conectese/compare/v0.1.11...v0.1.12
-[0.1.11]: https://github.com/renatoasse/conectese/compare/v0.1.10...v0.1.11
-[0.1.10]: https://github.com/renatoasse/conectese/compare/v0.1.9...v0.1.10
-[0.1.9]: https://github.com/renatoasse/conectese/compare/v0.1.8...v0.1.9
-[0.1.8]: https://github.com/renatoasse/conectese/compare/v0.1.7...v0.1.8
-[0.1.7]: https://github.com/renatoasse/conectese/compare/v0.1.5...v0.1.7
-[0.1.5]: https://github.com/renatoasse/conectese/compare/v0.1.4...v0.1.5
-[0.1.4]: https://github.com/renatoasse/conectese/compare/v0.1.1...v0.1.4
-[0.1.1]: https://github.com/renatoasse/conectese/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/renatoasse/conectese/releases/tag/v0.1.0
+[Unreleased]: https://github.com/henriqueadm-ai/conectese/compare/v0.1.13...HEAD
+[0.1.13]: https://github.com/henriqueadm-ai/conectese/compare/v0.1.12...v0.1.13
+[0.1.12]: https://github.com/henriqueadm-ai/conectese/compare/v0.1.11...v0.1.12
+[0.1.11]: https://github.com/henriqueadm-ai/conectese/compare/v0.1.10...v0.1.11
+[0.1.10]: https://github.com/henriqueadm-ai/conectese/compare/v0.1.9...v0.1.10
+[0.1.9]: https://github.com/henriqueadm-ai/conectese/compare/v0.1.8...v0.1.9
+[0.1.8]: https://github.com/henriqueadm-ai/conectese/compare/v0.1.7...v0.1.8
+[0.1.7]: https://github.com/henriqueadm-ai/conectese/compare/v0.1.5...v0.1.7
+[0.1.5]: https://github.com/henriqueadm-ai/conectese/compare/v0.1.4...v0.1.5
+[0.1.4]: https://github.com/henriqueadm-ai/conectese/compare/v0.1.1...v0.1.4
+[0.1.1]: https://github.com/henriqueadm-ai/conectese/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/henriqueadm-ai/conectese/releases/tag/v0.1.0

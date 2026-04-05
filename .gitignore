@@ -1,15 +1,28 @@
 node_modules/
 .env
+.env.*
 *.log
+
+# Caso data
 squads/*/
-_conectese/_memory/company.md
-_conectese/_memory/preferences.md
+PROCESSOS/*
+!PROCESSOS/.gitkeep
+ADMINISTRATIVO/*
+!ADMINISTRATIVO/.gitkeep
+
+# Sensitive User Data
+_conectese/_memory/company/
+_conectese/_memory/preferences/
 _conectese/_browser_profile/
+
+# Docs and Configs
 docs/
 .superpowers/
+.claude/settings.local.json
+
+# Temp & Tests
 temp/
 tests/
 test-results/
 temp/squads/
-.claude/settings.local.json
 dashboards/test-results/
