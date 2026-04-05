@@ -5,7 +5,7 @@ category: "Pipeline Core"
 icon: "🗺️"
 version: "2.0.0"
 skills:
-  - document-analyzer
+  - conectese-scraper
 ---
 
 # Operational Framework
