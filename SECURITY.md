@@ -1,21 +1,21 @@
 # Security
 
-This document describes how opendoc handles security, privacy, and user data.
+This document describes how conectese handles security, privacy, and user data.
 
 ## Browser Sessions (Sherlock Investigator)
 
-When you provide reference profile URLs during squad creation, opendoc dispatches the Sherlock investigator agent, which uses a headless Chromium browser (via Playwright) to navigate social media profiles and extract content patterns.
+When you provide reference profile URLs during squad creation, conectese dispatches the Sherlock investigator agent, which uses a headless Chromium browser (via Playwright) to navigate social media profiles and extract content patterns.
 
 ### How sessions work
 
 - **First login:** When Sherlock encounters a login wall, it asks you to log in manually and **asks for your consent** before saving the session.
-- **Persistent cookies:** If you consent, cookies and session data are stored locally in `_opendoc/_browser_profile/`. This directory is gitignored and never committed.
-- **Headless mode:** The browser runs in headless mode (no visible window) by default. Configuration is in `_opendoc/config/playwright.config.json`.
+- **Persistent cookies:** If you consent, cookies and session data are stored locally in `_conectese/_browser_profile/`. This directory is gitignored and never committed.
+- **Headless mode:** The browser runs in headless mode (no visible window) by default. Configuration is in `_conectese/config/playwright.config.json`.
 - **Access scope:** The browser can navigate to any URL, not just the reference URLs you provided. Navigation, clicks, and JavaScript execution are controlled by the agent.
 
 ### Revoking sessions
 
-Delete the `_opendoc/_browser_profile/` directory to remove all saved cookies and session data. The next investigation will require a fresh manual login.
+Delete the `_conectese/_browser_profile/` directory to remove all saved cookies and session data. The next investigation will require a fresh manual login.
 
 ## Image Hosting (imgBB)
 
@@ -34,11 +34,11 @@ The actual permission enforcement depends on the host IDE:
 - **Cursor, VS Code + Copilot:** Have their own approval mechanisms for agent actions.
 - **Other IDEs:** Check your IDE's documentation for how agent permissions are handled.
 
-opendoc's checkpoints instruct the agent to stop and ask — the host IDE enforces whether the agent can proceed without asking.
+conectese's checkpoints instruct the agent to stop and ask — the host IDE enforces whether the agent can proceed without asking.
 
 ## Skills
 
-Skills are opendoc's extension system. A skill is a directory containing a `SKILL.md` file with instructions that are injected into the agent context at runtime.
+Skills are conectese's extension system. A skill is a directory containing a `SKILL.md` file with instructions that are injected into the agent context at runtime.
 
 ### Security model
 
@@ -48,7 +48,7 @@ Skills are opendoc's extension system. A skill is a directory containing a `SKIL
   - `script` — Can execute bash commands with the **full permissions of the local user**.
   - `mcp` — Can connect to external servers and receives tokens from `.env`.
   - `hybrid` — Combination of script and MCP capabilities.
-- **Official catalog:** Skills from the official catalog (installed via `npx opendoc install <name>`) are maintained in the opendoc repository.
+- **Official catalog:** Skills from the official catalog (installed via `npx conectese install <name>`) are maintained in the conectese repository.
 - **Community skills:** Community-submitted skills go through code review before being accepted into the official catalog.
 - **Third-party skills:** If you install skills from other sources, review the `SKILL.md` and any scripts before use.
 
@@ -60,7 +60,7 @@ Skills are opendoc's extension system. A skill is a directory containing a `SKIL
 
 ## Token Consumption
 
-opendoc is free and open source software. However, running squads consumes AI tokens from your IDE or AI provider, which are typically paid.
+conectese is free and open source software. However, running squads consumes AI tokens from your IDE or AI provider, which are typically paid.
 
 - Every squad run consumes tokens. The amount depends on the number of agents, pipeline complexity, and model tier.
 - Sherlock investigations and image generation are especially token-intensive.
@@ -71,4 +71,4 @@ Monitor your usage in your IDE or AI provider dashboard.
 
 ## Reporting Security Issues
 
-If you find a security vulnerability in opendoc, please open an issue at [github.com/renatoasse/opendoc/issues](https://github.com/renatoasse/opendoc/issues) or contact the maintainer directly.
+If you find a security vulnerability in conectese, please open an issue at [github.com/renatoasse/conectese/issues](https://github.com/renatoasse/conectese/issues) or contact the maintainer directly.

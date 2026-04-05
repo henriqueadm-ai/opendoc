@@ -1,4 +1,4 @@
-# Sherlock — Content Investigator for Opendoc
+# Sherlock — Content Investigator for Conectese
 
 **Date:** 2026-02-24
 **Status:** Approved
@@ -6,7 +6,7 @@
 
 ## Overview
 
-Sherlock is a content investigation feature for Opendoc that extracts and analyzes real content from social media profiles during squad creation. Instead of relying solely on generic web research, Sherlock navigates to reference profiles, extracts actual content, and identifies patterns that feed into richer squad design.
+Sherlock is a content investigation feature for Conectese that extracts and analyzes real content from social media profiles during squad creation. Instead of relying solely on generic web research, Sherlock navigates to reference profiles, extracts actual content, and identifies patterns that feed into richer squad design.
 
 ## Trigger & Placement
 
@@ -102,7 +102,7 @@ Based on squad type:
 ### Per Profile
 
 ```
-_opendoc/_investigations/{squad-code}/
+_conectese/_investigations/{squad-code}/
 ├── {platform}-{username}/
 │   ├── raw-content.md        # All extracted content
 │   └── pattern-analysis.md   # Identified patterns
@@ -182,7 +182,7 @@ Total contents: {N}
 
 ### Persistence & Reuse
 
-Investigations saved in `_opendoc/_investigations/`. Enables:
+Investigations saved in `_conectese/_investigations/`. Enables:
 - Reuse between similar squads
 - Re-investigate profiles later (compare evolution)
 - Architect can ask: "Found previous investigations for this niche. Reuse?"
@@ -190,7 +190,7 @@ Investigations saved in `_opendoc/_investigations/`. Enables:
 ## Complete Flow
 
 ```
-User: /opendoc create "Instagram carousel squad"
+User: /conectese create "Instagram carousel squad"
 
 Phase 1: Discovery → 5 questions about the squad
 Phase 1.5: Investigation Setup

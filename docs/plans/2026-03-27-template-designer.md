@@ -893,8 +893,8 @@ git commit -m "feat(template-designer): add SKILL.md with full agent instruction
 ### Task 5: Architect Integration
 
 **Files:**
-- Modify: `_opendoc/core/prompts/design.prompt.md` (add template selection offer after Phase G)
-- Modify: `_opendoc/core/architect.agent.yaml` (add template-designer awareness to edit-squad workflow)
+- Modify: `_conectese/core/prompts/design.prompt.md` (add template selection offer after Phase G)
+- Modify: `_conectese/core/architect.agent.yaml` (add template-designer awareness to edit-squad workflow)
 
 - [ ] **Step 1: Read current `design.prompt.md`**
 
@@ -941,7 +941,7 @@ In the `edit-squad` workflow section, add awareness that the user might ask to e
 - [ ] **Step 4: Commit**
 
 ```bash
-git add _opendoc/core/prompts/design.prompt.md _opendoc/core/architect.agent.yaml
+git add _conectese/core/prompts/design.prompt.md _conectese/core/architect.agent.yaml
 git commit -m "feat(architect): integrate template-designer skill into design and edit flows"
 ```
 
@@ -998,8 +998,8 @@ ls "$TEST_DIR/state/server-stopped"
 
 - [ ] **Step 3: Verify architect integration**
 
-Read `_opendoc/core/prompts/design.prompt.md` and confirm Phase G.5 is present and correctly placed.
-Read `_opendoc/core/architect.agent.yaml` and confirm edit-squad workflow includes template-designer awareness.
+Read `_conectese/core/prompts/design.prompt.md` and confirm Phase G.5 is present and correctly placed.
+Read `_conectese/core/architect.agent.yaml` and confirm edit-squad workflow includes template-designer awareness.
 
 - [ ] **Step 4: Clean up test artifacts**
 

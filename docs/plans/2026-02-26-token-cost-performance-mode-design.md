@@ -35,8 +35,8 @@ Token cost implications (explain to user when presenting options):
 
 ## Files Affected
 
-1. `_opendoc/core/architect.agent.yaml` — lines 101-113
-2. `templates/_opendoc/core/architect.agent.yaml` — lines 101-113
+1. `_conectese/core/architect.agent.yaml` — lines 101-113
+2. `templates/_conectese/core/architect.agent.yaml` — lines 101-113
 
 ## Scope
 

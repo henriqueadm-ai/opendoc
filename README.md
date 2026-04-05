@@ -1,8 +1,8 @@
-# opendoc
+# conectese
 
 Crie equipes (squads) de agentes de IA focadas no ambiente jurídico — direto da sua IDE.
 
-O opendoc é um framework de orquestração multi-agente voltado inteiramente para **Advogados Especializados e Escritórios de Advocacia**. Descreva a necessidade do seu caso em linguagem natural, e o opendoc cria uma equipe de agentes e analistas jurídicos de IA que trabalham juntos para melhorar a análise processual, garantir a privacidade (LGPD) e dar suporte na sua tomada de decisão.
+O conectese é um framework de orquestração multi-agente voltado inteiramente para **Advogados Especializados e Escritórios de Advocacia**. Descreva a necessidade do seu caso em linguagem natural, e o conectese cria uma equipe de agentes e analistas jurídicos de IA que trabalham juntos para melhorar a análise processual, garantir a privacidade (LGPD) e dar suporte na sua tomada de decisão.
 
 ## Conheça mais
 
@@ -43,13 +43,13 @@ Para profissionais do Direito e equipes que desejam alavancar produtividade com 
 **Pré-requisito:** Node.js 20+
 
 ```bash
-npx opendoc init
+npx conectese init
 ```
 
 Para atualizar uma instalação existente:
 
 ```bash
-npx opendoc update
+npx conectese update
 ```
 
 ## IDEs Suportadas
@@ -63,14 +63,14 @@ npx opendoc update
 | Open Code | Disponível |
 | Antigravity | Disponível |
 
-## Escritório Virtual (Opendoc Dashboard)
+## Escritório Virtual (Conectese Dashboard)
 
 O Escritório Virtual é uma interface visual 2D que mostra seus agentes trabalhando no seu caso em tempo real.
 
 **Passo 1 — Gere o dashboard** (na sua IDE):
 
 ```
-/opendoc dashboard
+/conectese dashboard
 ```
 
 **Passo 2 — Sirva localmente** (no terminal):
@@ -86,10 +86,10 @@ npx serve squads/<nome-do-squad>/dashboard
 Abra o menu:
 
 ```
-/opendoc
+/conectese
 ```
 
-O **Opendoc** vai te mostrar as opções disponíveis. 
+O **Conectese** vai te mostrar as opções disponíveis. 
 
 Para criar um novo squad personalizado, o **Arquiteto** fará algumas perguntas sobre qual a área do seu escritório e o tipo de casos, e projetará o squad ideal configurando tudo. Você sempre aprova o design (a "tese") antes de qualquer execução.
 
@@ -98,7 +98,7 @@ Para criar um novo squad personalizado, o **Arquiteto** fará algumas perguntas 
 Você pode executar a triagem de um caso pedindo diretamente:
 
 ```
-/opendoc rode o squad <nome-do-squad>
+/conectese rode o squad <nome-do-squad>
 ```
 
 A equipe de IA inicia, pausando nos checkpoints onde os analistas jurídicos pedirão o input estratégico do Advogado (Human-in-the-Loop).
@@ -106,30 +106,30 @@ A equipe de IA inicia, pausando nos checkpoints onde os analistas jurídicos ped
 ## Exemplos
 
 ```
-/opendoc
-/opendoc crie um Squad que receba sentenças de primeiro grau e levante possibilidades de embargo ou apelação
-/opendoc quero um Squad focado em Direito Tributário que analise autos de infração e sugira defesas
-/opendoc crie um Squad que higieniza dados LGPD de processos de Direito de Família e gera resumos seguros
-/opendoc roda o squad analise-tributaria
+/conectese
+/conectese crie um Squad que receba sentenças de primeiro grau e levante possibilidades de embargo ou apelação
+/conectese quero um Squad focado em Direito Tributário que analise autos de infração e sugira defesas
+/conectese crie um Squad que higieniza dados LGPD de processos de Direito de Família e gera resumos seguros
+/conectese roda o squad analise-tributaria
 ```
 
 ## Comandos
 
 | Comando | O que faz |
 |---------|-----------|
-| `/opendoc` | Abre o menu principal |
-| `/opendoc help` | Mostra todos os comandos |
-| `/opendoc create` | Cria um novo squad / equipe de IA |
-| `/opendoc run <nome>` | Analisa um caso no squad |
-| `/opendoc list` | Lista seus squads de IA |
-| `/opendoc edit <nome>` | Modifica as diretrizes de uma equipe |
-| `/opendoc skills` | Navega pelas habilidades jurídicas instaladas |
-| `/opendoc install <nome>` | Instala uma habilidade do catálogo |
-| `/opendoc uninstall <nome>` | Remove uma habilidade instalada |
+| `/conectese` | Abre o menu principal |
+| `/conectese help` | Mostra todos os comandos |
+| `/conectese create` | Cria um novo squad / equipe de IA |
+| `/conectese run <nome>` | Analisa um caso no squad |
+| `/conectese list` | Lista seus squads de IA |
+| `/conectese edit <nome>` | Modifica as diretrizes de uma equipe |
+| `/conectese skills` | Navega pelas habilidades jurídicas instaladas |
+| `/conectese install <nome>` | Instala uma habilidade do catálogo |
+| `/conectese uninstall <nome>` | Remove uma habilidade instalada |
 
 ## Custo de Tokens
 
-O opendoc é open source e pode ser usado gratuitamente como software de orquestração. O uso de LLMs locais mantém os dados sigilosos na sua máquina (usando Ollama, LM Studio, etc).
+O conectese é open source e pode ser usado gratuitamente como software de orquestração. O uso de LLMs locais mantém os dados sigilosos na sua máquina (usando Ollama, LM Studio, etc).
 
 No uso de inteligência de fronteira (Claude Pro/Max, OpenAI API, Gemini Advanced):
 - O repasse das peças anonimizadas aos LLMs tem custo de tokens de acordo com o tamanho do processo escaneado.
@@ -138,11 +138,11 @@ No uso de inteligência de fronteira (Claude Pro/Max, OpenAI API, Gemini Advance
 ## Sessões de Navegador e Privacidade
 
 Caso um agente precise buscar atualizações de jurisprudência ativas, ele usa um navegador automatizado.
-- **Isolamento de Sessão:** Cookies de jusbrasil/STJ são salvos apenas em `_opendoc/_browser_profile/` que nunca sai da sua máquina ou vai para o Git.
+- **Isolamento de Sessão:** Cookies de jusbrasil/STJ são salvos apenas em `_conectese/_browser_profile/` que nunca sai da sua máquina ou vai para o Git.
 
 ## Sobre
 
-O opendoc é mantido como base de um projeto open source. Esta implementação específica foi transformada em um motor de inteligência e segurança jurídica projetado para advogados e escritórios de advocacia que precisam escalar o raciocínio forense humano com confiança.
+O conectese é mantido como base de um projeto open source. Esta implementação específica foi transformada em um motor de inteligência e segurança jurídica projetado para advogados e escritórios de advocacia que precisam escalar o raciocínio forense humano com confiança.
 
 Saiba mais em [conecte.se](https://conecte.se) ou entre em contato via carlos@conecte.se.
 
@@ -152,11 +152,11 @@ MIT — use como quiser.
 
 ---
 
-# opendoc (English)
+# conectese (English)
 
 Create AI squads specialized in the Legal environment — right from your IDE.
 
-opendoc is a multi-agent orchestration framework geared entirely towards **Lawyers, Law Firms, and Corporate Legal Departments**. Describe your case needs in plain language, and opendoc creates a team of AI legal analysts and agents who work together to enhance procedural analysis, guarantee privacy (GDPR/LGPD), and support your decision-making.
+conectese is a multi-agent orchestration framework geared entirely towards **Lawyers, Law Firms, and Corporate Legal Departments**. Describe your case needs in plain language, and conectese creates a team of AI legal analysts and agents who work together to enhance procedural analysis, guarantee privacy (GDPR/LGPD), and support your decision-making.
 
 ## Learn more
 
@@ -180,13 +180,13 @@ Example:
 **Prerequisite:** Node.js 20+
 
 ```bash
-npx opendoc init
+npx conectese init
 ```
 
 To update an existing installation:
 
 ```bash
-npx opendoc update
+npx conectese update
 ```
 
 ## Supported IDEs
@@ -206,7 +206,7 @@ The Virtual Office is a 2D interface showing your AI legal team working in real 
 
 **Step 1 — Generate the dashboard** (in your IDE):
 ```
-/opendoc dashboard
+/conectese dashboard
 ```
 
 **Step 2 — Serve it locally** (in terminal):
@@ -221,7 +221,7 @@ npx serve squads/<squad-name>/dashboard
 Describe what you need:
 
 ```
-/opendoc create "A squad that reviews M&A contracts and flags liabilities"
+/conectese create "A squad that reviews M&A contracts and flags liabilities"
 ```
 
 The **Architect** asks a few questions, designs the legal squad, and sets everything up safely. You approve the design before execution.
@@ -229,7 +229,7 @@ The **Architect** asks a few questions, designs the legal squad, and sets everyt
 ## Running a Squad
 
 ```
-/opendoc run <squad-name>
+/conectese run <squad-name>
 ```
 
 The squad runs automatically, pausing at critical junctures if legal interpretation is ambiguous to ask for your strategic guidance.
@@ -237,26 +237,26 @@ The squad runs automatically, pausing at critical junctures if legal interpretat
 ## Examples
 
 ```
-/opendoc create "Squad that reads 1st degree sentences and draft grounds for appeal"
-/opendoc create "Squad that sanitizes GDPR/LGPD data on family court proceedings"
-/opendoc create "Squad that audits labor contracts against current regulations"
+/conectese create "Squad that reads 1st degree sentences and draft grounds for appeal"
+/conectese create "Squad that sanitizes GDPR/LGPD data on family court proceedings"
+/conectese create "Squad that audits labor contracts against current regulations"
 ```
 
 ## Token Cost
 
-opendoc itself is completely free and open source. For utmost confidentiality, you can use OpenCode with local offline LLMs. 
+conectese itself is completely free and open source. For utmost confidentiality, you can use OpenCode with local offline LLMs. 
 When leveraging frontier models (Claude, OpenAI):
 - Passing massive case dossiers will incur higher token costs per run.
 - Using the **Anonymizer** agent beforehand ensures you are not passing sensitive PII into external APIs inadvertently.
 
 ## Browser Sessions & Privacy
 
-When fetching active jurisprudence, opendoc can perform browser actions locally.
-- **Persistent cookies:** stored completely locally in `_opendoc/_browser_profile/`.
+When fetching active jurisprudence, conectese can perform browser actions locally.
+- **Persistent cookies:** stored completely locally in `_conectese/_browser_profile/`.
 
 ## About
 
-This implementation of opendoc has been heavily customized to serve as a legal intelligence engine, designed for law firms needing to scale their forensic rationale confidently and safely.
+This implementation of conectese has been heavily customized to serve as a legal intelligence engine, designed for law firms needing to scale their forensic rationale confidently and safely.
 
 Learn more at [conecte.se](https://conecte.se) or reach out at carlos@conecte.se.
 

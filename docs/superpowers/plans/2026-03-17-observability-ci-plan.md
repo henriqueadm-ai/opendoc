@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add CI, linting, CLI logging, and pipeline execution history to opendoc — split across 3 PRs.
+**Goal:** Add CI, linting, CLI logging, and pipeline execution history to conectese — split across 3 PRs.
 
 **Architecture:** Three sequential PRs: (1) fix failing tests, (2) ESLint + GitHub Actions, (3) observability. Each PR is independent and merges cleanly.
 
@@ -29,7 +29,7 @@ In `tests/init.test.js`, replace the test at line 291 that expects agents to exi
 
 ```js
 test('init does not create agents dir when no bundled agents exist', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true });
     // No bundled agents in dev environment — agents/ should not be created
@@ -49,7 +49,7 @@ In `tests/update.test.js`, replace the test at line 152. Since there are no bund
 
 ```js
 test('update succeeds when no bundled agents exist', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true });
     const result = await update(tempDir);
@@ -71,7 +71,7 @@ In `tests/update.test.js`, replace the test at line 177. Since there are no bund
 
 ```js
 test('update preserves user-created agent files', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true });
     // User manually created an agent
@@ -110,7 +110,7 @@ The README is in Portuguese by default (line 1-60 of `src/readme/README.md`). Up
 
 ```js
 test('README.md is in Portuguese when language is PT-BR', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _language: 'Português (Brasil)' });
@@ -129,7 +129,7 @@ The README has no Spanish section. Since `writeProjectReadme` copies the same bi
 
 ```js
 test('README.md is in Spanish when language is Español', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _language: 'Español' });
@@ -290,7 +290,7 @@ test('logEvent writes JSONL line to cli.log', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'osq-log-'));
   try {
     await logEvent('init', {}, dir);
-    const raw = await readFile(join(dir, '_opendoc', 'logs', 'cli.log'), 'utf-8');
+    const raw = await readFile(join(dir, '_conectese', 'logs', 'cli.log'), 'utf-8');
     const entry = JSON.parse(raw.trim());
     assert.equal(entry.action, 'init');
     assert.ok(entry.timestamp);
@@ -304,7 +304,7 @@ test('logEvent appends multiple entries', async () => {
   try {
     await logEvent('init', {}, dir);
     await logEvent('update', {}, dir);
-    const raw = await readFile(join(dir, '_opendoc', 'logs', 'cli.log'), 'utf-8');
+    const raw = await readFile(join(dir, '_conectese', 'logs', 'cli.log'), 'utf-8');
     const lines = raw.trim().split('\n');
     assert.equal(lines.length, 2);
   } finally {
@@ -316,7 +316,7 @@ test('logEvent includes details', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'osq-log-'));
   try {
     await logEvent('skill:install', { name: 'apify' }, dir);
-    const raw = await readFile(join(dir, '_opendoc', 'logs', 'cli.log'), 'utf-8');
+    const raw = await readFile(join(dir, '_conectese', 'logs', 'cli.log'), 'utf-8');
     const entry = JSON.parse(raw.trim());
     assert.equal(entry.details.name, 'apify');
   } finally {
@@ -384,9 +384,9 @@ test('readCliLogs handles malformed lines gracefully', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'osq-log-'));
   try {
     const { mkdir, writeFile } = await import('node:fs/promises');
-    await mkdir(join(dir, '_opendoc', 'logs'), { recursive: true });
+    await mkdir(join(dir, '_conectese', 'logs'), { recursive: true });
     await writeFile(
-      join(dir, '_opendoc', 'logs', 'cli.log'),
+      join(dir, '_conectese', 'logs', 'cli.log'),
       'not json\n{"action":"init","timestamp":"2026-01-01T00:00:00Z","details":{}}\n',
       'utf-8'
     );
@@ -424,7 +424,7 @@ import { join } from 'node:path';
 
 export async function logEvent(action, details = {}, targetDir = process.cwd()) {
   try {
-    const logDir = join(targetDir, '_opendoc', 'logs');
+    const logDir = join(targetDir, '_conectese', 'logs');
     await mkdir(logDir, { recursive: true });
     const entry = JSON.stringify({
       timestamp: new Date().toISOString(),
@@ -439,7 +439,7 @@ export async function logEvent(action, details = {}, targetDir = process.cwd()) 
 
 export async function readCliLogs({ action, limit } = {}, targetDir = process.cwd()) {
   try {
-    const raw = await readFile(join(targetDir, '_opendoc', 'logs', 'cli.log'), 'utf-8');
+    const raw = await readFile(join(targetDir, '_conectese', 'logs', 'cli.log'), 'utf-8');
     const lines = raw.trim().split('\n');
     let entries = [];
     for (const line of lines) {
@@ -512,9 +512,9 @@ await logEvent('agent:update', { count: installed.length }, targetDir);
 await logEvent('agent:update', { name: id }, targetDir);
 ```
 
-- [ ] **Step 6: Add `_opendoc/logs/` to .gitignore template**
+- [ ] **Step 6: Add `_conectese/logs/` to .gitignore template**
 
-In `templates/.gitignore`, add `_opendoc/logs/` so user log files are not committed to git. If the template `.gitignore` already lists `_opendoc/_browser_profile/`, add the logs entry nearby.
+In `templates/.gitignore`, add `_conectese/logs/` so user log files are not committed to git. If the template `.gitignore` already lists `_conectese/_browser_profile/`, add the logs entry nearby.
 
 - [ ] **Step 7: Run full test suite**
 
@@ -528,7 +528,7 @@ git add src/logger.js tests/logger.test.js src/init.js src/update.js src/skills-
 git commit -m "feat: add CLI execution logger
 
 Logs init, update, skill, and agent operations to
-_opendoc/logs/cli.log in JSONL format. Silent on failure."
+_conectese/logs/cli.log in JSONL format. Silent on failure."
 ```
 
 ---
@@ -536,12 +536,12 @@ _opendoc/logs/cli.log in JSONL format. Silent on failure."
 ## Task 6: Make state.json persistent
 
 **Files:**
-- Modify: `_opendoc/core/runner.pipeline.md:341-349`
-- Modify: `templates/_opendoc/core/runner.pipeline.md:341-349`
+- Modify: `_conectese/core/runner.pipeline.md:341-349`
+- Modify: `templates/_conectese/core/runner.pipeline.md:341-349`
 
 - [ ] **Step 1: Update runner.pipeline.md — replace deletion with archive**
 
-In both `_opendoc/core/runner.pipeline.md` and `templates/_opendoc/core/runner.pipeline.md`, replace the "Post-Completion Cleanup" section (lines 341-349). The current text:
+In both `_conectese/core/runner.pipeline.md` and `templates/_conectese/core/runner.pipeline.md`, replace the "Post-Completion Cleanup" section (lines 341-349). The current text:
 
 ```markdown
 ### Post-Completion Cleanup
@@ -587,13 +587,13 @@ After `"updatedAt": "{ISO timestamp now}"` add:
 
 - [ ] **Step 3: Verify both files are identical**
 
-Run: `diff _opendoc/core/runner.pipeline.md templates/_opendoc/core/runner.pipeline.md`
+Run: `diff _conectese/core/runner.pipeline.md templates/_conectese/core/runner.pipeline.md`
 Expected: No differences.
 
 - [ ] **Step 4: Commit**
 
 ```bash
-git add _opendoc/core/runner.pipeline.md templates/_opendoc/core/runner.pipeline.md
+git add _conectese/core/runner.pipeline.md templates/_conectese/core/runner.pipeline.md
 git commit -m "feat: archive state.json to output folder after pipeline completion
 
 Instead of just deleting state.json, the runner now copies it to
@@ -608,7 +608,7 @@ the working copy. Adds completedAt/failedAt timestamps."
 **Files:**
 - Create: `src/runs.js`
 - Create: `tests/runs.test.js`
-- Modify: `bin/opendoc.js`
+- Modify: `bin/conectese.js`
 
 - [ ] **Step 1: Write runs tests**
 
@@ -893,7 +893,7 @@ Expected: All 10 tests pass.
 
 - [ ] **Step 5: Register runs command in CLI**
 
-In `bin/opendoc.js`, add the import and command handler:
+In `bin/conectese.js`, add the import and command handler:
 
 After the existing imports (line 4), add:
 ```js
@@ -910,7 +910,7 @@ Before the `else` block (line 48), add a new condition:
 
 Also add the `runs` command to the help text:
 ```
-    npx opendoc runs [squad-name]     View execution history
+    npx conectese runs [squad-name]     View execution history
 ```
 
 - [ ] **Step 6: Run full test suite**
@@ -928,13 +928,13 @@ Expected: Zero errors.
 ```bash
 git checkout -b feat/observability
 git add src/logger.js tests/logger.test.js src/init.js src/update.js src/skills-cli.js src/agents-cli.js
-git add _opendoc/core/runner.pipeline.md templates/_opendoc/core/runner.pipeline.md
-git add src/runs.js tests/runs.test.js bin/opendoc.js
+git add _conectese/core/runner.pipeline.md templates/_conectese/core/runner.pipeline.md
+git add src/runs.js tests/runs.test.js bin/conectese.js
 git commit -m "feat: add observability — CLI logger, persistent state.json, runs command
 
-- CLI logger records operations to _opendoc/logs/cli.log (JSONL, silent on failure)
+- CLI logger records operations to _conectese/logs/cli.log (JSONL, silent on failure)
 - Pipeline runner now archives state.json to output/{run_id}/ after completion
-- New command: npx opendoc runs [squad-name] shows execution history
+- New command: npx conectese runs [squad-name] shows execution history
 - 20 new tests across logger and runs modules"
 ```
 

@@ -19,7 +19,7 @@ async function confirm(question) {
 export async function skillsCli(subcommand, args, targetDir) {
   // Require initialized project
   try {
-    await stat(join(targetDir, '_opendoc'));
+    await stat(join(targetDir, '_conectese'));
   } catch {
     await loadLocale('English');
     console.log(`\n  ${t('skillsNotInitialized')}\n`);
@@ -54,7 +54,7 @@ export async function skillsCli(subcommand, args, targetDir) {
 }
 
 async function runList(targetDir) {
-  console.log(`\n  Opendoc Skills\n`);
+  console.log(`\n  Conectese Skills\n`);
 
   const installed = await listInstalled(targetDir);
 
@@ -76,12 +76,12 @@ async function runList(targetDir) {
     console.log(`  ${t('skillsNoneInstalled')}`);
   }
 
-  console.log(`\n  Browse available skills at: https://github.com/renatoasse/opendoc/tree/main/skills\n`);
+  console.log(`\n  Browse available skills at: https://github.com/renatoasse/conectese/tree/main/skills\n`);
 }
 
 async function runInstall(id, targetDir) {
   if (!id) {
-    console.log('\n  Usage: opendoc install <id>\n');
+    console.log('\n  Usage: conectese install <id>\n');
     return false;
   }
 
@@ -105,7 +105,7 @@ async function runInstall(id, targetDir) {
 
 async function runRemove(id, targetDir) {
   if (!id) {
-    console.log('\n  Usage: opendoc uninstall <id>\n');
+    console.log('\n  Usage: conectese uninstall <id>\n');
     return false;
   }
 
@@ -140,7 +140,7 @@ async function runUpdate(targetDir) {
 
 async function runUpdateOne(id, targetDir) {
   if (!id) {
-    console.log('\n  Usage: opendoc update <name>\n');
+    console.log('\n  Usage: conectese update <name>\n');
     return;
   }
 

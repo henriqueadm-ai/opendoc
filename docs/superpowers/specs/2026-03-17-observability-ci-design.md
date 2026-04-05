@@ -7,7 +7,7 @@ Alternative to PR #7 (`feat/observability-ci`). Same goals, split into 3 focused
 - Master test suite passes (currently 5 failures)
 - Automated CI on every push/PR
 - CLI operation logging for debugging
-- Pipeline execution history via `npx opendoc runs`
+- Pipeline execution history via `npx conectese runs`
 
 ## Decisions
 
@@ -126,7 +126,7 @@ jobs:
 **New file:** `src/logger.js`
 
 ```js
-// logEvent(action, details) — appends to _opendoc/logs/cli.log
+// logEvent(action, details) — appends to _conectese/logs/cli.log
 // readCliLogs({ action, since, limit }) — reads with optional filters
 ```
 
@@ -145,8 +145,8 @@ jobs:
 ### 3b. Persistent state.json
 
 **Modified files:**
-- `_opendoc/core/runner.pipeline.md`
-- `templates/_opendoc/core/runner.pipeline.md`
+- `_conectese/core/runner.pipeline.md`
+- `templates/_conectese/core/runner.pipeline.md`
 
 **Change:** Instead of deleting `state.json` after pipeline completion, the runner:
 
@@ -171,7 +171,7 @@ Failed state example:
 }
 ```
 
-**Important:** Both `_opendoc/core/runner.pipeline.md` and `templates/_opendoc/core/runner.pipeline.md` must be modified identically to prevent drift between installed instances and the template.
+**Important:** Both `_conectese/core/runner.pipeline.md` and `templates/_conectese/core/runner.pipeline.md` must be modified identically to prevent drift between installed instances and the template.
 
 ### 3c. Runs command
 
@@ -183,11 +183,11 @@ Failed state example:
 // formatDuration(ms) — "2m 30s" format
 ```
 
-**Modified file:** `bin/opendoc.js` — registers `runs` command
+**Modified file:** `bin/conectese.js` — registers `runs` command
 
 **Behavior:**
-- `npx opendoc runs` — all squads
-- `npx opendoc runs my-squad` — filter by squad
+- `npx conectese runs` — all squads
+- `npx conectese runs my-squad` — filter by squad
 - Reads `state.json` from each `squads/*/output/*/` directory
 - Shows: squad name, run date, status, step count, duration
 - Fallback: runs without `state.json` show as "unknown"
@@ -204,6 +204,6 @@ Failed state example:
 
 - All new tests pass
 - `npm test` full suite green
-- `npx opendoc runs` shows "No runs found." on fresh project
-- After a pipeline run, `state.json` is archived in `output/{run_id}/` and `npx opendoc runs` shows the run
+- `npx conectese runs` shows "No runs found." on fresh project
+- After a pipeline run, `state.json` is archived in `output/{run_id}/` and `npx conectese runs` shows the run
 - Duration is calculated from `startedAt` and `completedAt`/`failedAt` fields in `state.json`

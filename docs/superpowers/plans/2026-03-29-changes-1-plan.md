@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Implement 12 improvements to Opendoc covering Architect UX, Sherlock login, Template Designer, Dashboard, skill renaming, and research performance.
+**Goal:** Implement 12 improvements to Conectese covering Architect UX, Sherlock login, Template Designer, Dashboard, skill renaming, and research performance.
 
-**Architecture:** All changes target existing prompt/config/code files in `_opendoc/core/`, `skills/`, and `dashboard/`. No new subsystems. Most tasks are prompt edits; two are code changes (Dashboard TS, server shell script); one is a file rename.
+**Architecture:** All changes target existing prompt/config/code files in `_conectese/core/`, `skills/`, and `dashboard/`. No new subsystems. Most tasks are prompt edits; two are code changes (Dashboard TS, server shell script); one is a file rename.
 
 **Tech Stack:** Markdown prompts, YAML configs, TypeScript (Phaser dashboard), Bash (server script), Node.js
 
@@ -14,26 +14,26 @@
 
 | File | Action | Task |
 |------|--------|------|
-| `_opendoc/core/prompts/discovery.prompt.md` | Modify | 1, 2, 3 |
-| `_opendoc/core/prompts/design.prompt.md` | Modify | 3, 4 |
-| `_opendoc/core/prompts/build.prompt.md` | Modify | 3, 4 |
-| `_opendoc/core/architect.agent.yaml` | Modify | 2 |
-| `_opendoc/core/prompts/sherlock-shared.md` | Modify | 5 |
+| `_conectese/core/prompts/discovery.prompt.md` | Modify | 1, 2, 3 |
+| `_conectese/core/prompts/design.prompt.md` | Modify | 3, 4 |
+| `_conectese/core/prompts/build.prompt.md` | Modify | 3, 4 |
+| `_conectese/core/architect.agent.yaml` | Modify | 2 |
+| `_conectese/core/prompts/sherlock-shared.md` | Modify | 5 |
 | `skills/template-designer/SKILL.md` | Modify | 6 |
 | `skills/template-designer/scripts/start-server.sh` | Modify | 7 |
 | `dashboard/src/office/OfficeScene.ts` | Modify | 8 |
-| `_opendoc/core/runner.pipeline.md` | Modify | 9 |
+| `_conectese/core/runner.pipeline.md` | Modify | 9 |
 | `skills/image-generator/` → `skills/image-ai-generator/` | Rename | 10 |
 | `skills/README.md` | Modify | 10 |
 | `tests/update.test.js` | Modify | 10 |
-| `_opendoc/core/best-practices/researching.md` | Modify | 11 |
+| `_conectese/core/best-practices/researching.md` | Modify | 11 |
 
 ---
 
 ### Task 1: Discovery — Remove performance mode, auto-detect tools, restore options, natural language
 
 **Files:**
-- Modify: `_opendoc/core/prompts/discovery.prompt.md`
+- Modify: `_conectese/core/prompts/discovery.prompt.md`
 
 - [ ] **Step 1: Remove Step 4 (Tools and Integrations) and Step 5 (Performance Mode)**
 
@@ -122,7 +122,7 @@ Add new rule:
 - [ ] **Step 7: Commit**
 
 ```bash
-git add _opendoc/core/prompts/discovery.prompt.md
+git add _conectese/core/prompts/discovery.prompt.md
 git commit -m "feat(architect): remove perf mode, auto-detect tools, natural language"
 ```
 
@@ -131,7 +131,7 @@ git commit -m "feat(architect): remove perf mode, auto-detect tools, natural lan
 ### Task 2: Architect agent YAML — Update communication style
 
 **Files:**
-- Modify: `_opendoc/core/architect.agent.yaml`
+- Modify: `_conectese/core/architect.agent.yaml`
 
 - [ ] **Step 1: Update communication_style**
 
@@ -156,7 +156,7 @@ With:
 - [ ] **Step 2: Commit**
 
 ```bash
-git add _opendoc/core/architect.agent.yaml
+git add _conectese/core/architect.agent.yaml
 git commit -m "feat(architect): update communication style to natural language"
 ```
 
@@ -165,7 +165,7 @@ git commit -m "feat(architect): update communication style to natural language"
 ### Task 3: Design prompt — Remove performance modes and add agile philosophy
 
 **Files:**
-- Modify: `_opendoc/core/prompts/design.prompt.md`
+- Modify: `_conectese/core/prompts/design.prompt.md`
 
 - [ ] **Step 1: Remove performance_mode from Context Loading**
 
@@ -282,7 +282,7 @@ With:
 - [ ] **Step 8: Commit**
 
 ```bash
-git add _opendoc/core/prompts/design.prompt.md
+git add _conectese/core/prompts/design.prompt.md
 git commit -m "feat(design): remove performance modes, add agile philosophy"
 ```
 
@@ -291,7 +291,7 @@ git commit -m "feat(design): remove performance modes, add agile philosophy"
 ### Task 4: Build prompt — Remove performance mode references
 
 **Files:**
-- Modify: `_opendoc/core/prompts/build.prompt.md`
+- Modify: `_conectese/core/prompts/build.prompt.md`
 
 - [ ] **Step 1: Remove performance mode from summary**
 
@@ -325,7 +325,7 @@ For agents that have `tasks:` in frontmatter:
 - [ ] **Step 3: Commit**
 
 ```bash
-git add _opendoc/core/prompts/build.prompt.md
+git add _conectese/core/prompts/build.prompt.md
 git commit -m "feat(build): remove performance mode references"
 ```
 
@@ -334,7 +334,7 @@ git commit -m "feat(build): remove performance mode references"
 ### Task 5: Sherlock — Two-step login and session instructions
 
 **Files:**
-- Modify: `_opendoc/core/prompts/sherlock-shared.md`
+- Modify: `_conectese/core/prompts/sherlock-shared.md`
 
 - [ ] **Step 1: Add Session Management notice section near the top**
 
@@ -345,7 +345,7 @@ After the `## Purpose` section (line 9) and before `## How It Works`, insert:
 
 At the START of every investigation, before any browser action, tell the user:
 
-> "Your browser sessions are saved in `_opendoc/_browser_profile/`. To clear a platform's session, just delete the JSON file (e.g., `instagram.json`). I'll ask before saving any new session."
+> "Your browser sessions are saved in `_conectese/_browser_profile/`. To clear a platform's session, just delete the JSON file (e.g., `instagram.json`). I'll ask before saving any new session."
 
 This notice is mandatory for every investigation run, even if sessions already exist.
 
@@ -378,18 +378,18 @@ On the first investigation for a given platform, Sherlock may encounter a login 
    Ask: "Want me to save this session for next time?"
    If yes:
    ```bash
-   npx playwright open --save-storage=_opendoc/_browser_profile/{platform}.json {platform-url}
+   npx playwright open --save-storage=_conectese/_browser_profile/{platform}.json {platform-url}
    ```
    This command completes quickly since the browser already has the authenticated cookies.
 
 7. If the user declines saving, inform them:
-   "No problem. Remember your cookies are still in `_opendoc/_browser_profile/` — delete the folder to clear everything."
+   "No problem. Remember your cookies are still in `_conectese/_browser_profile/` — delete the folder to clear everything."
 ```
 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add _opendoc/core/prompts/sherlock-shared.md
+git add _conectese/core/prompts/sherlock-shared.md
 git commit -m "feat(sherlock): two-step login flow, session notice at top"
 ```
 
@@ -593,7 +593,7 @@ git commit -m "fix(dashboard): round-robin gender-aware character assignment"
 ### Task 9: Pipeline Runner — Remove handoff sleep
 
 **Files:**
-- Modify: `_opendoc/core/runner.pipeline.md`
+- Modify: `_conectese/core/runner.pipeline.md`
 
 - [ ] **Step 1: Remove the sleep 3 block**
 
@@ -626,7 +626,7 @@ To:
 - [ ] **Step 3: Commit**
 
 ```bash
-git add _opendoc/core/runner.pipeline.md
+git add _conectese/core/runner.pipeline.md
 git commit -m "perf(runner): remove 3s handoff sleep delay"
 ```
 
@@ -643,7 +643,7 @@ git commit -m "perf(runner): remove 3s handoff sleep delay"
 - [ ] **Step 1: Rename the directory**
 
 ```bash
-cd "d:/Coding Projects/opendoc" && git mv skills/image-generator skills/image-ai-generator
+cd "d:/Coding Projects/conectese" && git mv skills/image-generator skills/image-ai-generator
 ```
 
 - [ ] **Step 2: Update SKILL.md name field**
@@ -661,7 +661,7 @@ name: image-ai-generator
 
 In `skills/README.md`, replace all occurrences of `image-generator` with `image-ai-generator`:
 - Table row: `| [image-generator](./image-generator/) |` → `| [image-ai-generator](./image-ai-generator/) |`
-- Install command: `npx opendoc install image-generator` → `npx opendoc install image-ai-generator`
+- Install command: `npx conectese install image-generator` → `npx conectese install image-ai-generator`
 - Directory tree: `image-generator/` → `image-ai-generator/`
 
 - [ ] **Step 4: Update tests/update.test.js**
@@ -670,7 +670,7 @@ Replace all occurrences of `image-generator` with `image-ai-generator` (4 occurr
 
 ```javascript
     // image-ai-generator is the canonical non-MCP skill with env requirements (env: [OPENROUTER_API_KEY])
-    // Simulate a user who installed opendoc before this skill was bundled
+    // Simulate a user who installed conectese before this skill was bundled
     await rm(join(tempDir, 'skills', 'image-ai-generator'), { recursive: true, force: true });
 
     await update(tempDir);
@@ -682,7 +682,7 @@ Replace all occurrences of `image-generator` with `image-ai-generator` (4 occurr
 - [ ] **Step 5: Run tests to verify**
 
 ```bash
-cd "d:/Coding Projects/opendoc" && npm test
+cd "d:/Coding Projects/conectese" && npm test
 ```
 
 Expected: Tests pass (or at least the update test passes).
@@ -699,7 +699,7 @@ git commit -m "refactor: rename image-generator to image-ai-generator"
 ### Task 11: Research best-practices — Add efficiency directives
 
 **Files:**
-- Modify: `_opendoc/core/best-practices/researching.md`
+- Modify: `_conectese/core/best-practices/researching.md`
 
 - [ ] **Step 1: Add efficiency principle**
 
@@ -744,7 +744,7 @@ Select the 3-5 most promising sources and extract detailed findings. Cross-refer
 - [ ] **Step 4: Commit**
 
 ```bash
-git add _opendoc/core/best-practices/researching.md
+git add _conectese/core/best-practices/researching.md
 git commit -m "perf(research): add efficiency directives, tighten search scope"
 ```
 
@@ -753,7 +753,7 @@ git commit -m "perf(research): add efficiency directives, tighten search scope"
 ### Task 12: Design prompt — Add research efficiency directive
 
 **Files:**
-- Modify: `_opendoc/core/prompts/design.prompt.md`
+- Modify: `_conectese/core/prompts/design.prompt.md`
 
 - [ ] **Step 1: Tighten Phase B Research instructions**
 
@@ -790,6 +790,6 @@ With:
 - [ ] **Step 3: Commit**
 
 ```bash
-git add _opendoc/core/prompts/design.prompt.md
+git add _conectese/core/prompts/design.prompt.md
 git commit -m "perf(design): tighten research phase for efficiency"
 ```

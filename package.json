@@ -1,15 +1,15 @@
 {
-  "name": "opendoc",
+  "name": "conectese",
   "version": "0.1.14",
   "description": "Multi-agent orchestration framework — create AI squads that work together",
   "type": "module",
   "bin": {
-    "opendoc": "bin/opendoc.js"
+    "conectese": "bin/conectese.js"
   },
   "scripts": {
     "test": "node --test tests/*.test.js",
     "lint": "eslint src/ bin/ tests/",
-    "version": "node -e \"require('fs').writeFileSync('templates/_opendoc/.opendoc-version', require('./package.json').version + '\\n')\" && git add templates/_opendoc/.opendoc-version"
+    "version": "node -e \"require('fs').writeFileSync('templates/_conectese/.conectese-version', require('./package.json').version + '\\n')\" && git add templates/_conectese/.conectese-version"
   },
   "keywords": [
     "claude-code",
@@ -19,13 +19,13 @@
     "squads"
   ],
   "author": "Renato Asse (https://github.com/renatoasse)",
-  "homepage": "https://github.com/renatoasse/opendoc#readme",
+  "homepage": "https://github.com/renatoasse/conectese#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/renatoasse/opendoc.git"
+    "url": "git+https://github.com/renatoasse/conectese.git"
   },
   "bugs": {
-    "url": "https://github.com/renatoasse/opendoc/issues"
+    "url": "https://github.com/renatoasse/conectese/issues"
   },
   "license": "MIT",
   "engines": {
@@ -37,7 +37,7 @@
     "agents/",
     "skills/",
     "templates/",
-    "_opendoc/",
+    "_conectese/",
     "dashboard/"
   ],
   "dependencies": {

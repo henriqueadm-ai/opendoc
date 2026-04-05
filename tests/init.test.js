@@ -5,18 +5,18 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { init } from '../src/init.js';
 
-test('init creates _opendoc directory structure', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('init creates _conectese directory structure', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
 
-    await stat(join(tempDir, '_opendoc'));
-    await stat(join(tempDir, '_opendoc', 'core'));
-    await stat(join(tempDir, '_opendoc', 'core', 'architect.agent.yaml'));
-    await stat(join(tempDir, '_opendoc', 'core', 'runner.pipeline.md'));
-    await stat(join(tempDir, '_opendoc', '_memory'));
-    await stat(join(tempDir, '.claude', 'skills', 'opendoc', 'SKILL.md'));
+    await stat(join(tempDir, '_conectese'));
+    await stat(join(tempDir, '_conectese', 'core'));
+    await stat(join(tempDir, '_conectese', 'core', 'architect.agent.yaml'));
+    await stat(join(tempDir, '_conectese', 'core', 'runner.pipeline.md'));
+    await stat(join(tempDir, '_conectese', '_memory'));
+    await stat(join(tempDir, '.claude', 'skills', 'conectese', 'SKILL.md'));
     await stat(join(tempDir, 'CLAUDE.md'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
@@ -24,7 +24,7 @@ test('init creates _opendoc directory structure', async () => {
 });
 
 test('init creates empty squads directory', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
@@ -36,7 +36,7 @@ test('init creates empty squads directory', async () => {
 });
 
 test('init does not overwrite if already initialized', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
@@ -46,39 +46,39 @@ test('init does not overwrite if already initialized', async () => {
   }
 });
 
-test('CLAUDE.md contains Opendoc instructions', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('CLAUDE.md contains Conectese instructions', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
 
     const content = await readFile(join(tempDir, 'CLAUDE.md'), 'utf-8');
-    assert.ok(content.includes('Opendoc'));
-    assert.ok(content.includes('/opendoc'));
+    assert.ok(content.includes('Conectese'));
+    assert.ok(content.includes('/conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
 test('init creates _investigations directory', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
 
-    await stat(join(tempDir, '_opendoc', '_investigations'));
+    await stat(join(tempDir, '_conectese', '_investigations'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
 test('init writes preferences file with defaults when prompts skipped', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
 
-    const prefs = await readFile(join(tempDir, '_opendoc', '_memory', 'preferences.md'), 'utf-8');
+    const prefs = await readFile(join(tempDir, '_conectese', '_memory', 'preferences.md'), 'utf-8');
     assert.ok(prefs.includes('Output Language:'));
     assert.ok(prefs.includes('English'));
     assert.ok(prefs.includes('IDEs:'));
@@ -89,25 +89,25 @@ test('init writes preferences file with defaults when prompts skipped', async ()
 });
 
 test('init with language option produces translated preferences', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _language: 'Português (Brasil)' });
 
-    const prefs = await readFile(join(tempDir, '_opendoc', '_memory', 'preferences.md'), 'utf-8');
+    const prefs = await readFile(join(tempDir, '_conectese', '_memory', 'preferences.md'), 'utf-8');
     assert.ok(prefs.includes('Português (Brasil)'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
-test('init creates .opendoc-version file', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('init creates .conectese-version file', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
 
-    const version = await readFile(join(tempDir, '_opendoc', '.opendoc-version'), 'utf-8');
+    const version = await readFile(join(tempDir, '_conectese', '.conectese-version'), 'utf-8');
     assert.ok(version.trim().length > 0);
   } finally {
     await rm(tempDir, { recursive: true, force: true });
@@ -115,33 +115,33 @@ test('init creates .opendoc-version file', async () => {
 });
 
 test('init creates README.md in user project', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
 
     const content = await readFile(join(tempDir, 'README.md'), 'utf-8');
-    assert.ok(content.includes('Opendoc'));
+    assert.ok(content.includes('Conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
-test('README.md contains /opendoc command', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('README.md contains /conectese command', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
 
     const content = await readFile(join(tempDir, 'README.md'), 'utf-8');
-    assert.ok(content.includes('/opendoc'));
+    assert.ok(content.includes('/conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
 test('README.md is in Portuguese when language is PT-BR', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _language: 'Português (Brasil)' });
@@ -154,7 +154,7 @@ test('README.md is in Portuguese when language is PT-BR', async () => {
 });
 
 test('README.md is in Spanish when language is Español', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _language: 'Español' });
@@ -168,13 +168,13 @@ test('README.md is in Spanish when language is Español', async () => {
 });
 
 test('init with _ides installs only selected IDE files', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['claude-code'] });
 
     // claude-code files exist
-    await stat(join(tempDir, '.claude', 'skills', 'opendoc', 'SKILL.md'));
+    await stat(join(tempDir, '.claude', 'skills', 'conectese', 'SKILL.md'));
     await stat(join(tempDir, 'CLAUDE.md'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
@@ -182,60 +182,60 @@ test('init with _ides installs only selected IDE files', async () => {
 });
 
 test('init with _ides codex creates AGENTS.md', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['codex'] });
 
     const content = await readFile(join(tempDir, 'AGENTS.md'), 'utf-8');
-    assert.ok(content.includes('Opendoc'));
+    assert.ok(content.includes('Conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
-test('init with _ides antigravity creates .agent/rules/opendoc.md', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('init with _ides antigravity creates .agent/rules/conectese.md', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['antigravity'] });
 
     const content = await readFile(
-      join(tempDir, '.agent', 'rules', 'opendoc.md'),
+      join(tempDir, '.agent', 'rules', 'conectese.md'),
       'utf-8'
     );
-    assert.ok(content.includes('Opendoc'));
-    assert.ok(content.includes('/opendoc'));
+    assert.ok(content.includes('Conectese'));
+    assert.ok(content.includes('/conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
-test('init with _ides antigravity creates .agent/workflows/opendoc.md', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('init with _ides antigravity creates .agent/workflows/conectese.md', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['antigravity'] });
 
     const content = await readFile(
-      join(tempDir, '.agent', 'workflows', 'opendoc.md'),
+      join(tempDir, '.agent', 'workflows', 'conectese.md'),
       'utf-8'
     );
     assert.ok(content.includes('description:'));
-    assert.ok(content.includes('Opendoc'));
-    assert.ok(content.includes('/opendoc'));
+    assert.ok(content.includes('Conectese'));
+    assert.ok(content.includes('/conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
 test('init with multiple ides records all in preferences', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['claude-code', 'codex'] });
 
-    const prefs = await readFile(join(tempDir, '_opendoc', '_memory', 'preferences.md'), 'utf-8');
+    const prefs = await readFile(join(tempDir, '_conectese', '_memory', 'preferences.md'), 'utf-8');
     assert.ok(prefs.includes('claude-code'));
     assert.ok(prefs.includes('codex'));
   } finally {
@@ -244,38 +244,38 @@ test('init with multiple ides records all in preferences', async () => {
 });
 
 test('init creates .gitignore with browser profile exclusion', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
 
     const content = await readFile(join(tempDir, '.gitignore'), 'utf-8');
-    assert.ok(content.includes('_opendoc/_browser_profile/'));
+    assert.ok(content.includes('_conectese/_browser_profile/'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
 test('init creates playwright config with persistent context', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
 
     const content = await readFile(
-      join(tempDir, '_opendoc', 'config', 'playwright.config.json'),
+      join(tempDir, '_conectese', 'config', 'playwright.config.json'),
       'utf-8'
     );
     const config = JSON.parse(content);
     assert.equal(config.browser.isolated, false);
-    assert.equal(config.browser.userDataDir, '_opendoc/_browser_profile');
+    assert.equal(config.browser.userDataDir, '_conectese/_browser_profile');
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
 test('init with claude-code IDE creates .mcp.json with playwright server', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['claude-code'] });
@@ -290,7 +290,7 @@ test('init with claude-code IDE creates .mcp.json with playwright server', async
 });
 
 test('init does not create agents dir when no bundled agents exist', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true });
     // No bundled agents in dev environment — agents/ should not be created
@@ -304,7 +304,7 @@ test('init does not create agents dir when no bundled agents exist', async () =>
 });
 
 test('init installs all bundled skills including MCP skills', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true });
     const skillsDir = join(tempDir, 'skills');
@@ -317,11 +317,11 @@ test('init installs all bundled skills including MCP skills', async () => {
   }
 });
 
-test('init installs opendoc-skill-creator including subdirs', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('init installs conectese-skill-creator including subdirs', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true });
-    const scripts = await readdir(join(tempDir, 'skills', 'opendoc-skill-creator', 'scripts'));
+    const scripts = await readdir(join(tempDir, 'skills', 'conectese-skill-creator', 'scripts'));
     assert.ok(scripts.length > 0);
   } finally {
     await rm(tempDir, { recursive: true, force: true });
@@ -329,7 +329,7 @@ test('init installs opendoc-skill-creator including subdirs', async () => {
 });
 
 test('init does not overwrite existing package.json', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     const pkgPath = join(tempDir, 'package.json');
     await writeFile(pkgPath, JSON.stringify({ name: 'my-project', version: '2.0.0' }), 'utf-8');
@@ -346,7 +346,7 @@ test('init does not overwrite existing package.json', async () => {
 });
 
 test('init copies package.json to fresh project', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true });
 
@@ -358,17 +358,17 @@ test('init copies package.json to fresh project', async () => {
   }
 });
 
-test('init with _ides codex creates .agents/skills/opendoc/SKILL.md', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('init with _ides codex creates .agents/skills/conectese/SKILL.md', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['codex'] });
 
     const content = await readFile(
-      join(tempDir, '.agents', 'skills', 'opendoc', 'SKILL.md'),
+      join(tempDir, '.agents', 'skills', 'conectese', 'SKILL.md'),
       'utf-8'
     );
-    assert.ok(content.includes('name: opendoc'));
+    assert.ok(content.includes('name: conectese'));
     assert.ok(content.includes('description:'));
     assert.ok(content.includes('AGENTS.md'));
   } finally {
@@ -376,23 +376,23 @@ test('init with _ides codex creates .agents/skills/opendoc/SKILL.md', async () =
   }
 });
 
-test('init with vscode-copilot creates .github/prompts/opendoc.prompt.md', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('init with vscode-copilot creates .github/prompts/conectese.prompt.md', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['vscode-copilot'] });
     const content = await readFile(
-      join(tempDir, '.github', 'prompts', 'opendoc.prompt.md'),
+      join(tempDir, '.github', 'prompts', 'conectese.prompt.md'),
       'utf-8'
     );
     assert.ok(content.includes('mode:'));
-    assert.ok(content.includes('opendoc'));
+    assert.ok(content.includes('conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
 test('init with vscode-copilot creates .vscode/mcp.json with playwright server', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['vscode-copilot'] });
     const content = await readFile(join(tempDir, '.vscode', 'mcp.json'), 'utf-8');
@@ -405,7 +405,7 @@ test('init with vscode-copilot creates .vscode/mcp.json with playwright server',
 });
 
 test('init with vscode-copilot creates .vscode/settings.json with promptFilesLocations when no file exists', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['vscode-copilot'] });
     const content = await readFile(join(tempDir, '.vscode', 'settings.json'), 'utf-8');
@@ -424,7 +424,7 @@ test('init with vscode-copilot creates .vscode/settings.json with promptFilesLoc
 });
 
 test('init with vscode-copilot merges .vscode/settings.json when file already exists', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     const vscodePath = join(tempDir, '.vscode');
     await mkdir(vscodePath, { recursive: true });
@@ -449,7 +449,7 @@ test('init with vscode-copilot merges .vscode/settings.json when file already ex
 });
 
 test('init with vscode-copilot skips merge when settings.json has invalid JSON', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     const vscodePath = join(tempDir, '.vscode');
     await mkdir(vscodePath, { recursive: true });
@@ -466,25 +466,25 @@ test('init with vscode-copilot skips merge when settings.json has invalid JSON',
   }
 });
 
-test('init with cursor IDE creates .cursor/rules/opendoc.mdc', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('init with cursor IDE creates .cursor/rules/conectese.mdc', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['cursor'] });
 
     const content = await readFile(
-      join(tempDir, '.cursor', 'rules', 'opendoc.mdc'),
+      join(tempDir, '.cursor', 'rules', 'conectese.mdc'),
       'utf-8'
     );
     assert.ok(content.includes('alwaysApply: true'));
-    assert.ok(content.includes('opendoc'));
-    assert.ok(content.includes('/opendoc'));
+    assert.ok(content.includes('conectese'));
+    assert.ok(content.includes('/conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
 test('init with cursor IDE creates .cursor/mcp.json with playwright server', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['cursor'] });
 
@@ -498,12 +498,12 @@ test('init with cursor IDE creates .cursor/mcp.json with playwright server', asy
 });
 
 test('init with cursor IDE creates .cursorignore with browser profile exclusion', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['cursor'] });
 
     const content = await readFile(join(tempDir, '.cursorignore'), 'utf-8');
-    assert.ok(content.includes('_opendoc/_browser_profile/'));
+    assert.ok(content.includes('_conectese/_browser_profile/'));
     assert.ok(content.includes('node_modules/'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
@@ -511,7 +511,7 @@ test('init with cursor IDE creates .cursorignore with browser profile exclusion'
 });
 
 test('init does not copy dashboard node_modules or dist to user project', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });

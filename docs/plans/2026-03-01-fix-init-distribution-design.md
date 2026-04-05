@@ -1,19 +1,19 @@
 # Fix Init Distribution — Design Document
 
-> Fix Opendoc distribution: sync stale templates, make init install agents + skills automatically.
+> Fix Conectese distribution: sync stale templates, make init install agents + skills automatically.
 
 ## Problem
 
-When users run `npx opendoc init`, they receive:
-- **Missing:** `_opendoc/core/formats/` (14 format files) — never synced to templates
-- **Stale:** `_opendoc/core/platforms/` (deprecated, deleted from source but still in templates)
+When users run `npx conectese init`, they receive:
+- **Missing:** `_conectese/core/formats/` (14 format files) — never synced to templates
+- **Stale:** `_conectese/core/platforms/` (deprecated, deleted from source but still in templates)
 - **Outdated:** `architect.agent.yaml`, `runner.pipeline.md`, `sherlock.prompt.md` — template copies behind source
-- **Missing:** No agents installed (agents are only available via separate `npx opendoc agents install`)
+- **Missing:** No agents installed (agents are only available via separate `npx conectese agents install`)
 - **Missing:** No bundled skills installed (only MCP skills are offered during init)
 
 ## Root Cause
 
-1. The formats system was added to `_opendoc/core/` but the templates directory was never synced
+1. The formats system was added to `_conectese/core/` but the templates directory was never synced
 2. The deprecated `platforms/` was deleted from source but not from templates
 3. `src/init.js` only copies from `templates/` — it never calls `installAgent()` or `installSkill()`
 
@@ -21,15 +21,15 @@ When users run `npx opendoc init`, they receive:
 
 ### Part 1: Template Sync (immediate fix)
 
-Sync all stale/missing files between `_opendoc/core/` and `templates/_opendoc/core/`:
+Sync all stale/missing files between `_conectese/core/` and `templates/_conectese/core/`:
 
 | Source | Template | Action |
 |--------|----------|--------|
-| `_opendoc/core/formats/*.md` (14 files) | `templates/_opendoc/core/formats/` | **Create** directory + copy all |
-| `_opendoc/core/architect.agent.yaml` | `templates/_opendoc/core/architect.agent.yaml` | **Overwrite** |
-| `_opendoc/core/runner.pipeline.md` | `templates/_opendoc/core/runner.pipeline.md` | **Overwrite** |
-| `_opendoc/core/prompts/sherlock.prompt.md` | `templates/_opendoc/core/prompts/sherlock.prompt.md` | **Overwrite** |
-| — | `templates/_opendoc/core/platforms/` | **Delete** (deprecated) |
+| `_conectese/core/formats/*.md` (14 files) | `templates/_conectese/core/formats/` | **Create** directory + copy all |
+| `_conectese/core/architect.agent.yaml` | `templates/_conectese/core/architect.agent.yaml` | **Overwrite** |
+| `_conectese/core/runner.pipeline.md` | `templates/_conectese/core/runner.pipeline.md` | **Overwrite** |
+| `_conectese/core/prompts/sherlock.prompt.md` | `templates/_conectese/core/prompts/sherlock.prompt.md` | **Overwrite** |
+| — | `templates/_conectese/core/platforms/` | **Delete** (deprecated) |
 
 ### Part 2: Init installs agents + skills automatically
 
@@ -53,9 +53,9 @@ init() flow:
 
 **`installAllBundledSkills(targetDir)`:**
 - Reads `skills/` directory from npm package (BUNDLED_SKILLS_DIR)
-- Filters out `opendoc-skill-creator` (internal, already filtered elsewhere)
+- Filters out `conectese-skill-creator` (internal, already filtered elsewhere)
 - For each skill, calls existing `installSkill(id, targetDir)`
-- Copies `skills/{id}/SKILL.md` → `{targetDir}/_opendoc/skills/{id}/SKILL.md`
+- Copies `skills/{id}/SKILL.md` → `{targetDir}/_conectese/skills/{id}/SKILL.md`
 - These are non-MCP skills (no env vars, no configuration needed)
 - MCP skills continue to be offered via the existing interactive prompt
 
@@ -67,9 +67,9 @@ Modify `src/update.js`:
 - Respect `PROTECTED_PATHS` — never overwrite existing agents
 - Log new additions separately from updates
 
-### Part 4: Update opendoc-dev skill
+### Part 4: Update conectese-dev skill
 
-Add Check H to `.claude/skills/opendoc-dev/SKILL.md`:
+Add Check H to `.claude/skills/conectese-dev/SKILL.md`:
 - Verify that `src/init.js` calls `installAllAgents()` and `installAllBundledSkills()`
 - Verify the functions import from `src/agents.js` and `src/skills.js`
 
@@ -77,11 +77,11 @@ Add Check H to `.claude/skills/opendoc-dev/SKILL.md`:
 
 - `src/init.js` — Add agent/skill auto-installation
 - `src/update.js` — Add new agent/skill detection during update
-- `templates/_opendoc/core/` — Full sync with source
-- `.claude/skills/opendoc-dev/SKILL.md` — Add Check H
+- `templates/_conectese/core/` — Full sync with source
+- `.claude/skills/conectese-dev/SKILL.md` — Add Check H
 
 ## Out of Scope
 
-- Moving `_opendoc/skills/` to project root `/skills/` (separate design doc)
+- Moving `_conectese/skills/` to project root `/skills/` (separate design doc)
 - Agent selection UI during init (decided: install all silently)
 - MCP skill flow changes (unchanged)

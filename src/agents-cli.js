@@ -19,7 +19,7 @@ async function confirm(question) {
 export async function agentsCli(subcommand, args, targetDir) {
   // Require initialized project
   try {
-    await stat(join(targetDir, '_opendoc'));
+    await stat(join(targetDir, '_conectese'));
   } catch {
     await loadLocale('English');
     console.log(`\n  ${t('agentsNotInitialized')}\n`);
@@ -54,7 +54,7 @@ export async function agentsCli(subcommand, args, targetDir) {
 }
 
 async function runList(targetDir) {
-  console.log(`\n  Opendoc Agents\n`);
+  console.log(`\n  Conectese Agents\n`);
 
   const installed = await listInstalled(targetDir);
 
@@ -77,12 +77,12 @@ async function runList(targetDir) {
     console.log(`  ${t('agentsNoneInstalled')}`);
   }
 
-  console.log(`\n  Browse available agents at: https://github.com/renatoasse/opendoc/tree/main/agents\n`);
+  console.log(`\n  Browse available agents at: https://github.com/renatoasse/conectese/tree/main/agents\n`);
 }
 
 async function runInstall(id, targetDir) {
   if (!id) {
-    console.log('\n  Usage: opendoc agents install <id>\n');
+    console.log('\n  Usage: conectese agents install <id>\n');
     return false;
   }
 
@@ -106,7 +106,7 @@ async function runInstall(id, targetDir) {
 
 async function runRemove(id, targetDir) {
   if (!id) {
-    console.log('\n  Usage: opendoc agents remove <id>\n');
+    console.log('\n  Usage: conectese agents remove <id>\n');
     return false;
   }
 
@@ -141,7 +141,7 @@ async function runUpdate(targetDir) {
 
 async function runUpdateOne(id, targetDir) {
   if (!id) {
-    console.log('\n  Usage: opendoc update <name>\n');
+    console.log('\n  Usage: conectese update <name>\n');
     return;
   }
 

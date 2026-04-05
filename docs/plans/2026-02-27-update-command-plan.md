@@ -1,10 +1,10 @@
-# Update Command (`opendoc-terminal update`) Implementation Plan
+# Update Command (`conectese-terminal update`) Implementation Plan
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Add `npx opendoc-terminal update` that re-applies the latest system templates to an initialized project while preserving all user data.
+**Goal:** Add `npx conectese-terminal update` that re-applies the latest system templates to an initialized project while preserving all user data.
 
-**Architecture:** A new `src/update.js` module with an exported `update()` function mirrors the structure of `src/init.js`. It re-copies all template files to the project, skipping three protected directories (`_opendoc/_memory/`, `_opendoc/_investigations/`, `squads/`). Version is tracked in `_opendoc/.opendoc-version`. Two shared utilities (`getTemplateEntries`, `loadSavedLocale`) are exported from `init.js` and reused.
+**Architecture:** A new `src/update.js` module with an exported `update()` function mirrors the structure of `src/init.js`. It re-copies all template files to the project, skipping three protected directories (`_conectese/_memory/`, `_conectese/_investigations/`, `squads/`). Version is tracked in `_conectese/.conectese-version`. Two shared utilities (`getTemplateEntries`, `loadSavedLocale`) are exported from `init.js` and reused.
 
 **Tech Stack:** Node.js 20+ ESM, `node:fs/promises`, `node:path`, `node:test` (built-in test runner)
 
@@ -13,12 +13,12 @@
 ### Task 1: Add version file to templates
 
 **Files:**
-- Create: `templates/_opendoc/.opendoc-version`
+- Create: `templates/_conectese/.conectese-version`
 - Modify: `tests/init.test.js`
 
 **Step 1: Create the version file**
 
-Create `templates/_opendoc/.opendoc-version` with exactly this content (single line, no trailing newline):
+Create `templates/_conectese/.conectese-version` with exactly this content (single line, no trailing newline):
 
 ```
 0.1.0
@@ -29,13 +29,13 @@ Create `templates/_opendoc/.opendoc-version` with exactly this content (single l
 Add to `tests/init.test.js`:
 
 ```js
-test('init creates .opendoc-version file', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('init creates .conectese-version file', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
 
-    const version = await readFile(join(tempDir, '_opendoc', '.opendoc-version'), 'utf-8');
+    const version = await readFile(join(tempDir, '_conectese', '.conectese-version'), 'utf-8');
     assert.ok(version.trim().length > 0);
   } finally {
     await rm(tempDir, { recursive: true, force: true });
@@ -49,11 +49,11 @@ test('init creates .opendoc-version file', async () => {
 node --test tests/init.test.js
 ```
 
-Expected: FAIL — `ENOENT: no such file or directory ... .opendoc-version`
+Expected: FAIL — `ENOENT: no such file or directory ... .conectese-version`
 
 **Step 4: Run test to verify it passes**
 
-Since `copyTemplates()` in `init.js` recursively copies all template files, adding the file to `templates/_opendoc/` is all that's needed. No code changes required.
+Since `copyTemplates()` in `init.js` recursively copies all template files, adding the file to `templates/_conectese/` is all that's needed. No code changes required.
 
 ```bash
 node --test tests/init.test.js
@@ -64,8 +64,8 @@ Expected: all tests PASS
 **Step 5: Commit**
 
 ```bash
-git add templates/_opendoc/.opendoc-version tests/init.test.js
-git commit -m "feat: add .opendoc-version tracking file to templates"
+git add templates/_conectese/.conectese-version tests/init.test.js
+git commit -m "feat: add .conectese-version tracking file to templates"
 ```
 
 ---
@@ -177,98 +177,98 @@ Add the following to each locale file (add at the end of the JSON object, before
 
 **`src/locales/en.json`** — add:
 ```json
-  "updateNotInitialized": "No Opendoc installation found. Run 'init' first.",
-  "updateStarting": "Updating Opendoc {old} → {new}...",
-  "updateStartingUnknown": "Updating Opendoc (unknown version) → {new}...",
+  "updateNotInitialized": "No Conectese installation found. Run 'init' first.",
+  "updateStarting": "Updating Conectese {old} → {new}...",
+  "updateStartingUnknown": "Updating Conectese (unknown version) → {new}...",
   "updatedFile": "📄 Updated {path}",
-  "updateSuccess": "✅ Opendoc {version} installed successfully!",
+  "updateSuccess": "✅ Conectese {version} installed successfully!",
   "updatePreserved": "✓ Preserved: _memory/, _investigations/, squads/",
   "updateFileCount": "✓ Updated: {count} system files",
-  "updateLatestHint": "💡 Tip: Use 'npx opendoc-terminal@latest update' to always get the newest version."
+  "updateLatestHint": "💡 Tip: Use 'npx conectese-terminal@latest update' to always get the newest version."
 ```
 
 **`src/locales/pt-BR.json`** — add:
 ```json
-  "updateNotInitialized": "Nenhuma instalação do Opendoc encontrada. Execute 'init' primeiro.",
-  "updateStarting": "Atualizando Opendoc {old} → {new}...",
-  "updateStartingUnknown": "Atualizando Opendoc (versão desconhecida) → {new}...",
+  "updateNotInitialized": "Nenhuma instalação do Conectese encontrada. Execute 'init' primeiro.",
+  "updateStarting": "Atualizando Conectese {old} → {new}...",
+  "updateStartingUnknown": "Atualizando Conectese (versão desconhecida) → {new}...",
   "updatedFile": "📄 Atualizado {path}",
-  "updateSuccess": "✅ Opendoc {version} instalado com sucesso!",
+  "updateSuccess": "✅ Conectese {version} instalado com sucesso!",
   "updatePreserved": "✓ Preservado: _memory/, _investigations/, squads/",
   "updateFileCount": "✓ Atualizados: {count} arquivos do sistema",
-  "updateLatestHint": "💡 Dica: Use 'npx opendoc-terminal@latest update' para sempre obter a versão mais recente."
+  "updateLatestHint": "💡 Dica: Use 'npx conectese-terminal@latest update' para sempre obter a versão mais recente."
 ```
 
 **`src/locales/es.json`** — add:
 ```json
-  "updateNotInitialized": "No se encontró ninguna instalación de Opendoc. Ejecute 'init' primero.",
-  "updateStarting": "Actualizando Opendoc {old} → {new}...",
-  "updateStartingUnknown": "Actualizando Opendoc (versión desconocida) → {new}...",
+  "updateNotInitialized": "No se encontró ninguna instalación de Conectese. Ejecute 'init' primero.",
+  "updateStarting": "Actualizando Conectese {old} → {new}...",
+  "updateStartingUnknown": "Actualizando Conectese (versión desconocida) → {new}...",
   "updatedFile": "📄 Actualizado {path}",
-  "updateSuccess": "✅ ¡Opendoc {version} instalado correctamente!",
+  "updateSuccess": "✅ ¡Conectese {version} instalado correctamente!",
   "updatePreserved": "✓ Preservado: _memory/, _investigations/, squads/",
   "updateFileCount": "✓ Actualizados: {count} archivos del sistema",
-  "updateLatestHint": "💡 Consejo: Use 'npx opendoc-terminal@latest update' para obtener siempre la versión más reciente."
+  "updateLatestHint": "💡 Consejo: Use 'npx conectese-terminal@latest update' para obtener siempre la versión más reciente."
 ```
 
 **`src/locales/fr.json`** — add:
 ```json
-  "updateNotInitialized": "Aucune installation Opendoc trouvée. Exécutez 'init' d'abord.",
-  "updateStarting": "Mise à jour de Opendoc {old} → {new}...",
-  "updateStartingUnknown": "Mise à jour de Opendoc (version inconnue) → {new}...",
+  "updateNotInitialized": "Aucune installation Conectese trouvée. Exécutez 'init' d'abord.",
+  "updateStarting": "Mise à jour de Conectese {old} → {new}...",
+  "updateStartingUnknown": "Mise à jour de Conectese (version inconnue) → {new}...",
   "updatedFile": "📄 Mis à jour {path}",
-  "updateSuccess": "✅ Opendoc {version} installé avec succès !",
+  "updateSuccess": "✅ Conectese {version} installé avec succès !",
   "updatePreserved": "✓ Préservé : _memory/, _investigations/, squads/",
   "updateFileCount": "✓ Mis à jour : {count} fichiers système",
-  "updateLatestHint": "💡 Conseil : Utilisez 'npx opendoc-terminal@latest update' pour toujours obtenir la dernière version."
+  "updateLatestHint": "💡 Conseil : Utilisez 'npx conectese-terminal@latest update' pour toujours obtenir la dernière version."
 ```
 
 **`src/locales/de.json`** — add:
 ```json
-  "updateNotInitialized": "Keine Opendoc-Installation gefunden. Führen Sie zuerst 'init' aus.",
-  "updateStarting": "Opendoc wird aktualisiert {old} → {new}...",
-  "updateStartingUnknown": "Opendoc wird aktualisiert (unbekannte Version) → {new}...",
+  "updateNotInitialized": "Keine Conectese-Installation gefunden. Führen Sie zuerst 'init' aus.",
+  "updateStarting": "Conectese wird aktualisiert {old} → {new}...",
+  "updateStartingUnknown": "Conectese wird aktualisiert (unbekannte Version) → {new}...",
   "updatedFile": "📄 Aktualisiert {path}",
-  "updateSuccess": "✅ Opendoc {version} erfolgreich installiert!",
+  "updateSuccess": "✅ Conectese {version} erfolgreich installiert!",
   "updatePreserved": "✓ Erhalten: _memory/, _investigations/, squads/",
   "updateFileCount": "✓ Aktualisiert: {count} Systemdateien",
-  "updateLatestHint": "💡 Tipp: Verwenden Sie 'npx opendoc-terminal@latest update', um immer die neueste Version zu erhalten."
+  "updateLatestHint": "💡 Tipp: Verwenden Sie 'npx conectese-terminal@latest update', um immer die neueste Version zu erhalten."
 ```
 
 **`src/locales/it.json`** — add:
 ```json
-  "updateNotInitialized": "Nessuna installazione Opendoc trovata. Eseguire prima 'init'.",
-  "updateStarting": "Aggiornamento Opendoc {old} → {new}...",
-  "updateStartingUnknown": "Aggiornamento Opendoc (versione sconosciuta) → {new}...",
+  "updateNotInitialized": "Nessuna installazione Conectese trovata. Eseguire prima 'init'.",
+  "updateStarting": "Aggiornamento Conectese {old} → {new}...",
+  "updateStartingUnknown": "Aggiornamento Conectese (versione sconosciuta) → {new}...",
   "updatedFile": "📄 Aggiornato {path}",
-  "updateSuccess": "✅ Opendoc {version} installato con successo!",
+  "updateSuccess": "✅ Conectese {version} installato con successo!",
   "updatePreserved": "✓ Preservato: _memory/, _investigations/, squads/",
   "updateFileCount": "✓ Aggiornati: {count} file di sistema",
-  "updateLatestHint": "💡 Suggerimento: Usa 'npx opendoc-terminal@latest update' per ottenere sempre la versione più recente."
+  "updateLatestHint": "💡 Suggerimento: Usa 'npx conectese-terminal@latest update' per ottenere sempre la versione più recente."
 ```
 
 **`src/locales/ja.json`** — add:
 ```json
-  "updateNotInitialized": "Opendocのインストールが見つかりません。まず'init'を実行してください。",
-  "updateStarting": "Opendoc {old} → {new} に更新中...",
-  "updateStartingUnknown": "Opendoc（バージョン不明）→ {new} に更新中...",
+  "updateNotInitialized": "Conecteseのインストールが見つかりません。まず'init'を実行してください。",
+  "updateStarting": "Conectese {old} → {new} に更新中...",
+  "updateStartingUnknown": "Conectese（バージョン不明）→ {new} に更新中...",
   "updatedFile": "📄 更新しました {path}",
-  "updateSuccess": "✅ Opendoc {version} のインストールが完了しました！",
+  "updateSuccess": "✅ Conectese {version} のインストールが完了しました！",
   "updatePreserved": "✓ 保持: _memory/, _investigations/, squads/",
   "updateFileCount": "✓ 更新済み: {count} 個のシステムファイル",
-  "updateLatestHint": "💡 ヒント: 常に最新バージョンを入手するには 'npx opendoc-terminal@latest update' を使用してください。"
+  "updateLatestHint": "💡 ヒント: 常に最新バージョンを入手するには 'npx conectese-terminal@latest update' を使用してください。"
 ```
 
 **`src/locales/zh.json`** — add:
 ```json
-  "updateNotInitialized": "未找到 Opendoc 安装。请先运行 'init'。",
-  "updateStarting": "正在更新 Opendoc {old} → {new}...",
-  "updateStartingUnknown": "正在更新 Opendoc（未知版本）→ {new}...",
+  "updateNotInitialized": "未找到 Conectese 安装。请先运行 'init'。",
+  "updateStarting": "正在更新 Conectese {old} → {new}...",
+  "updateStartingUnknown": "正在更新 Conectese（未知版本）→ {new}...",
   "updatedFile": "📄 已更新 {path}",
-  "updateSuccess": "✅ Opendoc {version} 安装成功！",
+  "updateSuccess": "✅ Conectese {version} 安装成功！",
   "updatePreserved": "✓ 已保留：_memory/、_investigations/、squads/",
   "updateFileCount": "✓ 已更新：{count} 个系统文件",
-  "updateLatestHint": "💡 提示：使用 'npx opendoc-terminal@latest update' 以始终获取最新版本。"
+  "updateLatestHint": "💡 提示：使用 'npx conectese-terminal@latest update' 以始终获取最新版本。"
 ```
 
 **Step 4: Run tests to verify they pass**
@@ -308,7 +308,7 @@ import { init } from '../src/init.js';
 import { update } from '../src/update.js';
 
 test('update returns failure when not initialized', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     const result = await update(tempDir);
@@ -319,7 +319,7 @@ test('update returns failure when not initialized', async () => {
 });
 
 test('update overwrites system files', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
@@ -328,7 +328,7 @@ test('update overwrites system files', async () => {
     await update(tempDir);
 
     const content = await readFile(join(tempDir, 'CLAUDE.md'), 'utf-8');
-    assert.ok(content.includes('Opendoc'));
+    assert.ok(content.includes('Conectese'));
     assert.ok(!content.includes('garbage content'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
@@ -336,12 +336,12 @@ test('update overwrites system files', async () => {
 });
 
 test('update preserves _memory contents', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
     await writeFile(
-      join(tempDir, '_opendoc', '_memory', 'company.md'),
+      join(tempDir, '_conectese', '_memory', 'company.md'),
       'My Company Info',
       'utf-8'
     );
@@ -349,7 +349,7 @@ test('update preserves _memory contents', async () => {
     await update(tempDir);
 
     const content = await readFile(
-      join(tempDir, '_opendoc', '_memory', 'company.md'),
+      join(tempDir, '_conectese', '_memory', 'company.md'),
       'utf-8'
     );
     assert.equal(content, 'My Company Info');
@@ -359,12 +359,12 @@ test('update preserves _memory contents', async () => {
 });
 
 test('update preserves _investigations contents', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
     await writeFile(
-      join(tempDir, '_opendoc', '_investigations', 'profile-analysis.md'),
+      join(tempDir, '_conectese', '_investigations', 'profile-analysis.md'),
       'investigation data',
       'utf-8'
     );
@@ -372,7 +372,7 @@ test('update preserves _investigations contents', async () => {
     await update(tempDir);
 
     const content = await readFile(
-      join(tempDir, '_opendoc', '_investigations', 'profile-analysis.md'),
+      join(tempDir, '_conectese', '_investigations', 'profile-analysis.md'),
       'utf-8'
     );
     assert.equal(content, 'investigation data');
@@ -382,7 +382,7 @@ test('update preserves _investigations contents', async () => {
 });
 
 test('update preserves squads contents', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
@@ -405,8 +405,8 @@ test('update preserves squads contents', async () => {
   }
 });
 
-test('update writes new version to .opendoc-version', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('update writes new version to .conectese-version', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
@@ -414,7 +414,7 @@ test('update writes new version to .opendoc-version', async () => {
     await update(tempDir);
 
     const version = await readFile(
-      join(tempDir, '_opendoc', '.opendoc-version'),
+      join(tempDir, '_conectese', '.conectese-version'),
       'utf-8'
     );
     assert.ok(version.trim().length > 0);
@@ -424,12 +424,12 @@ test('update writes new version to .opendoc-version', async () => {
   }
 });
 
-test('update succeeds without existing .opendoc-version (legacy install)', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+test('update succeeds without existing .conectese-version (legacy install)', async () => {
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
-    await rm(join(tempDir, '_opendoc', '.opendoc-version'), { force: true });
+    await rm(join(tempDir, '_conectese', '.conectese-version'), { force: true });
 
     const result = await update(tempDir);
     assert.equal(result.success, true);
@@ -439,7 +439,7 @@ test('update succeeds without existing .opendoc-version (legacy install)', async
 });
 
 test('update returns success when initialized', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
@@ -472,8 +472,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const TEMPLATES_DIR = join(__dirname, '..', 'templates');
 
 const PROTECTED_PATHS = [
-  '_opendoc/_memory',
-  '_opendoc/_investigations',
+  '_conectese/_memory',
+  '_conectese/_investigations',
   'squads',
 ];
 
@@ -485,11 +485,11 @@ function isProtected(relativePath) {
 }
 
 export async function update(targetDir) {
-  console.log('\n  🔄 Opendoc — Update\n');
+  console.log('\n  🔄 Conectese — Update\n');
 
   // 1. Check initialized
   try {
-    await stat(join(targetDir, '_opendoc'));
+    await stat(join(targetDir, '_conectese'));
   } catch {
     await loadLocale('English');
     console.log(`  ${t('updateNotInitialized')}`);
@@ -503,14 +503,14 @@ export async function update(targetDir) {
   let currentVersion = null;
   try {
     currentVersion = (
-      await readFile(join(targetDir, '_opendoc', '.opendoc-version'), 'utf-8')
+      await readFile(join(targetDir, '_conectese', '.conectese-version'), 'utf-8')
     ).trim();
   } catch {
     // Legacy install — no version file
   }
 
   const newVersion = (
-    await readFile(join(TEMPLATES_DIR, '_opendoc', '.opendoc-version'), 'utf-8')
+    await readFile(join(TEMPLATES_DIR, '_conectese', '.conectese-version'), 'utf-8')
   ).trim();
 
   // 4. Announce
@@ -564,14 +564,14 @@ git commit -m "feat: implement update() function with protected-path copy logic"
 
 ---
 
-### Task 5: Wire `update` command in `bin/opendoc.js`
+### Task 5: Wire `update` command in `bin/conectese.js`
 
 **Files:**
-- Modify: `bin/opendoc.js`
+- Modify: `bin/conectese.js`
 
 **Step 1: Update the CLI entry point**
 
-Replace the content of `bin/opendoc.js` with:
+Replace the content of `bin/conectese.js` with:
 
 ```js
 #!/usr/bin/env node
@@ -594,13 +594,13 @@ if (command === 'init') {
   if (!result.success) process.exit(1);
 } else {
   console.log(`
-  opendoc-terminal — Multi-agent orchestration for Claude Code
+  conectese-terminal — Multi-agent orchestration for Claude Code
 
   Usage:
-    npx opendoc-terminal init      Initialize Opendoc in current directory
-    npx opendoc-terminal update    Update Opendoc to the latest version
+    npx conectese-terminal init      Initialize Conectese in current directory
+    npx conectese-terminal update    Update Conectese to the latest version
 
-  Learn more: https://github.com/your-org/opendoc-terminal
+  Learn more: https://github.com/your-org/conectese-terminal
   `);
   process.exit(command ? 1 : 0);
 }
@@ -616,32 +616,32 @@ Expected: all tests PASS
 
 **Step 3: Smoke test the command manually**
 
-From the project root (which has an initialized `_opendoc/`):
+From the project root (which has an initialized `_conectese/`):
 
 ```bash
-node bin/opendoc.js update
+node bin/conectese.js update
 ```
 
 Expected output:
 ```
-  🔄 Opendoc — Update
+  🔄 Conectese — Update
 
-  Updating Opendoc v0.1.0 → v0.1.0...
-  📄 Updated _opendoc/.opendoc-version
-  📄 Updated _opendoc/core/...
+  Updating Conectese v0.1.0 → v0.1.0...
+  📄 Updated _conectese/.conectese-version
+  📄 Updated _conectese/core/...
   ...
 
   ✓ Updated: N system files
   ✓ Preserved: _memory/, _investigations/, squads/
-  ✅ Opendoc v0.1.0 installed successfully!
+  ✅ Conectese v0.1.0 installed successfully!
 
-  💡 Tip: Use 'npx opendoc-terminal@latest update' to always get the newest version.
+  💡 Tip: Use 'npx conectese-terminal@latest update' to always get the newest version.
 ```
 
 **Step 4: Test the "not initialized" error path**
 
 ```bash
-mkdir /tmp/opendoc-empty && cd /tmp/opendoc-empty && node /path/to/opendoc/bin/opendoc.js update
+mkdir /tmp/conectese-empty && cd /tmp/conectese-empty && node /path/to/conectese/bin/conectese.js update
 ```
 
 Expected: prints error message and exits with code 1.
@@ -649,6 +649,6 @@ Expected: prints error message and exits with code 1.
 **Step 5: Commit**
 
 ```bash
-git add bin/opendoc.js
+git add bin/conectese.js
 git commit -m "feat: wire update command in CLI entry point"
 ```

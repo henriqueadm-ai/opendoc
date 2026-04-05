@@ -1,12 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const DIR = path.join(__dirname, 'squads', 'opendoc-case');
+const DIR = path.join(__dirname, 'squads', 'conectese-case');
 if (!fs.existsSync(DIR)) {
   fs.mkdirSync(DIR, { recursive: true });
 }
 
-const pipelineYaml = `name: Opendoc Case Processing Pipeline
+const pipelineYaml = `name: Conectese Case Processing Pipeline
 description: Pipeline rigoroso de 6 estagios para extracao, anonimizacao, analise, distribuicao, sintese e restauracao de pecas juridicas.
 version: 1.0.0
 
@@ -61,7 +61,7 @@ stages:
 fs.writeFileSync(path.join(DIR, 'pipeline.yaml'), pipelineYaml, 'utf8');
 
 const stateJson = {
-  "squad": "opendoc-case",
+  "squad": "conectese-case",
   "status": "idle",
   "step": { "current": 0, "total": 6, "label": "Pipeline Pronto" },
   "agents": [

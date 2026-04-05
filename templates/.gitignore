@@ -2,7 +2,7 @@ node_modules/
 .env
 *.log
 squads/*/output/
-_opendoc/_memory/company.md
-_opendoc/_memory/preferences.md
-_opendoc/_browser_profile/
-_opendoc/logs/
+_conectese/_memory/company.md
+_conectese/_memory/preferences.md
+_conectese/_browser_profile/
+_conectese/logs/

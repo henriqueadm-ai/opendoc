@@ -2,7 +2,7 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** During `opendoc init`, ask which IDEs the user wants to install (multi-select) and copy the appropriate config files for each selected IDE (Claude Code, Open Code, Codex, Antigravity).
+**Goal:** During `conectese init`, ask which IDEs the user wants to install (multi-select) and copy the appropriate config files for each selected IDE (Claude Code, Open Code, Codex, Antigravity).
 
 **Architecture:** IDE-specific template files move from `templates/` root into `templates/ide-templates/{ide}/`. `init.js` gains `copyCommonTemplates()` + `copyIdeTemplates(ides)`. `prompt.js` gains `multiChoose()` wrapping `@inquirer/checkbox`. The `_skipPrompts` path defaults to `['claude-code']` for backward-compatibility.
 
@@ -102,13 +102,13 @@ Add at the bottom of `tests/init.test.js`:
 
 ```js
 test('init with _ides installs only selected IDE files', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['claude-code'] });
 
     // claude-code files exist
-    await stat(join(tempDir, '.claude', 'skills', 'opendoc', 'SKILL.md'));
+    await stat(join(tempDir, '.claude', 'skills', 'conectese', 'SKILL.md'));
     await stat(join(tempDir, 'CLAUDE.md'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
@@ -145,7 +145,7 @@ In `src/init.js`, make these changes:
 
 4. Update the preferences file write (line 73-80) — change `**IDE:**` to `**IDEs:**`:
    ```js
-   const prefsContent = `# Opendoc Preferences
+   const prefsContent = `# Conectese Preferences
 
 - **User Name:** ${userName}
 - **Output Language:** ${language}
@@ -252,8 +252,8 @@ git commit -m "feat: add _ides option and split copyTemplates into common + ide-
 **Step 1: Create the new directory and move files**
 
 ```bash
-mkdir -p "templates/ide-templates/claude-code/.claude/skills/opendoc"
-cp "templates/.claude/skills/opendoc/SKILL.md" "templates/ide-templates/claude-code/.claude/skills/opendoc/SKILL.md"
+mkdir -p "templates/ide-templates/claude-code/.claude/skills/conectese"
+cp "templates/.claude/skills/conectese/SKILL.md" "templates/ide-templates/claude-code/.claude/skills/conectese/SKILL.md"
 cp "templates/CLAUDE.md" "templates/ide-templates/claude-code/CLAUDE.md"
 rm -rf "templates/.claude"
 rm "templates/CLAUDE.md"
@@ -290,7 +290,7 @@ Note: Use a string `includes('/ide-templates/')` check (normalizing backslashes)
 npm test
 ```
 
-Expected: All tests PASS. The test `init creates _opendoc directory structure` checks for `.claude/skills/opendoc/SKILL.md` — this now comes from `copyIdeTemplates(['claude-code'])` which is the default.
+Expected: All tests PASS. The test `init creates _conectese directory structure` checks for `.claude/skills/conectese/SKILL.md` — this now comes from `copyIdeTemplates(['claude-code'])` which is the default.
 
 **Step 4: Commit**
 
@@ -313,14 +313,14 @@ Add at the bottom of `tests/init.test.js`:
 
 ```js
 test('init with _ides opencode creates AGENTS.md', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['opencode'] });
 
     const content = await readFile(join(tempDir, 'AGENTS.md'), 'utf-8');
-    assert.ok(content.includes('Opendoc'));
-    assert.ok(content.includes('/opendoc'));
+    assert.ok(content.includes('Conectese'));
+    assert.ok(content.includes('/conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
@@ -340,16 +340,16 @@ Expected: FAIL with "ENOENT: no such file or directory, open '.../AGENTS.md'"
 Create `templates/ide-templates/opencode/AGENTS.md` with this content (SKILL.md body, no YAML frontmatter):
 
 ```markdown
-# Opendoc Instructions
+# Conectese Instructions
 
-You are now operating as the Opendoc system. Your primary role is to help users create, manage, and run AI agent squads.
+You are now operating as the Conectese system. Your primary role is to help users create, manage, and run AI agent squads.
 
 ## Initialization
 
 On activation, perform these steps IN ORDER:
 
-1. Read the company context file: `{project-root}/_opendoc/_memory/company.md`
-2. Read the preferences file: `{project-root}/_opendoc/_memory/preferences.md`
+1. Read the company context file: `{project-root}/_conectese/_memory/company.md`
+2. Read the preferences file: `{project-root}/_conectese/_memory/preferences.md`
 3. Check if company.md is empty or contains only the template — if so, trigger ONBOARDING flow
 4. Otherwise, display the MAIN MENU
 
@@ -357,7 +357,7 @@ On activation, perform these steps IN ORDER:
 
 If `company.md` is empty or contains `<!-- NOT CONFIGURED -->`:
 
-1. Welcome the user warmly to Opendoc
+1. Welcome the user warmly to Conectese
 2. Ask their name (save to preferences.md)
 3. Ask their preferred language for outputs (save to preferences.md)
 4. Ask for their company name/description and website URL
@@ -368,12 +368,12 @@ If `company.md` is empty or contains `<!-- NOT CONFIGURED -->`:
    - Tone of voice (inferred from website copy)
    - Social media profiles found
 6. Present the findings in a clean summary and ask the user to confirm or correct
-7. Save the confirmed profile to `_opendoc/_memory/company.md`
+7. Save the confirmed profile to `_conectese/_memory/company.md`
 8. Show the main menu
 
 ## Main Menu
 
-When the user types `/opendoc` or asks for the menu, present an interactive selector using AskUserQuestion with these options (max 4 per question):
+When the user types `/conectese` or asks for the menu, present an interactive selector using AskUserQuestion with these options (max 4 per question):
 
 **Primary menu (first question):**
 - **Create a new squad** — Describe what you need and I'll build a squad for you
@@ -393,19 +393,19 @@ Parse user input and route to the appropriate action:
 
 | Input Pattern | Action |
 |---------------|--------|
-| `/opendoc` or `/opendoc menu` | Show main menu |
-| `/opendoc help` | Show help text |
-| `/opendoc create <description>` | Load Architect → Create Squad flow |
-| `/opendoc list` | List all squads in `squads/` directory |
-| `/opendoc run <name>` | Load Pipeline Runner → Execute squad |
-| `/opendoc dashboard <name>` | Load dashboard.prompt.md → generate squad dashboard |
-| `/opendoc edit <name> <changes>` | Load Architect → Edit Squad flow |
-| `/opendoc tools` | Load Tools Engine → Show tools menu |
-| `/opendoc delete <name>` | Confirm and delete squad directory |
-| `/opendoc edit-company` | Re-run company profile setup |
-| `/opendoc show-company` | Display company.md contents |
-| `/opendoc settings` | Show/edit preferences.md |
-| `/opendoc reset` | Confirm and reset all configuration |
+| `/conectese` or `/conectese menu` | Show main menu |
+| `/conectese help` | Show help text |
+| `/conectese create <description>` | Load Architect → Create Squad flow |
+| `/conectese list` | List all squads in `squads/` directory |
+| `/conectese run <name>` | Load Pipeline Runner → Execute squad |
+| `/conectese dashboard <name>` | Load dashboard.prompt.md → generate squad dashboard |
+| `/conectese edit <name> <changes>` | Load Architect → Edit Squad flow |
+| `/conectese tools` | Load Tools Engine → Show tools menu |
+| `/conectese delete <name>` | Confirm and delete squad directory |
+| `/conectese edit-company` | Re-run company profile setup |
+| `/conectese show-company` | Display company.md contents |
+| `/conectese settings` | Show/edit preferences.md |
+| `/conectese reset` | Confirm and reset all configuration |
 | Natural language about squads | Infer intent and route accordingly |
 
 ## Loading Agents
@@ -415,7 +415,7 @@ When a specific agent needs to be activated:
 1. Read the agent's `.agent.md` file completely
 2. Adopt the agent's persona (role, identity, communication_style, principles)
 3. Follow the agent's menu/workflow instructions
-4. When the agent's task is complete, return to Opendoc main context
+4. When the agent's task is complete, return to Conectese main context
 
 ## Loading the Pipeline Runner
 
@@ -424,9 +424,9 @@ When running a squad:
 1. Read `squads/{name}/squad.yaml` to understand the pipeline
 2. Read `squads/{name}/squad-party.csv` to load all agent personas
 3. For each agent in the party CSV, also read their full `.agent.md` file from agents/ directory
-4. Load company context from `_opendoc/_memory/company.md`
+4. Load company context from `_conectese/_memory/company.md`
 5. Load squad memory from `squads/{name}/_memory/memories.md`
-6. Read the pipeline runner instructions from `_opendoc/core/runner.pipeline.md`
+6. Read the pipeline runner instructions from `_conectese/core/runner.pipeline.md`
 7. Execute the pipeline step by step following runner instructions
 
 ## Language Handling
@@ -476,27 +476,27 @@ Add to `tests/init.test.js`:
 
 ```js
 test('init with _ides codex creates AGENTS.md', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['codex'] });
 
     const content = await readFile(join(tempDir, 'AGENTS.md'), 'utf-8');
-    assert.ok(content.includes('Opendoc'));
+    assert.ok(content.includes('Conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });
 
 test('init with opencode and codex both selected writes AGENTS.md only once', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['opencode', 'codex'] });
 
     // AGENTS.md exists (written once, not duplicated)
     const content = await readFile(join(tempDir, 'AGENTS.md'), 'utf-8');
-    assert.ok(content.includes('Opendoc'));
+    assert.ok(content.includes('Conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
@@ -548,7 +548,7 @@ Add to `tests/init.test.js`:
 
 ```js
 test('init with _ides antigravity creates .antigravity/rules.md', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true, _ides: ['antigravity'] });
@@ -557,8 +557,8 @@ test('init with _ides antigravity creates .antigravity/rules.md', async () => {
       join(tempDir, '.antigravity', 'rules.md'),
       'utf-8'
     );
-    assert.ok(content.includes('Opendoc'));
-    assert.ok(content.includes('/opendoc'));
+    assert.ok(content.includes('Conectese'));
+    assert.ok(content.includes('/conectese'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
@@ -731,7 +731,7 @@ Expected: All tests PASS (interactive path is not tested; `_skipPrompts` skips i
 **Step 5: Manual smoke test** (optional, for confidence)
 
 ```bash
-node bin/opendoc.js init /tmp/opendoc-smoke-test
+node bin/conectese.js init /tmp/conectese-smoke-test
 ```
 
 Expected: See the checkbox selector with Claude Code pre-selected, select multiple, confirm files are created.
@@ -748,18 +748,18 @@ git commit -m "feat: wire multi-select IDE checkbox into interactive init flow"
 ### Task 10: Update the `templates` SKILL.md to match the live SKILL.md
 
 **Files:**
-- Verify: `templates/ide-templates/claude-code/.claude/skills/opendoc/SKILL.md`
+- Verify: `templates/ide-templates/claude-code/.claude/skills/conectese/SKILL.md`
 
 **Step 1: Check if the template SKILL.md matches the live SKILL.md**
 
 ```bash
-diff templates/ide-templates/claude-code/.claude/skills/opendoc/SKILL.md .claude/skills/opendoc/SKILL.md
+diff templates/ide-templates/claude-code/.claude/skills/conectese/SKILL.md .claude/skills/conectese/SKILL.md
 ```
 
-Expected: If there are differences, the live `.claude/skills/opendoc/SKILL.md` is the source of truth. Copy it over:
+Expected: If there are differences, the live `.claude/skills/conectese/SKILL.md` is the source of truth. Copy it over:
 
 ```bash
-cp .claude/skills/opendoc/SKILL.md templates/ide-templates/claude-code/.claude/skills/opendoc/SKILL.md
+cp .claude/skills/conectese/SKILL.md templates/ide-templates/claude-code/.claude/skills/conectese/SKILL.md
 ```
 
 Also copy to AGENTS.md templates if needed (they're manually maintained copies).

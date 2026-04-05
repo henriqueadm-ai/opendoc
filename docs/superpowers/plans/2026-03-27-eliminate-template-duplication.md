@@ -23,8 +23,8 @@ At `src/init.js:11`, after `const TEMPLATES_DIR = join(__dirname, '..', 'templat
 const PACKAGE_ROOT = join(__dirname, '..');
 
 const CANONICAL_SOURCES = [
-  { src: join(PACKAGE_ROOT, '_opendoc', 'core'), dest: join('_opendoc', 'core') },
-  { src: join(PACKAGE_ROOT, '_opendoc', 'config'), dest: join('_opendoc', 'config') },
+  { src: join(PACKAGE_ROOT, '_conectese', 'core'), dest: join('_conectese', 'core') },
+  { src: join(PACKAGE_ROOT, '_conectese', 'config'), dest: join('_conectese', 'config') },
   { src: join(PACKAGE_ROOT, 'dashboard'), dest: 'dashboard' },
 ];
 
@@ -168,22 +168,22 @@ git commit -m "feat(update): use copyCanonicalSources for core, config, and dash
 ### Task 3: Delete duplicated template directories
 
 **Files:**
-- Delete: `templates/_opendoc/core/` (entire directory)
-- Delete: `templates/_opendoc/config/` (entire directory)
+- Delete: `templates/_conectese/core/` (entire directory)
+- Delete: `templates/_conectese/config/` (entire directory)
 - Delete: `templates/dashboard/` (entire directory)
 
 - [ ] **Step 1: Delete the three directories**
 
 ```bash
-rm -rf templates/_opendoc/core/
-rm -rf templates/_opendoc/config/
+rm -rf templates/_conectese/core/
+rm -rf templates/_conectese/config/
 rm -rf templates/dashboard/
 ```
 
 - [ ] **Step 2: Run ALL tests to confirm everything works from canonical sources**
 
 Run: `node --test tests/init.test.js tests/update.test.js`
-Expected: All tests PASS — `init` copies core/config from `_opendoc/` and dashboard from `dashboard/`; `update` does the same with backup/overwrite semantics.
+Expected: All tests PASS — `init` copies core/config from `_conectese/` and dashboard from `dashboard/`; `update` does the same with backup/overwrite semantics.
 
 - [ ] **Step 3: Verify key files end up in the right place**
 
@@ -198,8 +198,8 @@ import { tmpdir } from 'node:os';
 
 const tmp = await mkdtemp(join(tmpdir(), 'osq-verify-'));
 await init(tmp, { _skipPrompts: true });
-await stat(join(tmp, '_opendoc', 'core', 'architect.agent.yaml'));
-await stat(join(tmp, '_opendoc', 'config', 'playwright.config.json'));
+await stat(join(tmp, '_conectese', 'core', 'architect.agent.yaml'));
+await stat(join(tmp, '_conectese', 'config', 'playwright.config.json'));
 await stat(join(tmp, 'dashboard', 'package.json'));
 await stat(join(tmp, 'dashboard', 'src', 'App.tsx'));
 console.log('All canonical files copied correctly');
@@ -212,10 +212,10 @@ Expected: `All canonical files copied correctly`
 - [ ] **Step 4: Commit the deletions**
 
 ```bash
-git add -A templates/_opendoc/core/ templates/_opendoc/config/ templates/dashboard/
+git add -A templates/_conectese/core/ templates/_conectese/config/ templates/dashboard/
 git commit -m "chore: remove duplicated core, config, and dashboard from templates
 
-These are now copied from canonical sources (_opendoc/core, _opendoc/config, dashboard/) by init.js and update.js."
+These are now copied from canonical sources (_conectese/core, _conectese/config, dashboard/) by init.js and update.js."
 ```
 
 ---
@@ -231,7 +231,7 @@ Add to `tests/init.test.js`:
 
 ```js
 test('init does not copy dashboard node_modules or dist to user project', async () => {
-  const tempDir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });

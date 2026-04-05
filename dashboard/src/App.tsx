@@ -30,7 +30,7 @@ export function App() {
           letterSpacing: 0.5,
         }}
       >
-        opendoc Dashboard
+        conectese Dashboard
       </header>
 
       {/* Main content */}

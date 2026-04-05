@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Image Generator — Opendoc Skill
+Image Generator — Conectese Skill
 Generates images via Openrouter API using AI image models.
 
 Usage:

@@ -36,7 +36,7 @@ Visual template selection and refinement for squad creation and editing.
 ### Step 0: Read Design Guidelines (MANDATORY)
 
 Before generating any template, read and internalize the design best practices:
-- `_opendoc/core/best-practices/image-design.md` — **REQUIRED reading**. Contains platform-specific minimum font sizes, typography rules, spacing guidelines, color palette constraints, contrast requirements, and layout methodology. Every template you generate MUST comply with these rules.
+- `_conectese/core/best-practices/image-design.md` — **REQUIRED reading**. Contains platform-specific minimum font sizes, typography rules, spacing guidelines, color palette constraints, contrast requirements, and layout methodology. Every template you generate MUST comply with these rules.
 
 Key rules to always follow:
 - **Font sizes**: Hero 58px, Heading 43px, Body 34px, Caption 24px minimum for Instagram carousel (1080x1440). Absolute minimum 20px for any readable text on any platform.
@@ -78,8 +78,8 @@ Read these files to understand the squad:
 - `squads/{code}/_build/discovery.yaml` — platform, domain, tone, language
 - `squads/{code}/_build/design.yaml` — agents, purpose, skills
 - `squads/{code}/_investigations/consolidated-analysis.md` (if exists) — visual patterns from reference profiles
-- `_opendoc/_memory/company.md` — company name, brand, industry, target audience
-- `_opendoc/_memory/preferences.md` — user preferences (language, style, tone)
+- `_conectese/_memory/company.md` — company name, brand, industry, target audience
+- `_conectese/_memory/preferences.md` — user preferences (language, style, tone)
 
 Use the company context and user preferences to adapt template content: example text should reflect the company's domain and audience, colors should align with brand if available, and language should match the user's Output Language preference.
 
@@ -130,7 +130,7 @@ Present the 3 template options to the user using **clickable markdown links with
 >
 > Click the links above to open each image. Tell me which one you prefer. I can also mix elements from different templates or adjust colors, fonts, and layout."
 
-**Important:** Always use the full absolute path (e.g., `d:\Coding Projects\opendoc\squads\my-squad\_build\template-a.png`) inside the markdown link — relative paths are not clickable in the IDE.
+**Important:** Always use the full absolute path (e.g., `d:\Coding Projects\conectese\squads\my-squad\_build\template-a.png`) inside the markdown link — relative paths are not clickable in the IDE.
 
 ## Iteration Loop
 

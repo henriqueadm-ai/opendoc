@@ -1,11 +1,11 @@
-# Design: Image Generation Tools for Opendoc
+# Design: Image Generation Tools for Conectese
 
 **Date**: 2026-02-26
 **Status**: Approved
 
 ## Context
 
-Opendoc squads currently produce text-only output. The instagram-content squad generates carousel copy in markdown but cannot produce actual images. This design adds two new tools to the Opendoc registry that enable squads to generate production-ready social media images.
+Conectese squads currently produce text-only output. The instagram-content squad generates carousel copy in markdown but cannot produce actual images. This design adds two new tools to the Conectese registry that enable squads to generate production-ready social media images.
 
 **Inspiration**: [Instagram Carousel Generator with Claude Code](https://www.youtube.com/watch?v=59TQNbMi3J4) — a skill that uses Python/Pillow to render carousel slides from config.json. Our approach adapts this concept using HTML/CSS + Playwright (no Python dependency).
 

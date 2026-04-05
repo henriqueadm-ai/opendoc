@@ -1,4 +1,4 @@
-# Opendoc
+# Conectese
 
 Crie squads de agentes de IA que trabalham juntos — direto do seu IDE.
 
@@ -7,7 +7,7 @@ Crie squads de agentes de IA que trabalham juntos — direto do seu IDE.
 Abra esta pasta no seu IDE e digite:
 
 ```
-/opendoc
+/conectese
 ```
 
 Isso abre o menu principal. De lá você pode criar squads, executá-los e mais.
@@ -15,26 +15,26 @@ Isso abre o menu principal. De lá você pode criar squads, executá-los e mais.
 Você também pode ser direto — descreva o que quer em linguagem natural:
 
 ```
-/opendoc crie um squad para escrever posts no LinkedIn sobre IA
-/opendoc execute o squad meu-squad
+/conectese crie um squad para escrever posts no LinkedIn sobre IA
+/conectese execute o squad meu-squad
 ```
 
 ## Criar um Squad
 
-Digite `/opendoc` e escolha "Criar squad" no menu, ou seja direto:
+Digite `/conectese` e escolha "Criar squad" no menu, ou seja direto:
 
 ```
-/opendoc crie um squad para [o que você precisa]
+/conectese crie um squad para [o que você precisa]
 ```
 
 O Arquiteto fará algumas perguntas, projetará o squad e configurará tudo automaticamente.
 
 ## Executar um Squad
 
-Digite `/opendoc` e escolha "Executar squad" no menu, ou seja direto:
+Digite `/conectese` e escolha "Executar squad" no menu, ou seja direto:
 
 ```
-/opendoc execute o squad <nome-do-squad>
+/conectese execute o squad <nome-do-squad>
 ```
 
 O squad executa automaticamente, pausando apenas nos checkpoints de decisão.
@@ -46,7 +46,7 @@ O Escritório Virtual é uma interface visual 2D que mostra seus agentes trabalh
 **Passo 1 — Gere o dashboard** (no seu IDE):
 
 ```
-/opendoc dashboard
+/conectese dashboard
 ```
 
 **Passo 2 — Sirva localmente** (no terminal):
@@ -59,7 +59,7 @@ npx serve squads/<nome-do-squad>/dashboard
 
 ---
 
-# Opendoc (English)
+# Conectese (English)
 
 Create AI squads that work together — right from your IDE.
 
@@ -68,7 +68,7 @@ Create AI squads that work together — right from your IDE.
 Open this folder in your IDE and type:
 
 ```
-/opendoc
+/conectese
 ```
 
 This opens the main menu. From there you can create squads, run them, and more.
@@ -76,26 +76,26 @@ This opens the main menu. From there you can create squads, run them, and more.
 You can also be direct — describe what you want in plain language:
 
 ```
-/opendoc create a squad for writing LinkedIn posts about AI
-/opendoc run my-squad
+/conectese create a squad for writing LinkedIn posts about AI
+/conectese run my-squad
 ```
 
 ## Create a Squad
 
-Type `/opendoc` and choose "Create squad" from the menu, or be direct:
+Type `/conectese` and choose "Create squad" from the menu, or be direct:
 
 ```
-/opendoc create a squad for [what you need]
+/conectese create a squad for [what you need]
 ```
 
 The Architect will ask a few questions, design the squad, and set everything up automatically.
 
 ## Run a Squad
 
-Type `/opendoc` and choose "Run squad" from the menu, or be direct:
+Type `/conectese` and choose "Run squad" from the menu, or be direct:
 
 ```
-/opendoc run the <squad-name> squad
+/conectese run the <squad-name> squad
 ```
 
 The squad runs automatically, pausing only at decision checkpoints.
@@ -107,7 +107,7 @@ The Virtual Office is a 2D visual interface that shows your agents working in re
 **Step 1 — Generate the dashboard** (in your IDE):
 
 ```
-/opendoc dashboard
+/conectese dashboard
 ```
 
 **Step 2 — Serve it locally** (in terminal):

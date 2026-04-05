@@ -5,9 +5,9 @@
 
 ## Problem
 
-`templates/_opendoc/core/`, `templates/_opendoc/config/`, and `templates/dashboard/` are manual copies of their canonical counterparts at the repo root. They already diverge (e.g., `architect.agent.yaml` differs between the two `core/` directories), causing users to receive stale versions on `init`/`update`.
+`templates/_conectese/core/`, `templates/_conectese/config/`, and `templates/dashboard/` are manual copies of their canonical counterparts at the repo root. They already diverge (e.g., `architect.agent.yaml` differs between the two `core/` directories), causing users to receive stale versions on `init`/`update`.
 
-This violates the project's own principle: "_opendoc/core/ is the canonical source — never apply palliative patches on installed instances."
+This violates the project's own principle: "_conectese/core/ is the canonical source — never apply palliative patches on installed instances."
 
 ## Solution
 
@@ -17,15 +17,15 @@ Use canonical source directories directly in `init.js` and `update.js`, eliminat
 
 | Destination (user project)   | Current source (template)          | New source (canonical)         |
 |------------------------------|------------------------------------|--------------------------------|
-| `_opendoc/core/*`          | `templates/_opendoc/core/`       | `_opendoc/core/`             |
-| `_opendoc/config/*`        | `templates/_opendoc/config/`     | `_opendoc/config/`           |
+| `_conectese/core/*`          | `templates/_conectese/core/`       | `_conectese/core/`             |
+| `_conectese/config/*`        | `templates/_conectese/config/`     | `_conectese/config/`           |
 | `dashboard/*`                | `templates/dashboard/`             | `dashboard/`                   |
 
 ### What stays in `templates/`
 
-- `_opendoc/_memory/` — clean scaffold for new projects
-- `_opendoc/_investigations/` — clean scaffold for new projects
-- `_opendoc/.opendoc-version` — distribution version marker
+- `_conectese/_memory/` — clean scaffold for new projects
+- `_conectese/_investigations/` — clean scaffold for new projects
+- `_conectese/.conectese-version` — distribution version marker
 - `ide-templates/` — IDE-specific config files
 - `skills/` — bundled skill templates
 - `squads/` — example squad scaffolding
@@ -46,8 +46,8 @@ Copies files from the three canonical directories to the target project:
 
 ```js
 const CANONICAL_SOURCES = [
-  { src: join(PACKAGE_ROOT, '_opendoc', 'core'), dest: join('_opendoc', 'core') },
-  { src: join(PACKAGE_ROOT, '_opendoc', 'config'), dest: join('_opendoc', 'config') },
+  { src: join(PACKAGE_ROOT, '_conectese', 'core'), dest: join('_conectese', 'core') },
+  { src: join(PACKAGE_ROOT, '_conectese', 'config'), dest: join('_conectese', 'config') },
   { src: join(PACKAGE_ROOT, 'dashboard'), dest: 'dashboard' },
 ];
 
@@ -79,23 +79,23 @@ const DASHBOARD_EXCLUDES = [
 
 ### Filesystem deletions
 
-- Delete `templates/_opendoc/core/` (entire directory)
-- Delete `templates/_opendoc/config/` (entire directory)
+- Delete `templates/_conectese/core/` (entire directory)
+- Delete `templates/_conectese/config/` (entire directory)
 - Delete `templates/dashboard/` (entire directory)
 
 ## What does NOT change
 
-- `templates/_opendoc/_memory/` — stays (clean scaffold)
-- `templates/_opendoc/_investigations/` — stays (clean scaffold)
-- `templates/_opendoc/.opendoc-version` — stays
+- `templates/_conectese/_memory/` — stays (clean scaffold)
+- `templates/_conectese/_investigations/` — stays (clean scaffold)
+- `templates/_conectese/.conectese-version` — stays
 - IDE templates logic — unchanged
 - Skills installation logic — unchanged
 - Protected paths logic — unchanged
-- Version comparison logic in `update.js` — unchanged (still reads from `templates/_opendoc/.opendoc-version`)
+- Version comparison logic in `update.js` — unchanged (still reads from `templates/_conectese/.conectese-version`)
 
 ## Risk Assessment
 
 - **Low risk:** `init.js` and `update.js` are the only consumers of these template paths
 - **No behavioral change for users:** They receive the same files, just from the canonical source
 - **Existing tests:** Should continue to pass — the test suite uses `_skipPrompts` and targets a temp directory
-- **npm pack:** `_opendoc/core/`, `_opendoc/config/`, and `dashboard/` are already included in the package (they're in the repo root, not gitignored)
+- **npm pack:** `_conectese/core/`, `_conectese/config/`, and `dashboard/` are already included in the package (they're in the repo root, not gitignored)
