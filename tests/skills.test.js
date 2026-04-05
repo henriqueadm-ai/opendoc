@@ -22,7 +22,7 @@ const SAMPLE_SKILL_MD = `---\nname: seo-optimizer\nversion: 1.2.0\ntype: tool\nd
 // --- listInstalled ---
 
 test('listInstalled returns empty array when skills/ does not exist', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     const result = await listInstalled(dir);
     assert.deepEqual(result, []);
@@ -31,11 +31,11 @@ test('listInstalled returns empty array when skills/ does not exist', async () =
   }
 });
 
-test('listInstalled excludes the built-in opensquad-skill-creator skill', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+test('listInstalled excludes the built-in opendoc-skill-creator skill', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     const skillsDir = join(dir, 'skills');
-    await mkdir(join(skillsDir, 'opensquad-skill-creator'), { recursive: true });
+    await mkdir(join(skillsDir, 'opendoc-skill-creator'), { recursive: true });
     await mkdir(join(skillsDir, 'seo-optimizer'), { recursive: true });
     const result = await listInstalled(dir);
     assert.deepEqual(result, ['seo-optimizer']);
@@ -45,7 +45,7 @@ test('listInstalled excludes the built-in opensquad-skill-creator skill', async 
 });
 
 test('listInstalled returns installed skill ids from skills/', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     const skillsDir = join(dir, 'skills');
     await mkdir(join(skillsDir, 'seo-optimizer'), { recursive: true });
@@ -71,7 +71,7 @@ test('listAvailable returns bundled skill ids', async () => {
 // --- installSkill ---
 
 test('installSkill copies SKILL.md from bundled skills to skills/<id>/', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     await installSkill('image-creator', dir);
     const content = await readFile(join(dir, 'skills', 'image-creator', 'SKILL.md'), 'utf-8');
@@ -83,7 +83,7 @@ test('installSkill copies SKILL.md from bundled skills to skills/<id>/', async (
 });
 
 test('installSkill creates skills/ directory if missing', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     await installSkill('apify', dir);
     const content = await readFile(join(dir, 'skills', 'apify', 'SKILL.md'), 'utf-8');
@@ -94,7 +94,7 @@ test('installSkill creates skills/ directory if missing', async () => {
 });
 
 test('installSkill throws when skill not found in bundled skills', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     await assert.rejects(
       () => installSkill('nonexistent', dir),
@@ -106,7 +106,7 @@ test('installSkill throws when skill not found in bundled skills', async () => {
 });
 
 test('installSkill throws on invalid skill id', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     await assert.rejects(
       () => installSkill('../evil', dir),
@@ -117,13 +117,13 @@ test('installSkill throws on invalid skill id', async () => {
   }
 });
 
-test('installSkill copies full directory including subdirs for opensquad-skill-creator', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+test('installSkill copies full directory including subdirs for opendoc-skill-creator', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
-    await installSkill('opensquad-skill-creator', dir);
-    const skill = await readFile(join(dir, 'skills', 'opensquad-skill-creator', 'SKILL.md'), 'utf-8');
+    await installSkill('opendoc-skill-creator', dir);
+    const skill = await readFile(join(dir, 'skills', 'opendoc-skill-creator', 'SKILL.md'), 'utf-8');
     assert.ok(skill.length > 0);
-    const scripts = await readdir(join(dir, 'skills', 'opensquad-skill-creator', 'scripts'));
+    const scripts = await readdir(join(dir, 'skills', 'opendoc-skill-creator', 'scripts'));
     assert.ok(scripts.length > 0);
   } finally {
     await rm(dir, { recursive: true });
@@ -131,7 +131,7 @@ test('installSkill copies full directory including subdirs for opensquad-skill-c
 });
 
 test('installSkill skips copy when src and dest resolve to the same path', async () => {
-  // Simulates running init from inside the opensquad repo itself
+  // Simulates running init from inside the opendoc repo itself
   const repoRoot = join(__dirname, '..');
   await assert.doesNotReject(() => installSkill('image-creator', repoRoot));
 });
@@ -139,7 +139,7 @@ test('installSkill skips copy when src and dest resolve to the same path', async
 // --- removeSkill ---
 
 test('removeSkill deletes the skill directory from skills/', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     const skillDir = join(dir, 'skills', 'seo-optimizer');
     await mkdir(skillDir, { recursive: true });
@@ -155,7 +155,7 @@ test('removeSkill deletes the skill directory from skills/', async () => {
 });
 
 test('removeSkill does not throw when skill not installed', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     await assert.doesNotReject(() => removeSkill('nonexistent', dir));
   } finally {
@@ -164,7 +164,7 @@ test('removeSkill does not throw when skill not installed', async () => {
 });
 
 test('removeSkill throws on invalid skill id', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     await assert.rejects(
       () => removeSkill('../evil', dir),
@@ -178,7 +178,7 @@ test('removeSkill throws on invalid skill id', async () => {
 // --- getSkillVersion ---
 
 test('getSkillVersion returns version from SKILL.md frontmatter', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     const skillDir = join(dir, 'skills', 'seo-optimizer');
     await mkdir(skillDir, { recursive: true });
@@ -191,7 +191,7 @@ test('getSkillVersion returns version from SKILL.md frontmatter', async () => {
 });
 
 test('getSkillVersion returns null when SKILL.md has no version', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     const skillDir = join(dir, 'skills', 'seo-optimizer');
     await mkdir(skillDir, { recursive: true });
@@ -204,7 +204,7 @@ test('getSkillVersion returns null when SKILL.md has no version', async () => {
 });
 
 test('getSkillVersion returns null when skill is not installed', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     const version = await getSkillVersion('nonexistent', dir);
     assert.equal(version, null);
@@ -214,7 +214,7 @@ test('getSkillVersion returns null when skill is not installed', async () => {
 });
 
 test('getSkillVersion returns null when SKILL.md has no frontmatter', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     const skillDir = join(dir, 'skills', 'seo-optimizer');
     await mkdir(skillDir, { recursive: true });
@@ -306,7 +306,7 @@ test('clearMetaCache forces re-read from disk', async () => {
 });
 
 test('installSkill invalidates metaCache for that skill', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     const before = await getSkillMeta('image-creator');
     await installSkill('image-creator', dir);
@@ -318,7 +318,7 @@ test('installSkill invalidates metaCache for that skill', async () => {
 });
 
 test('removeSkill invalidates metaCache for that skill', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'opensquad-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'opendoc-test-'));
   try {
     await installSkill('image-creator', dir);
     await getSkillMeta('image-creator'); // populate cache

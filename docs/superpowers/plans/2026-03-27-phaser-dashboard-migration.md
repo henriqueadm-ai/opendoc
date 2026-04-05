@@ -49,7 +49,7 @@
 - [ ] **Step 1: Create asset directories and copy desk sprites**
 
 ```bash
-cd d:/Coding\ Projects/opensquad
+cd d:/Coding\ Projects/opendoc
 mkdir -p dashboard/public/assets/desks
 cp "temp/pixel-assets/town/objects/desktop_set_black_down.png" dashboard/public/assets/desks/
 cp "temp/pixel-assets/town/objects/desktop_set_black_down_coding.png" dashboard/public/assets/desks/
@@ -105,7 +105,7 @@ npm install phaser@^3.87
 - [ ] **Step 5: Commit**
 
 ```bash
-cd d:/Coding\ Projects/opensquad
+cd d:/Coding\ Projects/opendoc
 git add dashboard/public/assets/ dashboard/package.json dashboard/package-lock.json
 git commit -m "feat(dashboard): copy pixel art assets and swap pixi→phaser dependency"
 ```
@@ -251,7 +251,7 @@ export const WALL_H = 2 * TILE;   // 64px — wall strip height at top
 - [ ] **Step 3: Verify TypeScript compiles (expect errors from deleted imports — that's fine)**
 
 ```bash
-cd d:/Coding\ Projects/opensquad/dashboard
+cd d:/Coding\ Projects/opendoc/dashboard
 npx tsc --noEmit 2>&1 | head -20
 ```
 
@@ -260,7 +260,7 @@ Expected: errors about missing OfficeScene/AgentDesk imports. These will be reso
 - [ ] **Step 4: Commit**
 
 ```bash
-cd d:/Coding\ Projects/opensquad
+cd d:/Coding\ Projects/opendoc
 git add dashboard/src/office/assetKeys.ts dashboard/src/office/palette.ts
 git commit -m "feat(dashboard): add asset keys manifest and slim down palette"
 ```
@@ -345,7 +345,7 @@ export function PhaserGame() {
 - [ ] **Step 2: Commit**
 
 ```bash
-cd d:/Coding\ Projects/opensquad
+cd d:/Coding\ Projects/opendoc
 git add dashboard/src/office/PhaserGame.tsx
 git commit -m "feat(dashboard): add PhaserGame React wrapper component"
 ```
@@ -579,7 +579,7 @@ export class OfficeScene extends Phaser.Scene {
 - [ ] **Step 3: Commit**
 
 ```bash
-cd d:/Coding\ Projects/opensquad
+cd d:/Coding\ Projects/opendoc
 git add dashboard/src/office/OfficeScene.ts dashboard/src/office/RoomBuilder.ts
 git commit -m "feat(dashboard): add OfficeScene and RoomBuilder with Phaser"
 ```
@@ -793,7 +793,7 @@ export class AgentSprite {
 - [ ] **Step 2: Commit**
 
 ```bash
-cd d:/Coding\ Projects/opensquad
+cd d:/Coding\ Projects/opendoc
 git add dashboard/src/office/AgentSprite.ts
 git commit -m "feat(dashboard): add AgentSprite with avatar animations and status badges"
 ```
@@ -850,7 +850,7 @@ export function App() {
           letterSpacing: 0.5,
         }}
       >
-        opensquad Dashboard
+        opendoc Dashboard
       </header>
 
       {/* Main content */}
@@ -869,7 +869,7 @@ export function App() {
 - [ ] **Step 2: Delete old procedural rendering files**
 
 ```bash
-cd d:/Coding\ Projects/opensquad
+cd d:/Coding\ Projects/opendoc
 rm dashboard/src/office/drawDesk.ts
 rm dashboard/src/office/drawFurniture.ts
 rm dashboard/src/office/drawRoom.ts
@@ -883,7 +883,7 @@ rm dashboard/src/office/HandoffEnvelope.tsx
 - [ ] **Step 3: Verify TypeScript compiles**
 
 ```bash
-cd d:/Coding\ Projects/opensquad/dashboard
+cd d:/Coding\ Projects/opendoc/dashboard
 npx tsc --noEmit
 ```
 
@@ -892,7 +892,7 @@ Expected: clean compilation with no errors. If there are import errors, fix them
 - [ ] **Step 4: Commit**
 
 ```bash
-cd d:/Coding\ Projects/opensquad
+cd d:/Coding\ Projects/opendoc
 git add -A dashboard/src/
 git commit -m "feat(dashboard): wire PhaserGame into App, delete all PixiJS procedural code"
 ```
@@ -907,7 +907,7 @@ git commit -m "feat(dashboard): wire PhaserGame into App, delete all PixiJS proc
 - [ ] **Step 1: Start the dev server and open in browser**
 
 ```bash
-cd d:/Coding\ Projects/opensquad/dashboard
+cd d:/Coding\ Projects/opendoc/dashboard
 npm run dev
 ```
 
@@ -934,7 +934,7 @@ npx playwright screenshot http://localhost:5173 --full-page dashboard-phaser.png
 - [ ] **Step 4: Commit any visual fixes**
 
 ```bash
-cd d:/Coding\ Projects/opensquad
+cd d:/Coding\ Projects/opendoc
 git add dashboard/src/office/
 git commit -m "fix(dashboard): tune sprite positions, sizes, and room layout"
 ```
@@ -949,7 +949,7 @@ git commit -m "fix(dashboard): tune sprite positions, sizes, and room layout"
 - [ ] **Step 1: Verify no PixiJS references remain**
 
 ```bash
-cd d:/Coding\ Projects/opensquad
+cd d:/Coding\ Projects/opendoc
 grep -r "pixi" dashboard/src/ --include="*.ts" --include="*.tsx" -l
 grep -r "@pixi" dashboard/package.json
 ```
@@ -959,7 +959,7 @@ Expected: no matches. If any remain, remove the imports/references.
 - [ ] **Step 2: Verify build succeeds**
 
 ```bash
-cd d:/Coding\ Projects/opensquad/dashboard
+cd d:/Coding\ Projects/opendoc/dashboard
 npm run build
 ```
 
@@ -968,7 +968,7 @@ Expected: clean build with no errors.
 - [ ] **Step 3: Commit if any cleanup was needed**
 
 ```bash
-cd d:/Coding\ Projects/opensquad
+cd d:/Coding\ Projects/opendoc
 git add -A dashboard/
 git commit -m "chore(dashboard): remove leftover PixiJS references"
 ```

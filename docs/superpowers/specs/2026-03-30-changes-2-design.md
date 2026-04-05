@@ -22,7 +22,7 @@
 - If "Yes" → ask for URLs as currently implemented.
 - If "No" → set `investigation.enabled: false` and continue.
 
-**Files:** `_opensquad/core/prompts/discovery.prompt.md`
+**Files:** `_opendoc/core/prompts/discovery.prompt.md`
 
 ---
 
@@ -44,7 +44,7 @@
 
 **Keep:** "Avoid redundant passes, cascading reviews, or separate optimization tasks" — this remains valid as guidance against bloat, not a cap on agent count.
 
-**Files:** `_opensquad/core/prompts/design.prompt.md`
+**Files:** `_opendoc/core/prompts/design.prompt.md`
 
 ---
 
@@ -65,7 +65,7 @@
 
 This applies to all questions where an example helps the user understand the choice — which is nearly all of them.
 
-**Files:** `_opensquad/core/prompts/discovery.prompt.md`, `_opensquad/core/prompts/design.prompt.md`
+**Files:** `_opendoc/core/prompts/discovery.prompt.md`, `_opendoc/core/prompts/design.prompt.md`
 
 ---
 
@@ -140,4 +140,4 @@ This applies to:
 - Build phase summary
 - Template designer approval
 
-**Files:** `_opensquad/core/runner.pipeline.md`, `_opensquad/core/prompts/design.prompt.md`, `_opensquad/core/prompts/build.prompt.md`
+**Files:** `_opendoc/core/runner.pipeline.md`, `_opendoc/core/prompts/design.prompt.md`, `_opendoc/core/prompts/build.prompt.md`

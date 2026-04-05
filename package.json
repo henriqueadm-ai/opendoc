@@ -1,15 +1,15 @@
 {
-  "name": "opensquad",
+  "name": "opendoc",
   "version": "0.1.14",
   "description": "Multi-agent orchestration framework — create AI squads that work together",
   "type": "module",
   "bin": {
-    "opensquad": "bin/opensquad.js"
+    "opendoc": "bin/opendoc.js"
   },
   "scripts": {
     "test": "node --test tests/*.test.js",
     "lint": "eslint src/ bin/ tests/",
-    "version": "node -e \"require('fs').writeFileSync('templates/_opensquad/.opensquad-version', require('./package.json').version + '\\n')\" && git add templates/_opensquad/.opensquad-version"
+    "version": "node -e \"require('fs').writeFileSync('templates/_opendoc/.opendoc-version', require('./package.json').version + '\\n')\" && git add templates/_opendoc/.opendoc-version"
   },
   "keywords": [
     "claude-code",
@@ -19,13 +19,13 @@
     "squads"
   ],
   "author": "Renato Asse (https://github.com/renatoasse)",
-  "homepage": "https://github.com/renatoasse/opensquad#readme",
+  "homepage": "https://github.com/renatoasse/opendoc#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/renatoasse/opensquad.git"
+    "url": "git+https://github.com/renatoasse/opendoc.git"
   },
   "bugs": {
-    "url": "https://github.com/renatoasse/opensquad/issues"
+    "url": "https://github.com/renatoasse/opendoc/issues"
   },
   "license": "MIT",
   "engines": {
@@ -37,7 +37,7 @@
     "agents/",
     "skills/",
     "templates/",
-    "_opensquad/",
+    "_opendoc/",
     "dashboard/"
   ],
   "dependencies": {

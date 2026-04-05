@@ -5,7 +5,7 @@
 
 ## Summary
 
-Replace the Figma MCP tool in the Opensquad registry with Canva Connect MCP. The Architect auto-suggests Canva when creating squads that need design/visual content. No structural changes to the tools engine.
+Replace the Figma MCP tool in the Opendoc registry with Canva Connect MCP. The Architect auto-suggests Canva when creating squads that need design/visual content. No structural changes to the tools engine.
 
 ## What Changes
 
@@ -53,7 +53,7 @@ useful_for: [content-design, brand-guidelines, visual-content, social-media-cont
 
 ### 2. Delete `figma.tool.yaml`
 
-Remove entirely from both `_opensquad/tools/registry/` and `templates/_opensquad/tools/registry/`.
+Remove entirely from both `_opendoc/tools/registry/` and `templates/_opendoc/tools/registry/`.
 
 ### 3. Update references
 

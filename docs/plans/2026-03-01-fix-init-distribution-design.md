@@ -1,19 +1,19 @@
 # Fix Init Distribution — Design Document
 
-> Fix Opensquad distribution: sync stale templates, make init install agents + skills automatically.
+> Fix Opendoc distribution: sync stale templates, make init install agents + skills automatically.
 
 ## Problem
 
-When users run `npx opensquad init`, they receive:
-- **Missing:** `_opensquad/core/formats/` (14 format files) — never synced to templates
-- **Stale:** `_opensquad/core/platforms/` (deprecated, deleted from source but still in templates)
+When users run `npx opendoc init`, they receive:
+- **Missing:** `_opendoc/core/formats/` (14 format files) — never synced to templates
+- **Stale:** `_opendoc/core/platforms/` (deprecated, deleted from source but still in templates)
 - **Outdated:** `architect.agent.yaml`, `runner.pipeline.md`, `sherlock.prompt.md` — template copies behind source
-- **Missing:** No agents installed (agents are only available via separate `npx opensquad agents install`)
+- **Missing:** No agents installed (agents are only available via separate `npx opendoc agents install`)
 - **Missing:** No bundled skills installed (only MCP skills are offered during init)
 
 ## Root Cause
 
-1. The formats system was added to `_opensquad/core/` but the templates directory was never synced
+1. The formats system was added to `_opendoc/core/` but the templates directory was never synced
 2. The deprecated `platforms/` was deleted from source but not from templates
 3. `src/init.js` only copies from `templates/` — it never calls `installAgent()` or `installSkill()`
 
@@ -21,15 +21,15 @@ When users run `npx opensquad init`, they receive:
 
 ### Part 1: Template Sync (immediate fix)
 
-Sync all stale/missing files between `_opensquad/core/` and `templates/_opensquad/core/`:
+Sync all stale/missing files between `_opendoc/core/` and `templates/_opendoc/core/`:
 
 | Source | Template | Action |
 |--------|----------|--------|
-| `_opensquad/core/formats/*.md` (14 files) | `templates/_opensquad/core/formats/` | **Create** directory + copy all |
-| `_opensquad/core/architect.agent.yaml` | `templates/_opensquad/core/architect.agent.yaml` | **Overwrite** |
-| `_opensquad/core/runner.pipeline.md` | `templates/_opensquad/core/runner.pipeline.md` | **Overwrite** |
-| `_opensquad/core/prompts/sherlock.prompt.md` | `templates/_opensquad/core/prompts/sherlock.prompt.md` | **Overwrite** |
-| — | `templates/_opensquad/core/platforms/` | **Delete** (deprecated) |
+| `_opendoc/core/formats/*.md` (14 files) | `templates/_opendoc/core/formats/` | **Create** directory + copy all |
+| `_opendoc/core/architect.agent.yaml` | `templates/_opendoc/core/architect.agent.yaml` | **Overwrite** |
+| `_opendoc/core/runner.pipeline.md` | `templates/_opendoc/core/runner.pipeline.md` | **Overwrite** |
+| `_opendoc/core/prompts/sherlock.prompt.md` | `templates/_opendoc/core/prompts/sherlock.prompt.md` | **Overwrite** |
+| — | `templates/_opendoc/core/platforms/` | **Delete** (deprecated) |
 
 ### Part 2: Init installs agents + skills automatically
 
@@ -53,9 +53,9 @@ init() flow:
 
 **`installAllBundledSkills(targetDir)`:**
 - Reads `skills/` directory from npm package (BUNDLED_SKILLS_DIR)
-- Filters out `opensquad-skill-creator` (internal, already filtered elsewhere)
+- Filters out `opendoc-skill-creator` (internal, already filtered elsewhere)
 - For each skill, calls existing `installSkill(id, targetDir)`
-- Copies `skills/{id}/SKILL.md` → `{targetDir}/_opensquad/skills/{id}/SKILL.md`
+- Copies `skills/{id}/SKILL.md` → `{targetDir}/_opendoc/skills/{id}/SKILL.md`
 - These are non-MCP skills (no env vars, no configuration needed)
 - MCP skills continue to be offered via the existing interactive prompt
 
@@ -67,9 +67,9 @@ Modify `src/update.js`:
 - Respect `PROTECTED_PATHS` — never overwrite existing agents
 - Log new additions separately from updates
 
-### Part 4: Update opensquad-dev skill
+### Part 4: Update opendoc-dev skill
 
-Add Check H to `.claude/skills/opensquad-dev/SKILL.md`:
+Add Check H to `.claude/skills/opendoc-dev/SKILL.md`:
 - Verify that `src/init.js` calls `installAllAgents()` and `installAllBundledSkills()`
 - Verify the functions import from `src/agents.js` and `src/skills.js`
 
@@ -77,11 +77,11 @@ Add Check H to `.claude/skills/opensquad-dev/SKILL.md`:
 
 - `src/init.js` — Add agent/skill auto-installation
 - `src/update.js` — Add new agent/skill detection during update
-- `templates/_opensquad/core/` — Full sync with source
-- `.claude/skills/opensquad-dev/SKILL.md` — Add Check H
+- `templates/_opendoc/core/` — Full sync with source
+- `.claude/skills/opendoc-dev/SKILL.md` — Add Check H
 
 ## Out of Scope
 
-- Moving `_opensquad/skills/` to project root `/skills/` (separate design doc)
+- Moving `_opendoc/skills/` to project root `/skills/` (separate design doc)
 - Agent selection UI during init (decided: install all silently)
 - MCP skill flow changes (unchanged)

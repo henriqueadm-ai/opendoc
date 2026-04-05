@@ -30,7 +30,7 @@ export function App() {
           letterSpacing: 0.5,
         }}
       >
-        opensquad Dashboard
+        opendoc Dashboard
       </header>
 
       {/* Main content */}

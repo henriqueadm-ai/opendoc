@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add Phase 7 (FULL SPRITE REVIEW) to the `opensquad-dashboard-design` skill — a self-contained audit loop that inventories all sprites, evaluates each one visually, fixes issues via parallel subagents, and loops until every sprite passes a 4-criterion checklist.
+**Goal:** Add Phase 7 (FULL SPRITE REVIEW) to the `opendoc-dashboard-design` skill — a self-contained audit loop that inventories all sprites, evaluates each one visually, fixes issues via parallel subagents, and loops until every sprite passes a 4-criterion checklist.
 
-**Architecture:** Single file edit to `.claude/skills/opensquad-dashboard-design/SKILL.md`. Phase 7 is appended after Phase 6 (LOOP). No TypeScript changes. No new files. The phase is triggered only on explicit user request; all other phases remain unchanged.
+**Architecture:** Single file edit to `.claude/skills/opendoc-dashboard-design/SKILL.md`. Phase 7 is appended after Phase 6 (LOOP). No TypeScript changes. No new files. The phase is triggered only on explicit user request; all other phases remain unchanged.
 
 **Tech Stack:** Markdown (SKILL.md prompt engineering), Playwright CLI for screenshots, Claude subagents for parallel fixes.
 
@@ -14,20 +14,20 @@
 
 | Action | File | What changes |
 |--------|------|-------------|
-| Modify | `.claude/skills/opensquad-dashboard-design/SKILL.md` | Append Phase 7 section after line 100 (after Phase 6 content) |
+| Modify | `.claude/skills/opendoc-dashboard-design/SKILL.md` | Append Phase 7 section after line 100 (after Phase 6 content) |
 
 ---
 
 ### Task 1: Add Phase 7 trigger note at the top of the Workflow section
 
 **Files:**
-- Modify: `.claude/skills/opensquad-dashboard-design/SKILL.md` (line 12)
+- Modify: `.claude/skills/opendoc-dashboard-design/SKILL.md` (line 12)
 
 The workflow intro currently says "Follow these 6 phases in order." Update it to mention Phase 7 as an optional explicit-request phase.
 
 - [ ] **Step 1: Edit the workflow intro line**
 
-Open `.claude/skills/opensquad-dashboard-design/SKILL.md`. Find line 12:
+Open `.claude/skills/opendoc-dashboard-design/SKILL.md`. Find line 12:
 
 ```
 Follow these 6 phases in order. Do NOT skip phases or implement without diagnosis.
@@ -48,7 +48,7 @@ Read the file and confirm lines 12–16 now contain the updated intro + the Phas
 - [ ] **Step 3: Commit**
 
 ```bash
-git add .claude/skills/opensquad-dashboard-design/SKILL.md
+git add .claude/skills/opendoc-dashboard-design/SKILL.md
 git commit -m "feat(dashboard-skill): add Phase 7 trigger note to workflow intro"
 ```
 
@@ -57,7 +57,7 @@ git commit -m "feat(dashboard-skill): add Phase 7 trigger note to workflow intro
 ### Task 2: Append Phase 7 — sub-phases 7.1 INVENTORY and 7.2 SCREENSHOT
 
 **Files:**
-- Modify: `.claude/skills/opensquad-dashboard-design/SKILL.md` (append after line 100, after Phase 6 ends)
+- Modify: `.claude/skills/opendoc-dashboard-design/SKILL.md` (append after line 100, after Phase 6 ends)
 
 - [ ] **Step 1: Append sub-phases 7.1 and 7.2 after Phase 6**
 
@@ -106,7 +106,7 @@ Read the file around lines 94–130. Confirm Phase 6 ends cleanly, then Phase 7 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add .claude/skills/opensquad-dashboard-design/SKILL.md
+git add .claude/skills/opendoc-dashboard-design/SKILL.md
 git commit -m "feat(dashboard-skill): add Phase 7 sub-phases 7.1 INVENTORY and 7.2 SCREENSHOT"
 ```
 
@@ -115,7 +115,7 @@ git commit -m "feat(dashboard-skill): add Phase 7 sub-phases 7.1 INVENTORY and 7
 ### Task 3: Append sub-phases 7.3 EVALUATE and 7.4 DOCUMENT
 
 **Files:**
-- Modify: `.claude/skills/opensquad-dashboard-design/SKILL.md` (append after 7.2)
+- Modify: `.claude/skills/opendoc-dashboard-design/SKILL.md` (append after 7.2)
 
 - [ ] **Step 1: Append 7.3 and 7.4**
 
@@ -201,7 +201,7 @@ Read the new block. Confirm:
 - [ ] **Step 3: Commit**
 
 ```bash
-git add .claude/skills/opensquad-dashboard-design/SKILL.md
+git add .claude/skills/opendoc-dashboard-design/SKILL.md
 git commit -m "feat(dashboard-skill): add Phase 7 sub-phases 7.3 EVALUATE and 7.4 DOCUMENT"
 ```
 
@@ -210,7 +210,7 @@ git commit -m "feat(dashboard-skill): add Phase 7 sub-phases 7.3 EVALUATE and 7.
 ### Task 4: Append sub-phases 7.5 FIX, 7.6 RE-REVIEW, and 7.7 APPROVE
 
 **Files:**
-- Modify: `.claude/skills/opensquad-dashboard-design/SKILL.md` (append after 7.4)
+- Modify: `.claude/skills/opendoc-dashboard-design/SKILL.md` (append after 7.4)
 
 - [ ] **Step 1: Append 7.5, 7.6, and 7.7**
 
@@ -232,7 +232,7 @@ Group all FAIL sprites by fix type and dispatch subagents in parallel:
 Each subagent receives:
 1. The list of sprite keys it must fix, with specific FAIL reasons from `/tmp/sprite-review.md`
 2. The Quick Reference section from this skill (depth sorting, origin conventions, layout constants)
-3. Instruction: read `.claude/skills/opensquad-dashboard-design/reference.md` for the asset catalog and code examples
+3. Instruction: read `.claude/skills/opendoc-dashboard-design/reference.md` for the asset catalog and code examples
 4. The rule: **never hardcode pixel values** — always use relative expressions (`MARGIN / 2`, `roomW / N`, `deskAreaBottom - offset`)
 
 If a group has no failing sprites, skip it.
@@ -287,7 +287,7 @@ Read the entire Phase 7 block from start to finish. Confirm:
 - [ ] **Step 3: Commit**
 
 ```bash
-git add .claude/skills/opensquad-dashboard-design/SKILL.md
+git add .claude/skills/opendoc-dashboard-design/SKILL.md
 git commit -m "feat(dashboard-skill): add Phase 7 sub-phases 7.5 FIX, 7.6 RE-REVIEW, 7.7 APPROVE"
 ```
 
@@ -299,7 +299,7 @@ No automated tests exist for skill files. Verification is manual.
 
 - [ ] **Step 1: Read the full updated SKILL.md**
 
-Read `.claude/skills/opensquad-dashboard-design/SKILL.md` from top to bottom. Confirm:
+Read `.claude/skills/opendoc-dashboard-design/SKILL.md` from top to bottom. Confirm:
 - Phase numbering is 1–7, no gaps or duplicates
 - The workflow intro mentions Phase 7 as optional/explicit-request
 - The Quick Reference section is still intact after Phase 6 (Phase 7 must be inserted before the Quick Reference section if the Quick Reference is meant to apply to Phase 7 as well — verify the append went to the right place)
@@ -314,6 +314,6 @@ If Phase 7 was accidentally appended *after* the Quick Reference section (at the
 - [ ] **Step 3: Final commit with complete message**
 
 ```bash
-git add .claude/skills/opensquad-dashboard-design/SKILL.md
+git add .claude/skills/opendoc-dashboard-design/SKILL.md
 git commit -m "feat(dashboard-skill): complete Phase 7 FULL SPRITE REVIEW — smoke test verified"
 ```

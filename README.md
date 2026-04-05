@@ -1,59 +1,55 @@
-# opensquad
+# opendoc
 
-Crie squads de agentes de IA que trabalham juntos — direto da sua IDE.
+Crie equipes (squads) de agentes de IA focadas no ambiente jurídico — direto da sua IDE.
 
-opensquad é um framework de orquestração multi-agente. Descreva o que você precisa em linguagem natural, e o opensquad cria uma equipe de agentes especializados que trabalham juntos automaticamente.
+O opendoc é um framework de orquestração multi-agente voltado inteiramente para **Advogados Especializados e Escritórios de Advocacia**. Descreva a necessidade do seu caso em linguagem natural, e o opendoc cria uma equipe de agentes e analistas jurídicos de IA que trabalham juntos para melhorar a análise processual, garantir a privacidade (LGPD) e dar suporte na sua tomada de decisão.
 
-## Veja em ação
+## Conheça mais
 
-[![Assista ao vídeo de lançamento](https://img.youtube.com/vi/CL1ppI4qHeU/maxresdefault.jpg)](https://www.youtube.com/watch?v=CL1ppI4qHeU)
+[conecte.se](https://conecte.se) - **Contato:** carlos@conecte.se
 
-## O que é um Squad?
+## O que é um Squad Jurídico?
 
-Um squad é uma equipe de agentes de IA que colaboram em uma tarefa. Cada agente tem um papel específico. Eles executam em pipeline com checkpoints onde o agente pausa e pede sua aprovação antes de continuar. Os checkpoints são instruções no pipeline do agente — o enforcement real de permissões depende da IDE host (ex: Claude Code, Cursor).
+Um squad jurídico é uma equipe de agentes de IA que colaboram para destrinchar e solucionar um caso ou analisar um conjunto probatório. Cada agente tem um papel específico (como extração, anonimização e formação de tese). Eles executam em pipeline com *checkpoints* onde o agente pausa e pede sua aprovação antes de tomar qualquer decisão sensível.
 
-Exemplo:
+Exemplo do nosso **Pipeline OpenLaw**:
 
-- **Pesquisador** coleta informações e tendências do setor
-- **Estrategista** gera ideias e define a abordagem
-- **Redator** produz o conteúdo final
-- **Designer** cria as imagens para redes sociais
-- **Revisor** garante qualidade antes da entrega
+- **Extrator de Dados** lê peças e provas processuais brutas
+- **Especialista LGPD (Anonimizador)** higieniza os dados e mascara informações pessoais e sensíveis
+- **Analista Jurídico Geral** monta o panorama probatório e interroga o advogado humano
+- **Orquestrador de Pareceres** convoca os Especialistas (Direito Penal, Civil, Tributário, etc)
+- **Compositor de Minutas** redige a fundamentação coesa e unificada
+- **Restaurador LGPD** reverte a anonimização e insere os dados reais no documento final
 
 ## Para quem?
 
-Para qualquer pessoa ou equipe que queira automatizar trabalho operacional e repetitivo com agentes de IA.
+Para profissionais do Direito e equipes que desejam alavancar produtividade com máxima segurança e privacidade usando IA.
 
-- **Criadores de conteúdo** — automatize pesquisa, redação e design para redes sociais, blogs e newsletters
-- **Agências e freelancers** — crie pipelines reutilizáveis para atender múltiplos clientes
-- **Times de marketing** — produza conteúdo consistente com aprovação humana nos checkpoints
-- **Times de RH** — automatize triagem de currículos, comunicações internas e onboarding
-- **Times de gestão** — gere relatórios, apresentações e dashboards a partir de dados brutos
+- **Advogados Autônomos** — ganhe suporte de especialistas virtuais em todas as áreas do direito
+- **Escritórios de Advocacia (Boutiques e Massificados)** — crie pipelines reutilizáveis para triar centenas de peças por dia
+- **Departamentos Jurídicos In-House** — automatize análise de contratos, due diligence corporativa e adequação à LGPD
+- **Pesquisadores Jurídicos** — encontre teses, jurisprudências e sumulas relacionadas aos autos rapidamente
 
 ## O que dá pra fazer?
 
-- **Produção de conteúdo** — carrosséis, posts estáticos, artigos de blog, LinkedIn, com publicação automática inclusa
-- **Refatoração de conteúdo** — transformar um vídeo em carrossel, artigo, thread ou qualquer outro formato
-- **Criação e edição de vídeos** — cortar vídeos longos em reels, montar vídeos do zero
-- **Análise de dados** — transformar planilhas em apresentações, sites ou dashboards
-- **Planejamento de campanhas** — gerar roteiros, e-mails, mensagens de WhatsApp, cronogramas de lançamento, tudo de uma vez
-- **Roteiros de vídeos longos** — VSLs, webinars, aulas
-- **Radar de tendências** — monitorar notícias e tendências do nicho e alimentar automaticamente outros squads, como o de produção de conteúdo
-- **Tutoriais e manuais** — o agente navega na internet, bate prints e monta um documento completo passo a passo (ideal para manuais de SaaS)
-- E muito mais — qualquer fluxo de trabalho que envolva pesquisa, criação ou automação
+- **Análise de Iniciais e Defesas** — ler autos densos, extrair fatias de prazo, pedidos e fatos principais
+- **Anonimização Automática LGPD** — preparar documentos protegidos para análise de modelos de LLM na nuvem
+- **Elaboração de Minutas e Pareceres** — cruzar argumentos de especialistas para redigir peças processuais
+- **Triagem Massificada** — ler publicações nos diários oficiais e encaminhar para a frente de trabalho correta
+- **Auditoria de Contratos** — revisar cláusulas buscando riscos para a empresa ou para o cliente
 
 ## Instalação
 
 **Pré-requisito:** Node.js 20+
 
 ```bash
-npx opensquad init
+npx opendoc init
 ```
 
 Para atualizar uma instalação existente:
 
 ```bash
-npx opensquad update
+npx opendoc update
 ```
 
 ## IDEs Suportadas
@@ -67,14 +63,14 @@ npx opensquad update
 | Open Code | Disponível |
 | Antigravity | Disponível |
 
-## Escritório Virtual
+## Escritório Virtual (Opendoc Dashboard)
 
-O Escritório Virtual é uma interface visual 2D que mostra seus agentes trabalhando em tempo real.
+O Escritório Virtual é uma interface visual 2D que mostra seus agentes trabalhando no seu caso em tempo real.
 
 **Passo 1 — Gere o dashboard** (na sua IDE):
 
 ```
-/opensquad dashboard
+/opendoc dashboard
 ```
 
 **Passo 2 — Sirva localmente** (no terminal):
@@ -90,77 +86,65 @@ npx serve squads/<nome-do-squad>/dashboard
 Abra o menu:
 
 ```
-/opensquad
+/opendoc
 ```
 
-O **Opensquad** vai te mostrar todas as opções disponíveis. 
+O **Opendoc** vai te mostrar as opções disponíveis. 
 
-Para criar um novo squad, basta selecionar a opção, e o **Arquiteto** faz algumas perguntas, projeta o squad e configura tudo automaticamente. Você aprova o design antes de qualquer execução.
+Para criar um novo squad personalizado, o **Arquiteto** fará algumas perguntas sobre qual a área do seu escritório e o tipo de casos, e projetará o squad ideal configurando tudo. Você sempre aprova o design (a "tese") antes de qualquer execução.
 
 ## Executando um Squad
 
-Você pode executar o squad novamente com /opensquad, ou pedindo diretamente:
+Você pode executar a triagem de um caso pedindo diretamente:
 
 ```
-/opensquad rode o squad <nome-do-squad>
+/opendoc rode o squad <nome-do-squad>
 ```
 
-O squad executa automaticamente, pausando nos checkpoints onde o agente pede sua aprovação.
+A equipe de IA inicia, pausando nos checkpoints onde os analistas jurídicos pedirão o input estratégico do Advogado (Human-in-the-Loop).
 
 ## Exemplos
 
 ```
-/opensquad
-/opensquad crie um Squad que gera carrosséis de Instagram a partir de notícias quentes, cria as imagens e publica automaticamente
-/opensquad quero um Squad que produz todos os materiais de lançamento de infoproduto: páginas de vendas, mensagens de WhatsApp, emails e roteiros de CPL
-/opensquad crie um Squad que escreve tutoriais completos com prints de tela para treinamento de colaboradores
-/opensquad crie um "Squad que pega vídeos do YouTube e gera cortes virais automaticamente"
-/opensquad roda o squad carrosseis-instagram
-
+/opendoc
+/opendoc crie um Squad que receba sentenças de primeiro grau e levante possibilidades de embargo ou apelação
+/opendoc quero um Squad focado em Direito Tributário que analise autos de infração e sugira defesas
+/opendoc crie um Squad que higieniza dados LGPD de processos de Direito de Família e gera resumos seguros
+/opendoc roda o squad analise-tributaria
 ```
 
 ## Comandos
 
 | Comando | O que faz |
 |---------|-----------|
-| `/opensquad` | Abre o menu principal |
-| `/opensquad help` | Mostra todos os comandos |
-| `/opensquad create` | Cria um novo squad |
-| `/opensquad run <nome>` | Executa um squad |
-| `/opensquad list` | Lista seus squads |
-| `/opensquad edit <nome>` | Modifica um squad |
-| `/opensquad skills` | Navega pelas skills instaladas |
-| `/opensquad install <nome>` | Instala uma skill do catálogo |
-| `/opensquad uninstall <nome>` | Remove uma skill instalada |
+| `/opendoc` | Abre o menu principal |
+| `/opendoc help` | Mostra todos os comandos |
+| `/opendoc create` | Cria um novo squad / equipe de IA |
+| `/opendoc run <nome>` | Analisa um caso no squad |
+| `/opendoc list` | Lista seus squads de IA |
+| `/opendoc edit <nome>` | Modifica as diretrizes de uma equipe |
+| `/opendoc skills` | Navega pelas habilidades jurídicas instaladas |
+| `/opendoc install <nome>` | Instala uma habilidade do catálogo |
+| `/opendoc uninstall <nome>` | Remove uma habilidade instalada |
 
 ## Custo de Tokens
 
-O opensquad é open source e gratuito como software. É possível usá-lo de forma 100% gratuita com stacks como Google Antigravity (free tier com Gemini) ou OpenCode com LLMs locais (Ollama, LM Studio, etc.).
+O opendoc é open source e pode ser usado gratuitamente como software de orquestração. O uso de LLMs locais mantém os dados sigilosos na sua máquina (usando Ollama, LM Studio, etc).
 
-Porém, stacks como Claude Code (Claude Pro/Max) e API da OpenAI consomem tokens pagos:
-
-- Cada execução de squad consome tokens — a quantidade depende do número de agentes, da complexidade do pipeline e do modelo escolhido.
-- Investigações com Sherlock (navegação de perfis) e geração de imagens são operações especialmente intensivas.
-- O framework carrega prompts de sistema, best practices e instruções de agentes no contexto — o que contribui para o consumo base de cada execução.
-
-Se estiver usando uma stack paga, recomendamos monitorar seu consumo de tokens na sua IDE ou no dashboard do provedor de IA.
+No uso de inteligência de fronteira (Claude Pro/Max, OpenAI API, Gemini Advanced):
+- O repasse das peças anonimizadas aos LLMs tem custo de tokens de acordo com o tamanho do processo escaneado.
+- Recomenda-se estritamente o uso dos agentes **LGPD-Anonymizers** primeiro, para que apenas os dados anonimizados trafeguem nas APIs.
 
 ## Sessões de Navegador e Privacidade
 
-Quando você fornece URLs de referência durante a criação de um squad (ex: "siga o estilo do @fulano"), o opensquad usa um navegador headless (Playwright) para visitar essas páginas e extrair padrões de conteúdo.
-
-- **Login manual:** na primeira vez que uma plataforma exige login, o opensquad pede para você entrar manualmente e **pergunta se deseja salvar a sessão** para investigações futuras.
-- **Cookies persistentes:** se você autorizar, os cookies ficam salvos localmente em `_opensquad/_browser_profile/`. Esse diretório nunca é commitado no git (`.gitignore`).
-- **Escopo de acesso:** o navegador tem acesso a qualquer URL — não apenas às referências fornecidas. As ações do navegador (navegação, cliques, execução de JavaScript) são controladas pelo agente investigador.
-- **Revogar sessões:** delete a pasta `_opensquad/_browser_profile/` para remover todos os cookies e dados de sessão salvos. Na próxima investigação, um novo login manual será necessário.
+Caso um agente precise buscar atualizações de jurisprudência ativas, ele usa um navegador automatizado.
+- **Isolamento de Sessão:** Cookies de jusbrasil/STJ são salvos apenas em `_opendoc/_browser_profile/` que nunca sai da sua máquina ou vai para o Git.
 
 ## Sobre
 
-O opensquad é um projeto open source criado e mantido por [Renato Asse](https://github.com/renatoasse), fundador da [Comunidade Sem Codar](https://semcodar.com.br), uma Escola de IA com mais de 25 mil alunos focada em ensinar pessoas não-técnicas a usar inteligência artificial no trabalho.
+O opendoc é mantido como base de um projeto open source. Esta implementação específica foi transformada em um motor de inteligência e segurança jurídica projetado para advogados e escritórios de advocacia que precisam escalar o raciocínio forense humano com confiança.
 
-O projeto nasceu da necessidade real de automatizar processos de conteúdo e marketing usando agentes de IA — e é disponibilizado gratuitamente para que qualquer pessoa possa usar, estudar e contribuir.
-
-Contribuições da comunidade são bem-vindas. Veja o [CONTRIBUTING.md](CONTRIBUTING.md) para saber como participar.
+Saiba mais em [conecte.se](https://conecte.se) ou entre em contato via carlos@conecte.se.
 
 ## Licença
 
@@ -168,41 +152,41 @@ MIT — use como quiser.
 
 ---
 
-# opensquad (English)
+# opendoc (English)
 
-Create AI squads that work together — right from your IDE.
+Create AI squads specialized in the Legal environment — right from your IDE.
 
-opensquad is a multi-agent orchestration framework. Describe what you need in plain language, and opensquad creates a team of specialized agents that work together automatically.
+opendoc is a multi-agent orchestration framework geared entirely towards **Lawyers, Law Firms, and Corporate Legal Departments**. Describe your case needs in plain language, and opendoc creates a team of AI legal analysts and agents who work together to enhance procedural analysis, guarantee privacy (GDPR/LGPD), and support your decision-making.
 
-## See it in action
+## Learn more
 
-[![Watch the launch video](https://img.youtube.com/vi/CL1ppI4qHeU/maxresdefault.jpg)](https://www.youtube.com/watch?v=CL1ppI4qHeU)
+[conecte.se](https://conecte.se) - **Contact:** carlos@conecte.se
 
-## What is a Squad?
+## What is a Legal Squad?
 
-A squad is a team of AI agents that collaborate on a task. Each agent has a specific role. They run in a pipeline with checkpoints where the agent pauses and asks for your approval before continuing. Checkpoints are instructions in the agent pipeline — actual permission enforcement depends on the host IDE (e.g., Claude Code, Cursor).
+A legal squad is a team of AI agents that collaborate to dissect a lawsuit, draft legal documents, or anonymize evidence. They run in a pipeline with checkpoints where the agent pauses and asks for the Head Human Lawyer's approval before proceeding with sensitive decisions.
 
 Example:
 
-- **Researcher** gathers information and industry trends
-- **Strategist** generates ideas and defines the approach
-- **Writer** produces the final content
-- **Reviewer** ensures quality before delivery
+- **Data Extractor** parses raw PDF filings
+- **LGPD Anonymizer** redacts PII and sanitizes the facts
+- **Legal Analyst** maps out the procedural landscape
+- **Specialists Routing** channels tasks to domain-specific AIs (Tax, Civil, Criminal)
+- **Legal Draftsperson** sews arguments into a final brief
+- **Data Restorer** reinjects real names maintaining confidentiality
 
 ## Installation
 
 **Prerequisite:** Node.js 20+
 
 ```bash
-npx opensquad init
+npx opendoc init
 ```
-
-> **Note:** Always run your AI IDE from inside the project directory where you ran `npx opensquad init`. The `/opensquad` command is only available when the IDE is opened in that folder.
 
 To update an existing installation:
 
 ```bash
-npx opensquad update
+npx opendoc update
 ```
 
 ## Supported IDEs
@@ -218,16 +202,14 @@ npx opensquad update
 
 ## Virtual Office
 
-The Virtual Office is a 2D visual interface that shows your agents working in real time.
+The Virtual Office is a 2D interface showing your AI legal team working in real time.
 
 **Step 1 — Generate the dashboard** (in your IDE):
-
 ```
-/opensquad dashboard
+/opendoc dashboard
 ```
 
 **Step 2 — Serve it locally** (in terminal):
-
 ```bash
 npx serve squads/<squad-name>/dashboard
 ```
@@ -239,70 +221,44 @@ npx serve squads/<squad-name>/dashboard
 Describe what you need:
 
 ```
-/opensquad create "A squad that writes LinkedIn posts about AI trends"
+/opendoc create "A squad that reviews M&A contracts and flags liabilities"
 ```
 
-The **Architect** asks a few questions, designs the squad, and sets everything up automatically. You approve the design before any execution begins.
+The **Architect** asks a few questions, designs the legal squad, and sets everything up safely. You approve the design before execution.
 
 ## Running a Squad
 
 ```
-/opensquad run <squad-name>
+/opendoc run <squad-name>
 ```
 
-The squad runs automatically, pausing at checkpoints where the agent asks for your approval.
+The squad runs automatically, pausing at critical junctures if legal interpretation is ambiguous to ask for your strategic guidance.
 
 ## Examples
 
 ```
-/opensquad create "Squad that generates Instagram carousels from trending news, creates the images, and publishes automatically"
-/opensquad create "Squad that produces all infoproduct launch materials: sales pages, WhatsApp messages, emails, and CPL scripts"
-/opensquad create "Squad that writes complete tutorials with screenshots for employee training"
-/opensquad create "Squad that takes YouTube videos and automatically generates viral clips"
+/opendoc create "Squad that reads 1st degree sentences and draft grounds for appeal"
+/opendoc create "Squad that sanitizes GDPR/LGPD data on family court proceedings"
+/opendoc create "Squad that audits labor contracts against current regulations"
 ```
-
-## Commands
-
-| Command | What it does |
-|---------|-------------|
-| `/opensquad` | Open the main menu |
-| `/opensquad help` | Show all commands |
-| `/opensquad create` | Create a new squad |
-| `/opensquad run <name>` | Run a squad |
-| `/opensquad list` | See all your squads |
-| `/opensquad edit <name>` | Modify a squad |
-| `/opensquad skills` | Browse installed skills |
-| `/opensquad install <name>` | Install a skill from catalog |
-| `/opensquad uninstall <name>` | Remove an installed skill |
 
 ## Token Cost
 
-opensquad is open source and free as software. You can use it completely free with stacks like Google Antigravity (free tier with Gemini) or OpenCode with local LLMs (Ollama, LM Studio, etc.).
-
-However, stacks like Claude Code (Claude Pro/Max) and OpenAI API consume paid tokens:
-
-- Every squad run consumes tokens — the amount depends on the number of agents, pipeline complexity, and the model chosen.
-- Sherlock investigations (profile browsing) and image generation are especially token-intensive operations.
-- The framework loads system prompts, best practices, and agent instructions into context — contributing to the base token consumption of every run.
-
-If using a paid stack, we recommend monitoring your token usage in your IDE or your AI provider's dashboard.
+opendoc itself is completely free and open source. For utmost confidentiality, you can use OpenCode with local offline LLMs. 
+When leveraging frontier models (Claude, OpenAI):
+- Passing massive case dossiers will incur higher token costs per run.
+- Using the **Anonymizer** agent beforehand ensures you are not passing sensitive PII into external APIs inadvertently.
 
 ## Browser Sessions & Privacy
 
-When you provide reference URLs during squad creation (e.g., "follow the style of @someone"), opensquad uses a headless browser (Playwright) to visit those pages and extract content patterns.
-
-- **Manual login:** the first time a platform requires login, opensquad asks you to log in manually and **asks whether you want to save the session** for future investigations.
-- **Persistent cookies:** if you agree, cookies are saved locally in `_opensquad/_browser_profile/`. This directory is never committed to git (`.gitignore`).
-- **Access scope:** the browser can access any URL — not just the references you provided. Browser actions (navigation, clicks, JavaScript execution) are controlled by the investigator agent.
-- **Revoking sessions:** delete the `_opensquad/_browser_profile/` folder to remove all saved cookies and session data. The next investigation will require a fresh manual login.
+When fetching active jurisprudence, opendoc can perform browser actions locally.
+- **Persistent cookies:** stored completely locally in `_opendoc/_browser_profile/`.
 
 ## About
 
-opensquad is an open source project created and maintained by [Renato Asse](https://github.com/renatoasse), founder of [Comunidade Sem Codar](https://semcodar.com.br) (No-Code Community), an AI School with over 25,000 students focused on teaching non-technical people how to use artificial intelligence at work.
+This implementation of opendoc has been heavily customized to serve as a legal intelligence engine, designed for law firms needing to scale their forensic rationale confidently and safely.
 
-The project was born from the real need to automate content and marketing workflows using AI agents — and is made freely available so anyone can use, study, and contribute.
-
-Community contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) to learn how to participate.
+Learn more at [conecte.se](https://conecte.se) or reach out at carlos@conecte.se.
 
 ## License
 

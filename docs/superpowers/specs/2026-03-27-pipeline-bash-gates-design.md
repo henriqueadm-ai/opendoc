@@ -2,7 +2,7 @@
 
 **Date:** 2026-03-27
 **Status:** Implemented
-**Scope:** `_opensquad/core/runner.pipeline.md` (inline changes only)
+**Scope:** `_opendoc/core/runner.pipeline.md` (inline changes only)
 
 ## Problem
 

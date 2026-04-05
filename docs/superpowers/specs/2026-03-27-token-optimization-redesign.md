@@ -1,4 +1,4 @@
-# Opensquad Token Optimization — CREATE Flow Redesign
+# Opendoc Token Optimization — CREATE Flow Redesign
 
 **Date:** 2026-03-27
 **Status:** Draft
@@ -9,7 +9,7 @@
 
 ## Problem Statement
 
-The current `/opensquad create` flow is a monolithic single-session process that:
+The current `/opendoc create` flow is a monolithic single-session process that:
 
 1. **Loads everything at once** — architect.agent.yaml (1,131 lines), 22 best-practices files, sherlock.prompt.md (1,014 lines), skills engine, all in a single context
 2. **Accumulates context without reset** — 7 phases in one session means context grows continuously until overflow
@@ -58,8 +58,8 @@ Phase 4: BUILD ──→ squads/{name}/
 ### Context Loaded
 
 - Discovery prompt (~150-200 lines)
-- `_opensquad/_memory/company.md` (company context)
-- `_opensquad/_memory/preferences.md` (user preferences)
+- `_opendoc/_memory/company.md` (company context)
+- `_opendoc/_memory/preferences.md` (user preferences)
 
 **Total: ~250 lines of prompt + conversation**
 
@@ -149,7 +149,7 @@ If user chose `mode: manual`:
 **New:** Shared base + 1 file per platform, loaded on demand.
 
 ```
-_opensquad/core/prompts/
+_opendoc/core/prompts/
   sherlock-shared.md        (~80 lines — browser setup, output format, error handling)
   sherlock-instagram.md     (~100 lines — Instagram extraction)
   sherlock-youtube.md       (~100 lines — YouTube extraction)
@@ -164,7 +164,7 @@ _opensquad/core/prompts/
 Uses Playwright CLI with `--save-storage` / `--load-storage` for session persistence. Preserves the existing Sherlock instructions about session management (login prompts, session saving, etc.), adapted from browser profile to JSON storage files.
 
 ```
-_opensquad/_browser_profile/
+_opendoc/_browser_profile/
   instagram.json    # cookies + localStorage
   twitter.json
   youtube.json
@@ -222,7 +222,7 @@ Before proceeding to Phase 3:
 - Design prompt (~250-300 lines)
 - `_build/discovery.yaml` (Phase 1 output)
 - `_investigations/*/raw-content.md` (if they exist, summarized)
-- `_opensquad/_memory/company.md` (company context)
+- `_opendoc/_memory/company.md` (company context)
 - Skills catalog — **compact list only** (name + one-line description, not full SKILL.md content)
 
 **Total: ~400-500 lines of prompt + artifacts**
@@ -331,7 +331,7 @@ investigation_refs:
     ├── agents/agent2.agent.md
     └── ...
 
-    Ready to run with /opensquad run {name}"
+    Ready to run with /opendoc run {name}"
 ```
 
 ### Cleanup
@@ -371,7 +371,7 @@ investigation_refs:
 ### New Files
 
 ```
-_opensquad/core/
+_opendoc/core/
   prompts/
     discovery.prompt.md       (~150-200 lines — wizard prompt)
     design.prompt.md          (~250-300 lines — squad composition)
@@ -386,7 +386,7 @@ _opensquad/core/
 ### Modified Files
 
 ```
-_opensquad/core/
+_opendoc/core/
   architect.agent.yaml       → significantly reduced or replaced by phase prompts
   skills.engine.md           → split into smaller operation files (future optimization)
   runner.pipeline.md         → unchanged for now (RUN flow optimization is separate scope)
@@ -395,7 +395,7 @@ _opensquad/core/
 ### Removed Files
 
 ```
-_opensquad/core/prompts/
+_opendoc/core/prompts/
   sherlock.prompt.md          → replaced by platform-specific files
 ```
 
@@ -441,7 +441,7 @@ This redesign affects only the CREATE flow. The RUN flow (`runner.pipeline.md`) 
 
 1. Create new phase prompts (discovery, design, build)
 2. Split sherlock.prompt.md into platform files
-3. Update the opensquad skill entry point to use phased flow
+3. Update the opendoc skill entry point to use phased flow
 4. Adapt session persistence to Playwright CLI (`--save-storage`/`--load-storage`)
 5. Add programmatic validation between phases
 6. Test end-to-end with a real squad creation
@@ -459,10 +459,10 @@ This redesign affects only the CREATE flow. The RUN flow (`runner.pipeline.md`) 
 
 ## Phase Orchestration
 
-The `/opensquad` skill entry point orchestrates phase transitions:
+The `/opendoc` skill entry point orchestrates phase transitions:
 
 ```
-/opensquad create
+/opendoc create
   → Load discovery.prompt.md → run Phase 1
   → Check discovery.yaml exists
   → If investigation.mode == "sherlock":
@@ -480,7 +480,7 @@ The `/opensquad` skill entry point orchestrates phase transitions:
 
 Each "run Phase N" is a **separate subagent dispatch** with clean context. The orchestrator (the skill prompt) only carries the minimal state needed to know which phase to run next — it reads artifact existence on disk to determine progress.
 
-If a session is interrupted, the user can resume by running `/opensquad create` again — the orchestrator checks which `_build/` artifacts already exist and resumes from the next incomplete phase.
+If a session is interrupted, the user can resume by running `/opendoc create` again — the orchestrator checks which `_build/` artifacts already exist and resumes from the next incomplete phase.
 
 ---
 

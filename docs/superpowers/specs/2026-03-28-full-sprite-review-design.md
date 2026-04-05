@@ -3,7 +3,7 @@ Date: 2026-03-28
 
 ## Overview
 
-Add a **FULL SPRITE REVIEW** function to the `opensquad-dashboard-design` skill as **Phase 7** — an optional phase invoked when the user explicitly requests a full visual audit of all sprites in the dashboard. It replaces the normal phases 2–6 for that session.
+Add a **FULL SPRITE REVIEW** function to the `opendoc-dashboard-design` skill as **Phase 7** — an optional phase invoked when the user explicitly requests a full visual audit of all sprites in the dashboard. It replaces the normal phases 2–6 for that session.
 
 The function autonomously audits every sprite, fixes issues via parallel subagents, and loops until all sprites pass the checklist. It asks the user for input only when evaluation is ambiguous or when stuck, and requests final approval at the end.
 

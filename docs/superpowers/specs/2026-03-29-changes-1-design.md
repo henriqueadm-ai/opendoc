@@ -1,4 +1,4 @@
-# Changes-1: Melhorias Opensquad
+# Changes-1: Melhorias Opendoc
 
 **Date:** 2026-03-29
 **Source:** docs/temp/changes-1/changes-1.md
@@ -18,7 +18,7 @@
 
 > "Always present numbered options for the user to choose from. The only exception is when the question requires free-text input (e.g., a URL, a name, a description)."
 
-This rule applies to all Opensquad interactions, not just the Architect.
+This rule applies to all Opendoc interactions, not just the Architect.
 
 ### 1.2 Auto-detect tools instead of asking (#2)
 
@@ -30,7 +30,7 @@ This rule applies to all Opensquad interactions, not just the Architect.
 - Based on the squad's purpose and target platforms, the Architect selects the relevant skills.
 - The selected tools appear in the final summary. The user can adjust them there before confirming.
 
-**Files:** `_opensquad/core/prompts/discovery.prompt.md`
+**Files:** `_opendoc/core/prompts/discovery.prompt.md`
 
 ### 1.3 Natural language in prompts (#3)
 
@@ -42,7 +42,7 @@ This rule applies to all Opensquad interactions, not just the Architect.
 > - Instead of 'Reply with multiple numbers separated by spaces' → 'Which platforms interest you? Can be more than one.'
 > - Instead of 'Type yes to confirm, or tell me what to change' → 'All good? Or want to change something?'"
 
-**Files:** `_opensquad/core/prompts/discovery.prompt.md`, `_opensquad/core/prompts/design.prompt.md`, `_opensquad/core/prompts/build.prompt.md`, `_opensquad/core/architect.agent.yaml`
+**Files:** `_opendoc/core/prompts/discovery.prompt.md`, `_opendoc/core/prompts/design.prompt.md`, `_opendoc/core/prompts/build.prompt.md`, `_opendoc/core/architect.agent.yaml`
 
 ### 1.4 Remove performance modes, adopt agile-by-default philosophy (#12)
 
@@ -57,7 +57,7 @@ This rule applies to all Opensquad interactions, not just the Architect.
 
 - This is not a "mode" — it's the default and only way squads are built.
 
-**Files:** `_opensquad/core/prompts/discovery.prompt.md`, `_opensquad/core/prompts/design.prompt.md`
+**Files:** `_opendoc/core/prompts/discovery.prompt.md`, `_opendoc/core/prompts/design.prompt.md`
 
 ---
 
@@ -70,9 +70,9 @@ This rule applies to all Opensquad interactions, not just the Architect.
 **Solution:** Split into two steps:
 
 1. **Step 1 — Login:** Run `npx playwright open https://instagram.com` (no `--save-storage`). Instruct the user: "Log into Instagram. When you're done, come back here and let me know." Use a generous timeout (5 minutes).
-2. **Step 2 — Save session:** After user confirms, run `npx playwright open --save-storage=_opensquad/_browser_profile/instagram.json https://instagram.com` to capture the already-authenticated session. This command completes quickly since the user is already logged in.
+2. **Step 2 — Save session:** After user confirms, run `npx playwright open --save-storage=_opendoc/_browser_profile/instagram.json https://instagram.com` to capture the already-authenticated session. This command completes quickly since the user is already logged in.
 
-**Files:** `_opensquad/core/prompts/sherlock-shared.md`
+**Files:** `_opendoc/core/prompts/sherlock-shared.md`
 
 ### 2.2 Session instructions not surfacing (#5)
 
@@ -81,11 +81,11 @@ This rule applies to all Opensquad interactions, not just the Architect.
 **Solution:** Verify `sherlock-shared.md` contains these instructions and move them to a prominent position (early in the prompt, not at the end). If the instructions exist but are buried, reposition them under a clearly marked section near the top:
 
 > **Session Management** (always inform the user):
-> - Saved sessions are in `_opensquad/_browser_profile/`
+> - Saved sessions are in `_opendoc/_browser_profile/`
 > - To clear a platform session, delete the corresponding JSON file
 > - Always ask before saving a new session
 
-**Files:** `_opensquad/core/prompts/sherlock-shared.md`
+**Files:** `_opendoc/core/prompts/sherlock-shared.md`
 
 ---
 
@@ -152,7 +152,7 @@ This rule applies to all Opensquad interactions, not just the Architect.
 - Remove the `sleep 3` from the handoff logic in `runner.pipeline.md`.
 - The `delivering` status in state.json can remain (useful for visual indication) but must not block pipeline execution.
 
-**Files:** `_opensquad/core/runner.pipeline.md`
+**Files:** `_opendoc/core/runner.pipeline.md`
 
 ---
 
@@ -184,7 +184,7 @@ This rule applies to all Opensquad interactions, not just the Architect.
 - Audit what context is being loaded into research agents — if full investigations, best-practices catalogs, or other large documents are being injected unnecessarily, trim them.
 - This aligns with #12's agile philosophy: agents should do the minimum needed to accomplish their goal.
 
-**Files:** `_opensquad/core/best-practices/research.md`, `_opensquad/core/prompts/design.prompt.md` (agent generation instructions)
+**Files:** `_opendoc/core/best-practices/research.md`, `_opendoc/core/prompts/design.prompt.md` (agent generation instructions)
 
 ---
 

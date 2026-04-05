@@ -13,8 +13,8 @@ const TEMPLATES_DIR = join(__dirname, '..', 'templates');
 const PACKAGE_ROOT = join(__dirname, '..');
 
 const CANONICAL_SOURCES = [
-  { src: join(PACKAGE_ROOT, '_opensquad', 'core'), dest: join('_opensquad', 'core') },
-  { src: join(PACKAGE_ROOT, '_opensquad', 'config'), dest: join('_opensquad', 'config') },
+  { src: join(PACKAGE_ROOT, '_opendoc', 'core'), dest: join('_opendoc', 'core') },
+  { src: join(PACKAGE_ROOT, '_opendoc', 'config'), dest: join('_opendoc', 'config') },
   { src: join(PACKAGE_ROOT, 'dashboard'), dest: 'dashboard' },
 ];
 
@@ -40,13 +40,13 @@ export async function init(targetDir, options = {}) {
   // Check if already initialized
   let isReInit = false;
   try {
-    await stat(join(targetDir, '_opensquad'));
+    await stat(join(targetDir, '_opendoc'));
     isReInit = true;
   } catch {
     // Not initialized yet — continue
   }
 
-  console.log(isReInit ? '\n  🔄 Opensquad — Re-configure\n' : '\n  🟢 Opensquad — Setup\n');
+  console.log(isReInit ? '\n  🔄 Opendoc — Re-configure\n' : '\n  🟢 Opendoc — Setup\n');
 
   // Guided installation (skip in test mode)
   let language = options._language || 'English';
@@ -87,9 +87,9 @@ export async function init(targetDir, options = {}) {
   await writeProjectReadme(targetDir);
 
   // Write user preferences
-  const prefsPath = join(targetDir, '_opensquad', '_memory', 'preferences.md');
+  const prefsPath = join(targetDir, '_opendoc', '_memory', 'preferences.md');
   await mkdir(dirname(prefsPath), { recursive: true });
-  const prefsContent = `# Opensquad Preferences
+  const prefsContent = `# Opendoc Preferences
 
 - **User Name:** ${userName}
 - **Output Language:** ${language}
@@ -126,7 +126,7 @@ export async function init(targetDir, options = {}) {
 
 export async function loadSavedLocale(targetDir) {
   try {
-    const prefsPath = join(targetDir, '_opensquad', '_memory', 'preferences.md');
+    const prefsPath = join(targetDir, '_opendoc', '_memory', 'preferences.md');
     const content = await readFile(prefsPath, 'utf-8');
     const match = content.match(/\*\*Output Language:\*\*\s*(.+)/);
     if (match) {

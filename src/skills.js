@@ -12,7 +12,7 @@ export async function listInstalled(targetDir) {
     const skillsDir = join(targetDir, 'skills');
     const entries = await readdir(skillsDir, { withFileTypes: true });
     return entries
-      .filter((e) => e.isDirectory() && e.name !== 'opensquad-skill-creator')
+      .filter((e) => e.isDirectory() && e.name !== 'opendoc-skill-creator')
       .map((e) => e.name);
   } catch (err) {
     if (err.code === 'ENOENT') return [];

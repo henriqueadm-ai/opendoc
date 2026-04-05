@@ -4,7 +4,7 @@
 
 **Goal:** Fix 5 post-test issues: investigation always offered, agents not artificially limited, options with examples, template designer serverless, file links for approval.
 
-**Architecture:** All changes target existing prompt/config files in `_opensquad/core/` and `skills/`. Task 4 deletes 5 server files and rewrites the Template Designer SKILL.md.
+**Architecture:** All changes target existing prompt/config files in `_opendoc/core/` and `skills/`. Task 4 deletes 5 server files and rewrites the Template Designer SKILL.md.
 
 **Tech Stack:** Markdown prompts, YAML frontmatter
 
@@ -14,10 +14,10 @@
 
 | File | Action | Task |
 |------|--------|------|
-| `_opensquad/core/prompts/discovery.prompt.md` | Modify | 1, 3 |
-| `_opensquad/core/prompts/design.prompt.md` | Modify | 2, 3, 5 |
-| `_opensquad/core/prompts/build.prompt.md` | Modify | 5 |
-| `_opensquad/core/runner.pipeline.md` | Modify | 5 |
+| `_opendoc/core/prompts/discovery.prompt.md` | Modify | 1, 3 |
+| `_opendoc/core/prompts/design.prompt.md` | Modify | 2, 3, 5 |
+| `_opendoc/core/prompts/build.prompt.md` | Modify | 5 |
+| `_opendoc/core/runner.pipeline.md` | Modify | 5 |
 | `skills/template-designer/SKILL.md` | Rewrite | 4 |
 | `skills/template-designer/scripts/server.js` | Delete | 4 |
 | `skills/template-designer/scripts/start-server.sh` | Delete | 4 |
@@ -30,7 +30,7 @@
 ### Task 1: Discovery — Investigation always offered
 
 **Files:**
-- Modify: `_opensquad/core/prompts/discovery.prompt.md`
+- Modify: `_opendoc/core/prompts/discovery.prompt.md`
 
 - [ ] **Step 1: Replace Step 5 header and conditional gate**
 
@@ -76,7 +76,7 @@ Replace with:
 - [ ] **Step 3: Commit**
 
 ```bash
-git add _opensquad/core/prompts/discovery.prompt.md
+git add _opendoc/core/prompts/discovery.prompt.md
 git commit -m "feat(discovery): always offer investigation option"
 ```
 
@@ -85,7 +85,7 @@ git commit -m "feat(discovery): always offer investigation option"
 ### Task 2: Design — Don't artificially limit agents
 
 **Files:**
-- Modify: `_opensquad/core/prompts/design.prompt.md`
+- Modify: `_opendoc/core/prompts/design.prompt.md`
 
 - [ ] **Step 1: Rewrite the Design Philosophy section**
 
@@ -120,7 +120,7 @@ Guidelines:
 - [ ] **Step 2: Commit**
 
 ```bash
-git add _opensquad/core/prompts/design.prompt.md
+git add _opendoc/core/prompts/design.prompt.md
 git commit -m "feat(design): don't artificially limit agent count"
 ```
 
@@ -129,12 +129,12 @@ git commit -m "feat(design): don't artificially limit agent count"
 ### Task 3: Discovery & Design — Contextualize all options with examples
 
 **Files:**
-- Modify: `_opensquad/core/prompts/discovery.prompt.md`
-- Modify: `_opensquad/core/prompts/design.prompt.md`
+- Modify: `_opendoc/core/prompts/discovery.prompt.md`
+- Modify: `_opendoc/core/prompts/design.prompt.md`
 
 - [ ] **Step 1: Add example rule to discovery Communication Style**
 
-In `_opensquad/core/prompts/discovery.prompt.md`, in the `## Communication Style` section, after the line:
+In `_opendoc/core/prompts/discovery.prompt.md`, in the `## Communication Style` section, after the line:
 ```
 - Always present numbered options when there are choices. The only exception is when the question requires free-text input (a URL, a name, a description)
 ```
@@ -148,7 +148,7 @@ Add:
 
 - [ ] **Step 2: Add example rule to design Communication style**
 
-In `_opensquad/core/prompts/design.prompt.md`, find the line (around line 9):
+In `_opendoc/core/prompts/design.prompt.md`, find the line (around line 9):
 ```
 **Communication style:** Clear and structured. Uses numbered lists and visual separators to organize information. Confirms understanding before proceeding. Celebrates progress with the user.
 ```
@@ -161,7 +161,7 @@ Replace with:
 - [ ] **Step 3: Commit**
 
 ```bash
-git add _opensquad/core/prompts/discovery.prompt.md _opensquad/core/prompts/design.prompt.md
+git add _opendoc/core/prompts/discovery.prompt.md _opendoc/core/prompts/design.prompt.md
 git commit -m "feat(prompts): contextualize all options with examples"
 ```
 
@@ -180,7 +180,7 @@ git commit -m "feat(prompts): contextualize all options with examples"
 - [ ] **Step 1: Delete server files**
 
 ```bash
-cd "d:/Coding Projects/opensquad"
+cd "d:/Coding Projects/opendoc"
 git rm skills/template-designer/scripts/server.js
 git rm skills/template-designer/scripts/start-server.sh
 git rm skills/template-designer/scripts/stop-server.sh
@@ -231,7 +231,7 @@ Visual template selection and refinement for squad creation and editing.
 ### Step 0: Read Design Guidelines (MANDATORY)
 
 Before generating any template, read and internalize the design best practices:
-- `_opensquad/core/best-practices/image-design.md` — **REQUIRED reading**. Contains platform-specific minimum font sizes, typography rules, spacing guidelines, color palette constraints, contrast requirements, and layout methodology. Every template you generate MUST comply with these rules.
+- `_opendoc/core/best-practices/image-design.md` — **REQUIRED reading**. Contains platform-specific minimum font sizes, typography rules, spacing guidelines, color palette constraints, contrast requirements, and layout methodology. Every template you generate MUST comply with these rules.
 
 Key rules to always follow:
 - **Font sizes**: Hero 58px, Heading 43px, Body 34px, Caption 24px minimum for Instagram carousel (1080x1440). Absolute minimum 20px for any readable text on any platform.
@@ -273,8 +273,8 @@ Read these files to understand the squad:
 - `squads/{code}/_build/discovery.yaml` — platform, domain, tone, language
 - `squads/{code}/_build/design.yaml` — agents, purpose, skills
 - `squads/{code}/_investigations/consolidated-analysis.md` (if exists) — visual patterns from reference profiles
-- `_opensquad/_memory/company.md` — company name, brand, industry, target audience
-- `_opensquad/_memory/preferences.md` — user preferences (language, style, tone)
+- `_opendoc/_memory/company.md` — company name, brand, industry, target audience
+- `_opendoc/_memory/preferences.md` — user preferences (language, style, tone)
 
 Use the company context and user preferences to adapt template content: example text should reflect the company's domain and audience, colors should align with brand if available, and language should match the user's Output Language preference.
 
@@ -397,7 +397,7 @@ If the squad already exists (editing flow):
 - [ ] **Step 3: Commit**
 
 ```bash
-cd "d:/Coding Projects/opensquad"
+cd "d:/Coding Projects/opendoc"
 git add -A skills/template-designer/
 git commit -m "refactor(template-designer): remove server, use image rendering"
 ```
@@ -407,13 +407,13 @@ git commit -m "refactor(template-designer): remove server, use image rendering"
 ### Task 5: Add file link rule for approvals
 
 **Files:**
-- Modify: `_opensquad/core/runner.pipeline.md`
-- Modify: `_opensquad/core/prompts/design.prompt.md`
-- Modify: `_opensquad/core/prompts/build.prompt.md`
+- Modify: `_opendoc/core/runner.pipeline.md`
+- Modify: `_opendoc/core/prompts/design.prompt.md`
+- Modify: `_opendoc/core/prompts/build.prompt.md`
 
 - [ ] **Step 1: Add rule to pipeline runner checkpoint section**
 
-In `_opensquad/core/runner.pipeline.md`, find the checkpoint section (around line 307):
+In `_opendoc/core/runner.pipeline.md`, find the checkpoint section (around line 307):
 ```markdown
 #### If `type: checkpoint`
 - Present the checkpoint message to the user
@@ -432,7 +432,7 @@ Replace with:
 
 - [ ] **Step 2: Add rule to design Phase G presentation**
 
-In `_opensquad/core/prompts/design.prompt.md`, find the Phase G section (around the "Does this look good?" line). After:
+In `_opendoc/core/prompts/design.prompt.md`, find the Phase G section (around the "Does this look good?" line). After:
 ```
 Wait for user approval. If they want changes, adjust and re-present.
 ```
@@ -445,7 +445,7 @@ Add:
 
 - [ ] **Step 3: Add rule to build summary**
 
-In `_opensquad/core/prompts/build.prompt.md`, find `## Step D: Present Summary`. After the summary template block (after the line `To modify it: /opensquad edit {code}`), add:
+In `_opendoc/core/prompts/build.prompt.md`, find `## Step D: Present Summary`. After the summary template block (after the line `To modify it: /opendoc edit {code}`), add:
 
 ```markdown
 
@@ -455,6 +455,6 @@ Include the file paths of key generated files (agent files, pipeline steps, refe
 - [ ] **Step 4: Commit**
 
 ```bash
-git add _opensquad/core/runner.pipeline.md _opensquad/core/prompts/design.prompt.md _opensquad/core/prompts/build.prompt.md
+git add _opendoc/core/runner.pipeline.md _opendoc/core/prompts/design.prompt.md _opendoc/core/prompts/build.prompt.md
 git commit -m "feat(prompts): include file links when requesting user approval"
 ```
