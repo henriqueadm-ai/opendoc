@@ -27,7 +27,7 @@ This rule applies to all Conectese interactions, not just the Architect.
 **Solution:**
 - Remove the tools question from the discovery phase.
 - The Architect scans the `skills/` directory automatically.
-- Based on the squad's purpose and target platforms, the Architect selects the relevant skills.
+- Based on the team's purpose and target platforms, the Architect selects the relevant skills.
 - The selected tools appear in the final summary. The user can adjust them there before confirming.
 
 **Files:** `_conectese/core/prompts/discovery.prompt.md`
@@ -46,16 +46,16 @@ This rule applies to all Conectese interactions, not just the Architect.
 
 ### 1.4 Remove performance modes, adopt agile-by-default philosophy (#12)
 
-**Problem:** The "alta performance" vs "economico" choice is unnecessary. Squads should always be lean.
+**Problem:** The "alta performance" vs "economico" choice is unnecessary. Teams should always be lean.
 
 **Solution:**
 - Remove the performance mode question from discovery.
 - Remove all branching logic for `alta_performance` vs `economico` in `design.prompt.md`.
 - Replace with a single design philosophy:
 
-> "Build agile, objective squads. Each agent should have the minimum tasks necessary to fulfill its role. Avoid redundant passes, cascading reviews, or separate optimization tasks."
+> "Build agile, objective teams. Each agent should have the minimum tasks necessary to fulfill its role. Avoid redundant passes, cascading reviews, or separate optimization tasks."
 
-- This is not a "mode" — it's the default and only way squads are built.
+- This is not a "mode" — it's the default and only way teams are built.
 
 **Files:** `_conectese/core/prompts/discovery.prompt.md`, `_conectese/core/prompts/design.prompt.md`
 
@@ -190,6 +190,6 @@ This rule applies to all Conectese interactions, not just the Architect.
 
 ## Non-implementation item
 
-### Token usage during squad creation (#9)
+### Token usage during team creation (#9)
 
-260k cache create + 8.5M cache read for squad creation is expected given the volume of files loaded (prompts, best-practices, investigations, catalog). Cache read is the cheapest token type (~$0.30/MTok). The $7.08 total for a full squad creation with investigation is reasonable. Second runs in the same session would be significantly cheaper as files shift from cache create to cache read. No action needed — improvements from #12 and #11 will naturally reduce this.
+260k cache create + 8.5M cache read for team creation is expected given the volume of files loaded (prompts, best-practices, investigations, catalog). Cache read is the cheapest token type (~$0.30/MTok). The $7.08 total for a full team creation with investigation is reasonable. Second runs in the same session would be significantly cheaper as files shift from cache create to cache read. No action needed — improvements from #12 and #11 will naturally reduce this.

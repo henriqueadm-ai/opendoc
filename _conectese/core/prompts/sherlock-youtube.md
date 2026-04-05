@@ -48,7 +48,7 @@ This file contains the YouTube-specific extraction process. The Architect loads 
 Use yt-dlp to download auto-generated or manual subtitles:
 
 ```bash
-yt-dlp --write-auto-sub --sub-lang en --skip-download -o "squads/{squad-name}/_investigations/{channel}/%(id)s" "https://www.youtube.com/watch?v={video-id}"
+yt-dlp --write-auto-sub --sub-lang en --skip-download -o "teams/{team-name}/_investigations/{channel}/%(id)s" "https://www.youtube.com/watch?v={video-id}"
 ```
 
 If subtitles are available, read the `.vtt` or `.srt` file and extract the text content (strip timestamps).
@@ -60,11 +60,11 @@ If subtitles are available, read the `.vtt` or `.srt` file and extract the text 
 If no subtitles are available, download the audio and transcribe:
 
 ```bash
-yt-dlp -x --audio-format wav -o "squads/{squad-name}/_investigations/{channel}/%(id)s.%(ext)s" "https://www.youtube.com/watch?v={video-id}"
+yt-dlp -x --audio-format wav -o "teams/{team-name}/_investigations/{channel}/%(id)s.%(ext)s" "https://www.youtube.com/watch?v={video-id}"
 ```
 
 ```bash
-whisper "squads/{squad-name}/_investigations/{channel}/{video-id}.wav" --model small --output_dir "squads/{squad-name}/_investigations/{channel}/" --output_format txt
+whisper "teams/{team-name}/_investigations/{channel}/{video-id}.wav" --model small --output_dir "teams/{team-name}/_investigations/{channel}/" --output_format txt
 ```
 
 Read the transcription file and include it in the raw content output.

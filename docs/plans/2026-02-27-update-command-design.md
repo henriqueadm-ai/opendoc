@@ -5,7 +5,7 @@
 
 ## Problem
 
-Users currently have no way to update Conectese without a full reinstall, which destroys user data (`_memory/`, `_investigations/`, `squads/`). A `reinstall.sh` script exists but is a manual, destructive workaround.
+Users currently have no way to update Conectese without a full reinstall, which destroys user data (`_memory/`, `_investigations/`, `teams/`). A `reinstall.sh` script exists but is a manual, destructive workaround.
 
 ## Solution
 
@@ -24,7 +24,7 @@ Add `npx conectese-terminal@latest update` — a command that re-applies the lat
 ### Protected (never touched)
 - `_conectese/_memory/` — company context and user preferences
 - `_conectese/_investigations/` — Sherlock investigation cache
-- `squads/` — user-created squads and their data
+- `teams/` — user-created teams and their data
 
 ## Version Tracking
 
@@ -50,7 +50,7 @@ npx conectese-terminal@latest update
 6. **Show summary**:
    ```
    ✓ Updated: 12 system files
-   ✓ Preserved: _memory/, _investigations/, squads/
+   ✓ Preserved: _memory/, _investigations/, teams/
    ✓ Conectese v0.2.0 installed successfully
    ```
 

@@ -1,5 +1,5 @@
 {
-  "squad": "instagram-carrossel",
+  "team": "instagram-carrossel",
   "status": "running",
   "step": { "current": 5, "total": 9, "label": "step-05" },
   "agents": [

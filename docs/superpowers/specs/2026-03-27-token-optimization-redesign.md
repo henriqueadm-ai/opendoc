@@ -3,7 +3,7 @@
 **Date:** 2026-03-27
 **Status:** Draft
 **Problem:** CREATE flow consumes ~12.7M tokens (~R$46) with zero functional output
-**Goal:** Reduce to ~200K-500K tokens (~95-97% reduction) while maintaining intelligent squad creation
+**Goal:** Reduce to ~200K-500K tokens (~95-97% reduction) while maintaining intelligent team creation
 
 ---
 
@@ -19,11 +19,11 @@ The current `/conectese create` flow is a monolithic single-session process that
 
 ### Root Cause
 
-The architecture treats squad creation as a single intelligent conversation. In reality, it's **4 distinct activities** that don't need shared context:
+The architecture treats team creation as a single intelligent conversation. In reality, it's **4 distinct activities** that don't need shared context:
 
 1. Understanding what the user wants (conversation)
 2. Investigating reference profiles (browser automation)
-3. Designing the squad structure (architectural reasoning)
+3. Designing the team structure (architectural reasoning)
 4. Generating files (mechanical templating)
 
 ---
@@ -36,7 +36,7 @@ Break CREATE into 4 independent phases, each with its own clean context. Phases 
 Phase 1: DISCOVERY ──→ _build/discovery.yaml
 Phase 2: INVESTIGATION (optional) ──→ _investigations/{profile}/
 Phase 3: DESIGN ──→ _build/design.yaml
-Phase 4: BUILD ──→ squads/{name}/
+Phase 4: BUILD ──→ teams/{name}/
 ```
 
 ### Key Principles
@@ -74,7 +74,7 @@ Phase 4: BUILD ──→ squads/{name}/
 
 ```
 1. Purpose (open-ended)
-   "What do you want this squad to do?"
+   "What do you want this team to do?"
    — Does not assume domain. Adapts to response.
 
 2. Context exploration (adaptive)
@@ -86,7 +86,7 @@ Phase 4: BUILD ──→ squads/{name}/
    - Mixed → decompose into sub-objectives
 
 3. Tools and integrations
-   "Does this squad need external tools?"
+   "Does this team need external tools?"
    (skills, APIs, browser, local files, etc.)
 
 4. Investigation — offered only when relevant
@@ -127,7 +127,7 @@ references_provided: []
 
 ## Phase 2: Investigation (Sherlock Lean) — OPTIONAL
 
-**Purpose:** Extract content patterns from reference profiles. Only runs when the user's squad involves content creation and they want to analyze reference accounts.
+**Purpose:** Extract content patterns from reference profiles. Only runs when the user's team involves content creation and they want to analyze reference accounts.
 
 ### When Sherlock is Offered
 
@@ -215,7 +215,7 @@ Before proceeding to Phase 3:
 
 ## Phase 3: Design (Architectural Intelligence)
 
-**Purpose:** Compose the squad structure based on Discovery + Investigation results. This is where AI adds the most value.
+**Purpose:** Compose the team structure based on Discovery + Investigation results. This is where AI adds the most value.
 
 ### Context Loaded
 
@@ -247,8 +247,8 @@ Before proceeding to Phase 3:
 ```
 1. Read discovery.yaml + investigations (if any)
 
-2. Propose squad structure:
-   "Based on what we discussed, I suggest this squad:"
+2. Propose team structure:
+   "Based on what we discussed, I suggest this team:"
 
    Agents: [list with roles and responsibilities]
    Pipeline: [ordered task flow with checkpoints]
@@ -263,8 +263,8 @@ Before proceeding to Phase 3:
 ### Output: `_build/design.yaml`
 
 ```yaml
-squad:
-  name: "squad-name"
+team:
+  name: "team-name"
   description: "..."
 
 agents:
@@ -292,13 +292,13 @@ investigation_refs:
 
 ## Phase 4: Build (Mechanical Generation)
 
-**Purpose:** Take the approved design.yaml and generate squad files. Minimal AI needed — mostly templating.
+**Purpose:** Take the approved design.yaml and generate team files. Minimal AI needed — mostly templating.
 
 ### Context Loaded
 
 - Build prompt (~150-200 lines)
 - `_build/design.yaml` (Phase 3 output)
-- Best-practices referenced in design — **loaded now**, but only the ones needed (e.g., if squad uses 2 best-practices, load 2, not 22)
+- Best-practices referenced in design — **loaded now**, but only the ones needed (e.g., if team uses 2 best-practices, load 2, not 22)
 
 **Total: ~200 lines of prompt + design.yaml + selected best-practices**
 
@@ -312,10 +312,10 @@ investigation_refs:
    - Generate persona from discovery + investigation + best-practice
    - Write {agent-name}.agent.md
 
-3. Generate squad.yaml (metadata + pipeline)
+3. Generate team.yaml (metadata + pipeline)
 
 4. Programmatic validation:
-   ✓ squad.yaml exists and is valid YAML?
+   ✓ team.yaml exists and is valid YAML?
    ✓ Each agent referenced in pipeline has .agent.md?
    ✓ Referenced skills are installed?
    ✓ Referenced best-practices exist in catalog?
@@ -324,9 +324,9 @@ investigation_refs:
    (never fabricate, never skip)
 
 5. Present summary to user:
-   "Squad created:
-    squads/{name}/
-    ├── squad.yaml
+   "Team created:
+    teams/{name}/
+    ├── team.yaml
     ├── agents/agent1.agent.md
     ├── agents/agent2.agent.md
     └── ...
@@ -374,7 +374,7 @@ investigation_refs:
 _conectese/core/
   prompts/
     discovery.prompt.md       (~150-200 lines — wizard prompt)
-    design.prompt.md          (~250-300 lines — squad composition)
+    design.prompt.md          (~250-300 lines — team composition)
     build.prompt.md           (~150-200 lines — file generation)
     sherlock-shared.md        (~80 lines — browser setup, errors)
     sherlock-instagram.md     (~100 lines — Instagram extraction)
@@ -402,7 +402,7 @@ _conectese/core/prompts/
 ### Build Artifacts (Temporary)
 
 ```
-squads/{name}/_build/
+teams/{name}/_build/
   discovery.yaml              → Phase 1 output
   design.yaml                 → Phase 3 output
 ```
@@ -426,7 +426,7 @@ Phase 2 → 3: For each target:
              OR error.md exists (explicit failure recorded)
              OR mode is "none"/"manual" (investigation skipped/manual)
 Phase 3 → 4: design.yaml exists, is valid YAML, agents and pipeline defined
-Phase 4 done: squad.yaml valid, all agent .md files exist, skills installed
+Phase 4 done: team.yaml valid, all agent .md files exist, skills installed
 ```
 
 **Rule: If validation fails, stop and report. Never fabricate. Never skip.**
@@ -444,13 +444,13 @@ This redesign affects only the CREATE flow. The RUN flow (`runner.pipeline.md`) 
 3. Update the conectese skill entry point to use phased flow
 4. Adapt session persistence to Playwright CLI (`--save-storage`/`--load-storage`)
 5. Add programmatic validation between phases
-6. Test end-to-end with a real squad creation
+6. Test end-to-end with a real team creation
 7. Remove old monolithic architect.agent.yaml (after validation)
 
 ### Backwards Compatibility
 
-- Existing squads are unaffected (RUN flow unchanged)
-- Squad YAML format is unchanged
+- Existing teams are unaffected (RUN flow unchanged)
+- Team YAML format is unchanged
 - Agent .agent.md format is unchanged
 - Best-practices files are unchanged
 - Skills are unchanged
@@ -474,7 +474,7 @@ The `/conectese` skill entry point orchestrates phase transitions:
   → Load design.prompt.md + artifacts → run Phase 3
   → Check design.yaml exists
   → Load build.prompt.md + design.yaml + selected best-practices → run Phase 4
-  → Validate generated squad files
+  → Validate generated team files
   → Done
 ```
 

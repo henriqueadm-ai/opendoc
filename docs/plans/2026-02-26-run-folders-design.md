@@ -1,11 +1,11 @@
-# Design: Run Folders para Output de Squad
+# Design: Run Folders para Output de Team
 
 **Date:** 2026-02-26
 **Status:** Approved
 
 ## Problem
 
-Atualmente, cada execução do squad sobrescreve os mesmos arquivos em `output/drafts/`. Não há separação entre execuções. Futuramente, cada run pode gerar múltiplos arquivos (imagens, assets, etc.) que precisam estar agrupados.
+Atualmente, cada execução do team sobrescreve os mesmos arquivos em `output/drafts/`. Não há separação entre execuções. Futuramente, cada run pode gerar múltiplos arquivos (imagens, assets, etc.) que precisam estar agrupados.
 
 ## Solution
 
@@ -14,7 +14,7 @@ Cada execução do pipeline cria uma subpasta dedicada dentro de `output/`, nome
 ## Output Structure
 
 ```
-squads/{name}/output/
+teams/{name}/output/
 ├── drafts/                                    ← staging temporário (step 1)
 │   └── research.md                            ← sobrescrito a cada run
 ├── 2026-02-26-inteligencia-artificial/
@@ -33,13 +33,13 @@ squads/{name}/output/
 
 ## New Variable: `{run-folder}`
 
-The Pipeline Runner creates a `{run-folder}` variable after step 1 completes, pointing to `{squad-root}/output/YYYY-MM-DD-{slug}/`.
+The Pipeline Runner creates a `{run-folder}` variable after step 1 completes, pointing to `{team-root}/output/YYYY-MM-DD-{slug}/`.
 
 ## Execution Flow
 
 ### Step 1 (Research) — uses staging area
 
-1. Step 1 executes normally, saving to `{squad-root}/output/drafts/research.md` (existing path, acts as staging)
+1. Step 1 executes normally, saving to `{team-root}/output/drafts/research.md` (existing path, acts as staging)
 2. User completes step 1 checkpoint (selects findings)
 
 ### Run Folder Creation — after step 1 checkpoint
@@ -51,7 +51,7 @@ The Pipeline Runner creates a `{run-folder}` variable after step 1 completes, po
    - Replace spaces and special characters with `-`
    - Truncate at ~50 characters
    - If folder already exists, append `-2`, `-3`, etc.
-5. Runner creates `{run-folder}` = `{squad-root}/output/YYYY-MM-DD-{slug}/`
+5. Runner creates `{run-folder}` = `{team-root}/output/YYYY-MM-DD-{slug}/`
 6. Runner creates `{run-folder}/drafts/` and `{run-folder}/final/`
 7. Runner moves `output/drafts/research.md` → `{run-folder}/drafts/research.md`
 
@@ -64,7 +64,7 @@ The Pipeline Runner creates a `{run-folder}` variable after step 1 completes, po
 
 10. Final output saved to `{run-folder}/final/{filename}.md`
 11. Completion banner shows the run folder path
-12. Squad memory updated as usual
+12. Team memory updated as usual
 
 ## Slug Generation Rules
 
@@ -80,23 +80,23 @@ The Pipeline Runner creates a `{run-folder}` variable after step 1 completes, po
 - `_conectese/core/runner.pipeline.md` — Add "Run Folder Creation" section after step execution rules
 - `templates/_conectese/core/runner.pipeline.md` — Mirror same change
 
-### Step files (existing squad)
-- `squads/instagram-content/pipeline/steps/step-01-research.md` — Keep `outputFile` as staging path (no change)
-- `squads/instagram-content/pipeline/steps/step-02-ideation.md` — `inputFile`/`outputFile` → `{run-folder}/drafts/`
-- `squads/instagram-content/pipeline/steps/step-03-writing.md` — `inputFile`/`outputFile` → `{run-folder}/drafts/`
-- `squads/instagram-content/pipeline/steps/step-04-review.md` — `inputFile`/`outputFile` → `{run-folder}/drafts/`
+### Step files (existing team)
+- `teams/instagram-content/pipeline/steps/step-01-research.md` — Keep `outputFile` as staging path (no change)
+- `teams/instagram-content/pipeline/steps/step-02-ideation.md` — `inputFile`/`outputFile` → `{run-folder}/drafts/`
+- `teams/instagram-content/pipeline/steps/step-03-writing.md` — `inputFile`/`outputFile` → `{run-folder}/drafts/`
+- `teams/instagram-content/pipeline/steps/step-04-review.md` — `inputFile`/`outputFile` → `{run-folder}/drafts/`
 
 ### Step templates
-- `templates/squads/instagram-content/pipeline/steps/step-02-ideation.md` — Same as above
-- `templates/squads/instagram-content/pipeline/steps/step-03-writing.md` — Same as above
-- `templates/squads/instagram-content/pipeline/steps/step-04-review.md` — Same as above
+- `templates/teams/instagram-content/pipeline/steps/step-02-ideation.md` — Same as above
+- `templates/teams/instagram-content/pipeline/steps/step-03-writing.md` — Same as above
+- `templates/teams/instagram-content/pipeline/steps/step-04-review.md` — Same as above
 
-### Squad YAML
-- `squads/instagram-content/squad.yaml` — Update output paths in pipeline steps
-- `templates/squads/instagram-content/squad.yaml` (if exists) — Mirror
+### Team YAML
+- `teams/instagram-content/team.yaml` — Update output paths in pipeline steps
+- `templates/teams/instagram-content/team.yaml` (if exists) — Mirror
 
 ### Architect
-- `_conectese/core/architect.agent.yaml` — Update squad creation instructions re: output structure
+- `_conectese/core/architect.agent.yaml` — Update team creation instructions re: output structure
 
 ### Pipeline State
 - Add `run-folder-path` to tracked pipeline state in runner

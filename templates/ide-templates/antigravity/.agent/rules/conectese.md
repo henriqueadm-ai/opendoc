@@ -9,8 +9,8 @@ This project uses **Conectese**, a multi-agent orchestration framework.
 ## Quick Start
 
 Type `/conectese` to open the main menu, or use any of these commands:
-- `/conectese create` — Create a new squad
-- `/conectese run <name>` — Run a squad
+- `/conectese create` — Create a new team
+- `/conectese run <name>` — Run a team
 - `/conectese help` — See all commands
 
 ## Directory Structure
@@ -18,17 +18,17 @@ Type `/conectese` to open the main menu, or use any of these commands:
 - `_conectese/` — Conectese core files (do not modify manually)
 - `_conectese/_memory/` — Persistent memory (company context, preferences)
 - `skills/` — Installed skills (integrations, scripts, prompts)
-- `squads/` — User-created squads
-- `squads/{name}/_investigations/` — Sherlock content investigations (profile analyses)
-- `squads/{name}/output/` — Generated content and files
+- `teams/` — User-created teams
+- `teams/{name}/_investigations/` — Sherlock content investigations (profile analyses)
+- `teams/{name}/output/` — Generated content and files
 - `_conectese/_browser_profile/` — Persistent browser sessions (login cookies, localStorage)
 
 ## How It Works
 
 1. The `/conectese` workflow is the entry point for all interactions
-2. The **Architect** agent creates and modifies squads
-3. During squad creation, the **Sherlock** investigator can analyze reference profiles (Instagram, YouTube, Twitter/X, LinkedIn) to extract real content patterns
-4. The **Pipeline Runner** executes squads automatically
+2. The **Architect** agent creates and modifies teams
+3. During team creation, the **Sherlock** investigator can analyze reference profiles (Instagram, YouTube, Twitter/X, LinkedIn) to extract real content patterns
+4. The **Pipeline Runner** executes teams automatically
 5. All tasks run inline and sequentially (no background subagents)
 6. Checkpoints pause execution for user input/approval
 
@@ -36,8 +36,8 @@ Type `/conectese` to open the main menu, or use any of these commands:
 
 - Always use `/conectese` commands to interact with the system
 - Do not manually edit files in `_conectese/core/` unless you know what you're doing
-- Squad YAML files can be edited manually if needed, but prefer using `/conectese edit`
-- Company context in `_conectese/_memory/company.md` is loaded for every squad run
+- Team YAML files can be edited manually if needed, but prefer using `/conectese edit`
+- Company context in `_conectese/_memory/company.md` is loaded for every team run
 
 ## Antigravity Environment: Subagents
 

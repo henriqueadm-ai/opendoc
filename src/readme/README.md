@@ -1,6 +1,6 @@
 # Conectese
 
-Crie squads de agentes de IA que trabalham juntos — direto do seu IDE.
+Crie times de agentes de IA que trabalham juntos — direto do seu IDE.
 
 ## Como Usar
 
@@ -10,34 +10,34 @@ Abra esta pasta no seu IDE e digite:
 /conectese
 ```
 
-Isso abre o menu principal. De lá você pode criar squads, executá-los e mais.
+Isso abre o menu principal. De lá você pode criar times, executá-los e mais.
 
 Você também pode ser direto — descreva o que quer em linguagem natural:
 
 ```
-/conectese crie um squad para escrever posts no LinkedIn sobre IA
-/conectese execute o squad meu-squad
+/conectese crie um time para escrever posts no LinkedIn sobre IA
+/conectese execute o time meu-time
 ```
 
-## Criar um Squad
+## Criar um Time
 
-Digite `/conectese` e escolha "Criar squad" no menu, ou seja direto:
-
-```
-/conectese crie um squad para [o que você precisa]
-```
-
-O Arquiteto fará algumas perguntas, projetará o squad e configurará tudo automaticamente.
-
-## Executar um Squad
-
-Digite `/conectese` e escolha "Executar squad" no menu, ou seja direto:
+Digite `/conectese` e escolha "Criar time" no menu, ou seja direto:
 
 ```
-/conectese execute o squad <nome-do-squad>
+/conectese crie um time para [o que você precisa]
 ```
 
-O squad executa automaticamente, pausando apenas nos checkpoints de decisão.
+O Arquiteto fará algumas perguntas, projetará o time e configurará tudo automaticamente.
+
+## Executar um Time
+
+Digite `/conectese` e escolha "Executar time" no menu, ou seja direto:
+
+```
+/conectese execute o time <nome-do-time>
+```
+
+O time executa automaticamente, pausando apenas nos checkpoints de decisão.
 
 ## Escritório Virtual
 
@@ -52,7 +52,7 @@ O Escritório Virtual é uma interface visual 2D que mostra seus agentes trabalh
 **Passo 2 — Sirva localmente** (no terminal):
 
 ```bash
-npx serve squads/<nome-do-squad>/dashboard
+npx serve teams/<nome-do-time>/dashboard
 ```
 
 **Passo 3 —** Abra `http://localhost:3000` no seu navegador.
@@ -61,7 +61,7 @@ npx serve squads/<nome-do-squad>/dashboard
 
 # Conectese (English)
 
-Create AI squads that work together — right from your IDE.
+Create AI teams that work together — right from your IDE.
 
 ## How to Use
 
@@ -71,34 +71,34 @@ Open this folder in your IDE and type:
 /conectese
 ```
 
-This opens the main menu. From there you can create squads, run them, and more.
+This opens the main menu. From there you can create teams, run them, and more.
 
 You can also be direct — describe what you want in plain language:
 
 ```
-/conectese create a squad for writing LinkedIn posts about AI
-/conectese run my-squad
+/conectese create a team for writing LinkedIn posts about AI
+/conectese run my-team
 ```
 
-## Create a Squad
+## Create a Team
 
-Type `/conectese` and choose "Create squad" from the menu, or be direct:
-
-```
-/conectese create a squad for [what you need]
-```
-
-The Architect will ask a few questions, design the squad, and set everything up automatically.
-
-## Run a Squad
-
-Type `/conectese` and choose "Run squad" from the menu, or be direct:
+Type `/conectese` and choose "Create team" from the menu, or be direct:
 
 ```
-/conectese run the <squad-name> squad
+/conectese create a team for [what you need]
 ```
 
-The squad runs automatically, pausing only at decision checkpoints.
+The Architect will ask a few questions, design the team, and set everything up automatically.
+
+## Run a Team
+
+Type `/conectese` and choose "Run team" from the menu, or be direct:
+
+```
+/conectese run the <team-name> team
+```
+
+The team runs automatically, pausing only at decision checkpoints.
 
 ## Virtual Office
 
@@ -113,7 +113,7 @@ The Virtual Office is a 2D visual interface that shows your agents working in re
 **Step 2 — Serve it locally** (in terminal):
 
 ```bash
-npx serve squads/<squad-name>/dashboard
+npx serve teams/<team-name>/dashboard
 ```
 
 **Step 3 —** Open `http://localhost:3000` in your browser.

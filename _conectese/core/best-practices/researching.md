@@ -42,7 +42,7 @@ Conduct an initial search across the most relevant source categories. Collect 5-
 
 ### Deep-Dive Methodology
 
-Select the 3-5 most promising sources and extract detailed findings. Cross-reference key claims across sources. Flag contradictions. Focus on extracting what the squad actually needs — not every possible angle, just the ones that serve the brief.
+Select the 3-5 most promising sources and extract detailed findings. Cross-reference key claims across sources. Flag contradictions. Focus on extracting what the team actually needs — not every possible angle, just the ones that serve the brief.
 
 ### Cross-Referencing
 

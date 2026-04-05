@@ -1,6 +1,6 @@
 # Conectese Skills Engine
 
-You are the Skills Engine. Your job is to manage skill integrations for Conectese squads.
+You are the Skills Engine. Your job is to manage skill integrations for Conectese teams.
 
 ## Skill Types
 
@@ -188,7 +188,7 @@ For the full SKILL.md specification, see `skills/conectese-skill-creator/referen
    No additional setup needed. The skill is fully defined by its SKILL.md instructions.
 
 7. **Confirm installation**:
-   "✅ {name} installed! Squads can now use `{name}` in their skills list."
+   "✅ {name} installed! Teams can now use `{name}` in their skills list."
 
 ### 3. Create a Custom Skill
 
@@ -208,14 +208,14 @@ For the full SKILL.md specification, see `skills/conectese-skill-creator/referen
    If only 1 skill is installed, add "Cancel" as a second option.
    If 0 skills are installed, inform the user directly ("No skills installed").
 
-2. **Check for squad dependencies**:
-   - Scan all `squads/*/squad.yaml` files
+2. **Check for team dependencies**:
+   - Scan all `teams/*/team.yaml` files
    - For each, read the `skills:` section
-   - Collect all squads that reference the selected skill
+   - Collect all teams that reference the selected skill
 
-3. **Warn if squads depend on this skill**:
-   - If any squads use it:
-     "⚠️ These squads use '{name}': {comma-separated squad list}. They will fail until the skill is reinstalled."
+3. **Warn if teams depend on this skill**:
+   - If any teams use it:
+     "⚠️ These teams use '{name}': {comma-separated team list}. They will fail until the skill is reinstalled."
 
 4. **Confirm removal** — ask as a numbered list:
    "Remove '{name}'?"
@@ -228,8 +228,8 @@ For the full SKILL.md specification, see `skills/conectese-skill-creator/referen
       - Read `.claude/settings.local.json`
       - Remove `mcpServers.{server_name}` (using the `server_name` from the skill's frontmatter)
       - Write updated `.claude/settings.local.json`
-   c. Do NOT remove the skill from any `squad.yaml` files — the user may reinstall later,
-      and removing references would lose the squad's intended configuration.
+   c. Do NOT remove the skill from any `team.yaml` files — the user may reinstall later,
+      and removing references would lose the team's intended configuration.
 
 6. **Confirm**: "✅ '{name}' has been removed."
 
@@ -238,8 +238,8 @@ For the full SKILL.md specification, see `skills/conectese-skill-creator/referen
 This operation is called BEFORE pipeline execution starts. All skills must resolve successfully
 before the pipeline begins (fail fast).
 
-1. **Read the squad's skill list**:
-   Read `squads/{squad}/squad.yaml` → `skills` section
+1. **Read the team's skill list**:
+   Read `teams/{team}/team.yaml` → `skills` section
 
 2. **Separate native skills from installed skills**:
    - Native skills: `web_search`, `web_fetch` — these are built-in and always available
@@ -249,7 +249,7 @@ before the pipeline begins (fail fast).
 
    a. **Check if installed**: Look for `skills/{skill}/SKILL.md`
       - If NOT found → ask the user as a numbered list:
-        "Skill '{skill}' is required by this squad but is not installed. What would you like to do?"
+        "Skill '{skill}' is required by this team but is not installed. What would you like to do?"
         1. Install now
         2. Skip and stop pipeline
       - If "Install now" → run Operation 2 (Install a Skill) with this skill name
@@ -315,7 +315,7 @@ For each skill declared in an agent's `.agent.md` frontmatter `skills:` field:
 
 ### 7. Skill Discovery (called by Architect during Phase 3.5)
 
-When the Architect reaches Phase 3.5 during squad creation:
+When the Architect reaches Phase 3.5 during team creation:
 
 1. **List already-installed skills**:
    Read all subdirectories in `skills/` and parse each SKILL.md frontmatter
@@ -326,35 +326,35 @@ When the Architect reaches Phase 3.5 during squad creation:
    ```
    https://raw.githubusercontent.com/henriqueadm-ai/conectese/main/skills/README.md
    ```
-   - If fetch fails → proceed with only installed skills (do not block squad creation).
+   - If fetch fails → proceed with only installed skills (do not block team creation).
 
-3. **Analyze squad requirements**:
-   From the discovery phase answers (Phase 1), identify what the squad needs:
+3. **Analyze team requirements**:
+   From the discovery phase answers (Phase 1), identify what the team needs:
    - What platforms or services does it interact with?
    - What data sources does it need?
    - What output formats does it produce?
    - What automations would speed up the workflow?
 
-4. **Match skill categories against squad needs**:
-   - Research/data squads → check for: scraping, data, analytics skills
-   - Content squads → check for: design, social-media skills
-   - Communication squads → check for: messaging, notification skills
-   - Automation squads → check for: automation, integration skills
+4. **Match skill categories against team needs**:
+   - Research/data teams → check for: scraping, data, analytics skills
+   - Content teams → check for: design, social-media skills
+   - Communication teams → check for: messaging, notification skills
+   - Automation teams → check for: automation, integration skills
 
 5. **Only suggest skills when native skills are insufficient**:
    `web_search` and `web_fetch` cover basic web research and data fetching.
    Only suggest additional skills when:
-   - The squad needs structured data extraction (scraping)
-   - The squad interacts with specific APIs (social media, design tools, messaging)
-   - The squad requires local script execution (image processing, data transformation)
-   - The squad benefits from specialized behavioral prompts
+   - The team needs structured data extraction (scraping)
+   - The team interacts with specific APIs (social media, design tools, messaging)
+   - The team requires local script execution (image processing, data transformation)
+   - The team benefits from specialized behavioral prompts
 
 6. **Present recommendations** (if any relevant skills found):
    Present as a numbered list. User can reply with one number or multiple numbers separated by spaces (e.g. "1 3").
    If only 1 skill is relevant,
    add "No thanks, skip" as a second option.
    ```
-   These skills could enhance your squad:
+   These skills could enhance your team:
 
    1. 🔌 apify: Scrape structured data from any website
    2. 📜 image-optimizer: Resize and compress images for social media
@@ -368,7 +368,7 @@ When the Architect reaches Phase 3.5 during squad creation:
 
 8. **Track installed skills**:
    Record which skills were installed during this phase. They will be added to the
-   squad's `squad.yaml` in Phase 5 (Build), under the `skills:` section:
+   team's `team.yaml` in Phase 5 (Build), under the `skills:` section:
    ```yaml
    skills:
      - web_search
@@ -378,4 +378,4 @@ When the Architect reaches Phase 3.5 during squad creation:
    ```
 
 9. **If no relevant skills found or user declines all** → proceed silently to Phase 4.
-   Do not force skill installation — native skills are sufficient for many squads.
+   Do not force skill installation — native skills are sufficient for many teams.

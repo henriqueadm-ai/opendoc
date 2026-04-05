@@ -5,7 +5,7 @@
 
 ## Summary
 
-Replace the Figma MCP tool in the Conectese registry with Canva Connect MCP. The Architect auto-suggests Canva when creating squads that need design/visual content. No structural changes to the tools engine.
+Replace the Figma MCP tool in the Conectese registry with Canva Connect MCP. The Architect auto-suggests Canva when creating teams that need design/visual content. No structural changes to the tools engine.
 
 ## What Changes
 
@@ -60,12 +60,12 @@ Remove entirely from both `_conectese/tools/registry/` and `templates/_conectese
 Replace any mentions of "figma" in:
 - Architect agent (Phase 3.5 tool discovery)
 - Runner pipeline (if any hardcoded references)
-- Existing squad definitions (if any reference figma)
+- Existing team definitions (if any reference figma)
 - Template files
 
 ### 4. No structural changes
 
-The Architect Phase 3.5 tool discovery works by matching `categories` and `useful_for` fields. Canva has the right categories (`design`, `ui`, `assets`) and use cases (`content-design`, `brand-guidelines`, `visual-content`) to be auto-suggested for content/design squads.
+The Architect Phase 3.5 tool discovery works by matching `categories` and `useful_for` fields. Canva has the right categories (`design`, `ui`, `assets`) and use cases (`content-design`, `brand-guidelines`, `visual-content`) to be auto-suggested for content/design teams.
 
 ## Technical Details
 

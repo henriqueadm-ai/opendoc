@@ -1,5 +1,5 @@
 ---
-description: Conectese — Create and run AI agent squads for your business
+description: Conectese — Create and run AI agent teams for your business
 ---
 
 You are now activating the Conectese system. Follow these steps IN ORDER:
@@ -32,13 +32,13 @@ If `company.md` is empty or contains `<!-- NOT CONFIGURED -->`:
 Present the following numbered menu and ask the user to reply with a number:
 
 **Primary menu:**
-1. **Create a new squad** — Describe what you need and I'll build a squad for you
-2. **Run an existing squad** — Execute a squad's pipeline
-3. **My squads** — View, edit, or delete your squads
+1. **Create a new team** — Describe what you need and I'll build a team for you
+2. **Run an existing team** — Execute a team's pipeline
+3. **My teams** — View, edit, or delete your teams
 4. **More options** — Skills, company profile, settings, and help
 
 If the user replies "4" or types "More options", present a second numbered menu:
-1. **Skills** — Browse, install, create, and manage skills for your squads
+1. **Skills** — Browse, install, create, and manage skills for your teams
 2. **Company profile** — View or update your company information
 3. **Settings & Help** — Language, preferences, configuration, and help
 
@@ -50,19 +50,19 @@ Parse user input and route to the appropriate action:
 |---------------|--------|
 | `/conectese` or `/conectese menu` | Show main menu |
 | `/conectese help` | Show help text |
-| `/conectese create <description>` | Load Architect → Create Squad flow |
-| `/conectese list` | List all squads in `squads/` directory |
-| `/conectese run <name>` | Load Pipeline Runner → Execute squad |
-| `/conectese edit <name> <changes>` | Load Architect → Edit Squad flow |
+| `/conectese create <description>` | Load Architect → Create Team flow |
+| `/conectese list` | List all teams in `teams/` directory |
+| `/conectese run <name>` | Load Pipeline Runner → Execute team |
+| `/conectese edit <name> <changes>` | Load Architect → Edit Team flow |
 | `/conectese skills` | Load Skills Engine → Show skills menu |
 | `/conectese install <name>` | Install a skill from the catalog |
 | `/conectese uninstall <name>` | Remove an installed skill |
-| `/conectese delete <name>` | Confirm and delete squad directory |
+| `/conectese delete <name>` | Confirm and delete team directory |
 | `/conectese edit-company` | Re-run company profile setup |
 | `/conectese show-company` | Display company.md contents |
 | `/conectese settings` | Show/edit preferences.md |
 | `/conectese reset` | Confirm and reset all configuration |
-| Natural language about squads | Infer intent and route accordingly |
+| Natural language about teams | Infer intent and route accordingly |
 
 ## Loading Agents
 
@@ -75,13 +75,13 @@ When a specific agent needs to be activated:
 
 ## Loading the Pipeline Runner
 
-When running a squad:
+When running a team:
 
-1. Read `squads/{name}/squad.yaml` to understand the pipeline
-2. Read `squads/{name}/squad-party.csv` to load all agent personas
+1. Read `teams/{name}/team.yaml` to understand the pipeline
+2. Read `teams/{name}/team-party.csv` to load all agent personas
 3. For each agent in the party CSV, also read their full `.agent.md` file from agents/ directory
 4. Load company context from `_conectese/_memory/company.md`
-5. Load squad memory from `squads/{name}/_memory/memories.md`
+5. Load team memory from `teams/{name}/_memory/memories.md`
 6. Read the pipeline runner instructions from `_conectese/core/runner.pipeline.md`
 7. Execute the pipeline step by step following runner instructions
 
@@ -95,8 +95,8 @@ When running a squad:
 ## Critical Rules
 
 - NEVER skip the onboarding if company.md is not configured
-- ALWAYS load company context before running any squad
+- ALWAYS load company context before running any team
 - ALWAYS present checkpoints to the user — never skip them
-- ALWAYS save outputs to the squad's output directory
+- ALWAYS save outputs to the team's output directory
 - When switching personas (inline execution), clearly indicate which agent is speaking
-- After each pipeline run, update the squad's memories.md with key learnings
+- After each pipeline run, update the team's memories.md with key learnings

@@ -76,7 +76,7 @@ O Escritório Virtual é uma interface visual 2D que mostra seus agentes trabalh
 **Passo 2 — Sirva localmente** (no terminal):
 
 ```bash
-npx serve squads/<nome-do-time>/dashboard
+npx serve teams/<nome-do-time>/dashboard
 ```
 
 **Passo 3 —** Abra `http://localhost:3000` no seu navegador.
@@ -211,7 +211,7 @@ The Virtual Office is a 2D interface showing your AI legal team working in real 
 
 **Step 2 — Serve it locally** (in terminal):
 ```bash
-npx serve squads/<team-name>/dashboard
+npx serve teams/<team-name>/dashboard
 ```
 
 **Step 3 —** Open `http://localhost:3000` in your browser.

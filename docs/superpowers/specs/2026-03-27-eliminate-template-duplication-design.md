@@ -28,7 +28,7 @@ Use canonical source directories directly in `init.js` and `update.js`, eliminat
 - `_conectese/.conectese-version` — distribution version marker
 - `ide-templates/` — IDE-specific config files
 - `skills/` — bundled skill templates
-- `squads/` — example squad scaffolding
+- `teams/` — example team scaffolding
 - `package.json` — user project package.json
 - `.gitignore` — user project gitignore
 
@@ -55,13 +55,13 @@ const DASHBOARD_EXCLUDES = [
   'node_modules',
   'dist',
   'tsconfig.tsbuildinfo',
-  'squads',
+  'teams',
 ];
 ```
 
 - For `init`: skip files that already exist (same as current `copyCommonTemplates` behavior)
 - For `update`: backup existing files before overwriting, respect `PROTECTED_PATHS`
-- Dashboard copy excludes local-only artifacts: `node_modules/`, `dist/`, `tsconfig.tsbuildinfo`, `squads/`
+- Dashboard copy excludes local-only artifacts: `node_modules/`, `dist/`, `tsconfig.tsbuildinfo`, `teams/`
 
 ### Changes to `init.js`
 

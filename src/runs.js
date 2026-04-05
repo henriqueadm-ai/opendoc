@@ -3,16 +3,16 @@ import { join } from 'node:path';
 
 const MAX_RUNS = 20;
 
-export async function listRuns(squadName, targetDir = process.cwd()) {
-  const squadsDir = join(targetDir, 'squads');
-  let squadNames;
+export async function listRuns(teamName, targetDir = process.cwd()) {
+  const teamsDir = join(targetDir, 'teams');
+  let teamNames;
 
   try {
-    if (squadName) {
-      squadNames = [squadName];
+    if (teamName) {
+      teamNames = [teamName];
     } else {
-      const entries = await readdir(squadsDir, { withFileTypes: true });
-      squadNames = entries.filter((e) => e.isDirectory()).map((e) => e.name);
+      const entries = await readdir(teamsDir, { withFileTypes: true });
+      teamNames = entries.filter((e) => e.isDirectory()).map((e) => e.name);
     }
   } catch {
     return [];
@@ -20,8 +20,8 @@ export async function listRuns(squadName, targetDir = process.cwd()) {
 
   const runs = [];
 
-  for (const name of squadNames) {
-    const outputDir = join(squadsDir, name, 'output');
+  for (const name of teamNames) {
+    const outputDir = join(teamsDir, name, 'output');
     let runDirs;
     try {
       const entries = await readdir(outputDir, { withFileTypes: true });
@@ -31,7 +31,7 @@ export async function listRuns(squadName, targetDir = process.cwd()) {
     }
 
     for (const runId of runDirs) {
-      const run = { squad: name, runId, status: 'unknown', steps: null, duration: null };
+      const run = { team: name, runId, status: 'unknown', steps: null, duration: null };
 
       try {
         const raw = await readFile(join(outputDir, runId, 'state.json'), 'utf-8');
@@ -73,11 +73,11 @@ export function printRuns(runs) {
     return;
   }
 
-  let currentSquad = null;
+  let currentTeam = null;
   for (const run of runs) {
-    if (run.squad !== currentSquad) {
-      currentSquad = run.squad;
-      console.log(`\n  ${currentSquad}`);
+    if (run.team !== currentTeam) {
+      currentTeam = run.team;
+      console.log(`\n  ${currentTeam}`);
       console.log('  ' + '─'.repeat(50));
     }
     const parts = [`    ${run.runId}`];

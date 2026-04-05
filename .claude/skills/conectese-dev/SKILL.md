@@ -47,7 +47,7 @@ Understand this before checking anything:
   Currently: `bin/`, `src/`, `agents/`, `skills/`, `templates/`.
 
 - **`src/update.js:PROTECTED_PATHS`** → Directories NEVER overwritten during update:
-  `_conectese/_memory`, `_conectese/_investigations`, `agents`, `squads`.
+  `_conectese/_memory`, `_conectese/_investigations`, `agents`, `teams`.
 
 ## Multi-IDE Architecture
 
@@ -161,7 +161,7 @@ For each changed **multi-file** skill:
    - `_conectese/_memory` (user preferences and company context)
    - `_conectese/_investigations` (Sherlock investigation data)
    - `agents` (user-installed/customized agents)
-   - `squads` (user-created squads)
+   - `teams` (user-created teams)
 4. If a new user-owned top-level directory was added to the project,
    check if it should be in PROTECTED_PATHS
 

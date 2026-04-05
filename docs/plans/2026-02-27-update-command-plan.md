@@ -4,7 +4,7 @@
 
 **Goal:** Add `npx conectese-terminal update` that re-applies the latest system templates to an initialized project while preserving all user data.
 
-**Architecture:** A new `src/update.js` module with an exported `update()` function mirrors the structure of `src/init.js`. It re-copies all template files to the project, skipping three protected directories (`_conectese/_memory/`, `_conectese/_investigations/`, `squads/`). Version is tracked in `_conectese/.conectese-version`. Two shared utilities (`getTemplateEntries`, `loadSavedLocale`) are exported from `init.js` and reused.
+**Architecture:** A new `src/update.js` module with an exported `update()` function mirrors the structure of `src/init.js`. It re-copies all template files to the project, skipping three protected directories (`_conectese/_memory/`, `_conectese/_investigations/`, `teams/`). Version is tracked in `_conectese/.conectese-version`. Two shared utilities (`getTemplateEntries`, `loadSavedLocale`) are exported from `init.js` and reused.
 
 **Tech Stack:** Node.js 20+ ESM, `node:fs/promises`, `node:path`, `node:test` (built-in test runner)
 
@@ -182,7 +182,7 @@ Add the following to each locale file (add at the end of the JSON object, before
   "updateStartingUnknown": "Updating Conectese (unknown version) → {new}...",
   "updatedFile": "📄 Updated {path}",
   "updateSuccess": "✅ Conectese {version} installed successfully!",
-  "updatePreserved": "✓ Preserved: _memory/, _investigations/, squads/",
+  "updatePreserved": "✓ Preserved: _memory/, _investigations/, teams/",
   "updateFileCount": "✓ Updated: {count} system files",
   "updateLatestHint": "💡 Tip: Use 'npx conectese-terminal@latest update' to always get the newest version."
 ```
@@ -194,7 +194,7 @@ Add the following to each locale file (add at the end of the JSON object, before
   "updateStartingUnknown": "Atualizando Conectese (versão desconhecida) → {new}...",
   "updatedFile": "📄 Atualizado {path}",
   "updateSuccess": "✅ Conectese {version} instalado com sucesso!",
-  "updatePreserved": "✓ Preservado: _memory/, _investigations/, squads/",
+  "updatePreserved": "✓ Preservado: _memory/, _investigations/, teams/",
   "updateFileCount": "✓ Atualizados: {count} arquivos do sistema",
   "updateLatestHint": "💡 Dica: Use 'npx conectese-terminal@latest update' para sempre obter a versão mais recente."
 ```
@@ -206,7 +206,7 @@ Add the following to each locale file (add at the end of the JSON object, before
   "updateStartingUnknown": "Actualizando Conectese (versión desconocida) → {new}...",
   "updatedFile": "📄 Actualizado {path}",
   "updateSuccess": "✅ ¡Conectese {version} instalado correctamente!",
-  "updatePreserved": "✓ Preservado: _memory/, _investigations/, squads/",
+  "updatePreserved": "✓ Preservado: _memory/, _investigations/, teams/",
   "updateFileCount": "✓ Actualizados: {count} archivos del sistema",
   "updateLatestHint": "💡 Consejo: Use 'npx conectese-terminal@latest update' para obtener siempre la versión más reciente."
 ```
@@ -218,7 +218,7 @@ Add the following to each locale file (add at the end of the JSON object, before
   "updateStartingUnknown": "Mise à jour de Conectese (version inconnue) → {new}...",
   "updatedFile": "📄 Mis à jour {path}",
   "updateSuccess": "✅ Conectese {version} installé avec succès !",
-  "updatePreserved": "✓ Préservé : _memory/, _investigations/, squads/",
+  "updatePreserved": "✓ Préservé : _memory/, _investigations/, teams/",
   "updateFileCount": "✓ Mis à jour : {count} fichiers système",
   "updateLatestHint": "💡 Conseil : Utilisez 'npx conectese-terminal@latest update' pour toujours obtenir la dernière version."
 ```
@@ -230,7 +230,7 @@ Add the following to each locale file (add at the end of the JSON object, before
   "updateStartingUnknown": "Conectese wird aktualisiert (unbekannte Version) → {new}...",
   "updatedFile": "📄 Aktualisiert {path}",
   "updateSuccess": "✅ Conectese {version} erfolgreich installiert!",
-  "updatePreserved": "✓ Erhalten: _memory/, _investigations/, squads/",
+  "updatePreserved": "✓ Erhalten: _memory/, _investigations/, teams/",
   "updateFileCount": "✓ Aktualisiert: {count} Systemdateien",
   "updateLatestHint": "💡 Tipp: Verwenden Sie 'npx conectese-terminal@latest update', um immer die neueste Version zu erhalten."
 ```
@@ -242,7 +242,7 @@ Add the following to each locale file (add at the end of the JSON object, before
   "updateStartingUnknown": "Aggiornamento Conectese (versione sconosciuta) → {new}...",
   "updatedFile": "📄 Aggiornato {path}",
   "updateSuccess": "✅ Conectese {version} installato con successo!",
-  "updatePreserved": "✓ Preservato: _memory/, _investigations/, squads/",
+  "updatePreserved": "✓ Preservato: _memory/, _investigations/, teams/",
   "updateFileCount": "✓ Aggiornati: {count} file di sistema",
   "updateLatestHint": "💡 Suggerimento: Usa 'npx conectese-terminal@latest update' per ottenere sempre la versione più recente."
 ```
@@ -254,7 +254,7 @@ Add the following to each locale file (add at the end of the JSON object, before
   "updateStartingUnknown": "Conectese（バージョン不明）→ {new} に更新中...",
   "updatedFile": "📄 更新しました {path}",
   "updateSuccess": "✅ Conectese {version} のインストールが完了しました！",
-  "updatePreserved": "✓ 保持: _memory/, _investigations/, squads/",
+  "updatePreserved": "✓ 保持: _memory/, _investigations/, teams/",
   "updateFileCount": "✓ 更新済み: {count} 個のシステムファイル",
   "updateLatestHint": "💡 ヒント: 常に最新バージョンを入手するには 'npx conectese-terminal@latest update' を使用してください。"
 ```
@@ -266,7 +266,7 @@ Add the following to each locale file (add at the end of the JSON object, before
   "updateStartingUnknown": "正在更新 Conectese（未知版本）→ {new}...",
   "updatedFile": "📄 已更新 {path}",
   "updateSuccess": "✅ Conectese {version} 安装成功！",
-  "updatePreserved": "✓ 已保留：_memory/、_investigations/、squads/",
+  "updatePreserved": "✓ 已保留：_memory/、_investigations/、teams/",
   "updateFileCount": "✓ 已更新：{count} 个系统文件",
   "updateLatestHint": "💡 提示：使用 'npx conectese-terminal@latest update' 以始终获取最新版本。"
 ```
@@ -381,25 +381,25 @@ test('update preserves _investigations contents', async () => {
   }
 });
 
-test('update preserves squads contents', async () => {
+test('update preserves teams contents', async () => {
   const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
-    await mkdir(join(tempDir, 'squads', 'my-squad'), { recursive: true });
+    await mkdir(join(tempDir, 'teams', 'my-team'), { recursive: true });
     await writeFile(
-      join(tempDir, 'squads', 'my-squad', 'custom.md'),
-      'user squad content',
+      join(tempDir, 'teams', 'my-team', 'custom.md'),
+      'user team content',
       'utf-8'
     );
 
     await update(tempDir);
 
     const content = await readFile(
-      join(tempDir, 'squads', 'my-squad', 'custom.md'),
+      join(tempDir, 'teams', 'my-team', 'custom.md'),
       'utf-8'
     );
-    assert.equal(content, 'user squad content');
+    assert.equal(content, 'user team content');
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
@@ -474,7 +474,7 @@ const TEMPLATES_DIR = join(__dirname, '..', 'templates');
 const PROTECTED_PATHS = [
   '_conectese/_memory',
   '_conectese/_investigations',
-  'squads',
+  'teams',
 ];
 
 function isProtected(relativePath) {
@@ -632,7 +632,7 @@ Expected output:
   ...
 
   ✓ Updated: N system files
-  ✓ Preserved: _memory/, _investigations/, squads/
+  ✓ Preserved: _memory/, _investigations/, teams/
   ✅ Conectese v0.1.0 installed successfully!
 
   💡 Tip: Use 'npx conectese-terminal@latest update' to always get the newest version.

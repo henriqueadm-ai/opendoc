@@ -1,10 +1,10 @@
 ---
 base_agent: researcher
-id: "squads/instagram-carrossel/agents/researcher"
+id: "teams/instagram-carrossel/agents/researcher"
 name: "Ângela Ângulo"
 title: "Especialista em Pesquisa e Curadoria de Notícias"
 icon: "🔍"
-squad: "instagram-carrossel"
+team: "instagram-carrossel"
 execution: subagent
 skills:
   - web_search

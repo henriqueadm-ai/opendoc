@@ -1,5 +1,5 @@
 {
-  "squad": "sim-10-agentes",
+  "team": "sim-10-agentes",
   "status": "checkpoint",
   "step": { "current": 9, "total": 14, "label": "Aprovar publicação final" },
   "agents": [

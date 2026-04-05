@@ -4,9 +4,9 @@ This file contains the shared logic for all Sherlock investigations. It must be 
 
 ## Purpose
 
-When a user provides reference profile URLs during squad discovery ("follow the style of @username"), the Architect dispatches one Sherlock subagent per profile URL. Each subagent navigates to the profile using browser automation, extracts real content (captions, text, slide content, video transcriptions), and produces a structured analysis of patterns found.
+When a user provides reference profile URLs during team discovery ("follow the style of @username"), the Architect dispatches one Sherlock subagent per profile URL. Each subagent navigates to the profile using browser automation, extracts real content (captions, text, slide content, video transcriptions), and produces a structured analysis of patterns found.
 
-The investigation output feeds directly into squad data files — making agents, frameworks, quality criteria, and voice guidance grounded in real high-performing content rather than generic best practices.
+The investigation output feeds directly into team data files — making agents, frameworks, quality criteria, and voice guidance grounded in real high-performing content rather than generic best practices.
 
 ## Session Management (ALWAYS inform the user)
 
@@ -66,14 +66,14 @@ When using MCP browser tools or other automation APIs, use these JSON files as t
 When saving a browser screenshot as a file, always specify the full path:
 
 ```
-squads/{squad-name}/_investigations/{username}/screenshots/{filename}.png
+teams/{team-name}/_investigations/{username}/screenshots/{filename}.png
 ```
 
 Never save screenshots without a full output path — omitting the path saves the file to the repo root, polluting the project.
 
 For content reading and navigation, prefer snapshots (live view, no file saved) over screenshots.
 
-The `{squad-name}` value is always provided by the Architect in the Sherlock subagent prompt.
+The `{team-name}` value is always provided by the Architect in the Sherlock subagent prompt.
 
 ---
 
@@ -186,7 +186,7 @@ Users can clear all saved browser sessions at any time by deleting the `_conecte
 
 **Never fabricate data. Never declare success over empty results.**
 
-- If extraction fails for any reason, save an `error.md` file to `squads/{squad-name}/_investigations/{username}/error.md` explaining what failed and why.
+- If extraction fails for any reason, save an `error.md` file to `teams/{team-name}/_investigations/{username}/error.md` explaining what failed and why.
 - Never produce an investigation with neither `raw-content.md` nor `error.md` — one of the two must always be present.
 - If extraction is partially successful, save what was collected to `raw-content.md` with a note about what was not extracted, and do not also create `error.md` unless the partial data is too thin to be useful.
 - Maximum time per profile: 10 minutes. If extraction exceeds this, save what has been collected so far and note: "Investigation truncated at {N} contents due to time limit."
@@ -201,7 +201,7 @@ Sherlock produces two output files per investigation (per subagent). The Archite
 
 ### Raw Content File: `raw-content.md`
 
-One file per profile, saved to `squads/{squad-name}/_investigations/{username}/raw-content.md`.
+One file per profile, saved to `teams/{team-name}/_investigations/{username}/raw-content.md`.
 
 ```markdown
 # Raw Content: @{username} ({platform})
@@ -347,7 +347,7 @@ Full transcription text goes here, paragraph by paragraph.
 
 ### Pattern Analysis File: `pattern-analysis.md`
 
-One file per profile, saved to `squads/{squad-name}/_investigations/{username}/pattern-analysis.md`.
+One file per profile, saved to `teams/{team-name}/_investigations/{username}/pattern-analysis.md`.
 
 ```markdown
 # Pattern Analysis: @{username} ({platform})
@@ -442,9 +442,9 @@ Patterns found in below-average posts:
 - [Pattern]: These posts averaged [X]% lower engagement. Possible reason: [hypothesis]
 - [Pattern]: These posts averaged [X]% lower engagement. Possible reason: [hypothesis]
 
-## Recommendations for Squad
+## Recommendations for Team
 
-Five specific, actionable recommendations for how the squad should incorporate
+Five specific, actionable recommendations for how the team should incorporate
 patterns from this creator's content:
 
 1. **[Recommendation title]**: [Detailed recommendation with specific examples
@@ -464,10 +464,10 @@ patterns from this creator's content:
 
 **This file is produced by the Architect during the Design phase, not by individual Sherlock subagents.**
 
-One file per investigation (across all profiles), saved to `squads/{squad-name}/_investigations/consolidated-analysis.md`.
+One file per investigation (across all profiles), saved to `teams/{team-name}/_investigations/consolidated-analysis.md`.
 
 ```markdown
-# Consolidated Investigation: {squad-name}
+# Consolidated Investigation: {team-name}
 
 Investigated: {YYYY-MM-DD}
 Total profiles analyzed: {N}
@@ -521,7 +521,7 @@ What makes each profile's approach unique (not shared with others):
 ## Recommended Framework
 
 A synthesized framework based on the best patterns found across all profiles.
-This framework becomes the operational blueprint for the squad.
+This framework becomes the operational blueprint for the team.
 
 ### Structure Template
 The recommended content structure, synthesized from the highest-performing
@@ -570,7 +570,7 @@ The 3 most effective CTA patterns found:
 
 ### Anti-Patterns
 Patterns that were absent from successful content or present in underperforming
-content. These become "never do" rules for the squad:
+content. These become "never do" rules for the team:
 
 1. [Anti-pattern]: Found in [N] underperforming posts, absent from top performers.
 2. [Anti-pattern]: Found in [N] underperforming posts, absent from top performers.
@@ -582,11 +582,11 @@ content. These become "never do" rules for the squad:
 
 ## How the Architect Uses Sherlock Output
 
-After the investigation completes, the Architect maps findings to squad data files during Phase 3 (Extraction). Each squad data file is enriched with real-world evidence from the investigation.
+After the investigation completes, the Architect maps findings to team data files during Phase 3 (Extraction). Each team data file is enriched with real-world evidence from the investigation.
 
-### Mapping: Investigation Output to Squad Data Files
+### Mapping: Investigation Output to Team Data Files
 
-| Investigation Section | Squad Data File | What Gets Extracted |
+| Investigation Section | Team Data File | What Gets Extracted |
 |---|---|---|
 | Highest-engagement raw content | `pipeline/data/output-examples.md` | Real posts reformatted as gold-standard examples for the writer agent |
 | Anti-Patterns from consolidated analysis | `pipeline/data/anti-patterns.md` | Patterns absent from successful content become "never do" rules |
@@ -602,7 +602,7 @@ Beyond data files, investigation output enriches individual agent definitions:
 - **Writer agent persona**: Operational Framework includes real hook patterns and structure templates from the investigation. Voice Guidance uses the vocabulary signature. Output Examples are adapted from real high-performing content.
 - **Reviewer agent persona**: Quality Criteria are calibrated against real engagement metrics from investigated profiles. The reviewer knows what "high-performing" looks like because it has seen real examples.
 - **Researcher agent persona**: The research brief includes first-party data from the investigation, making the researcher's benchmarks grounded in real content, not just industry averages.
-- **Ideator agent persona** (content squads): Hook templates and angle patterns from the investigation feed directly into the ideator's framework for generating viral angles.
+- **Ideator agent persona** (content teams): Hook templates and angle patterns from the investigation feed directly into the ideator's framework for generating viral angles.
 
 ### Priority Rules
 
@@ -610,7 +610,7 @@ When investigation data conflicts with web research data:
 
 1. Investigation data (first-party, real content) takes priority over web research (third-party, aggregated)
 2. Patterns found across multiple investigated profiles carry more weight than single-profile patterns
-3. The Architect notes the source of each data point in the squad data files: "[Source: Investigation — @username]" vs "[Source: Web research — URL]"
+3. The Architect notes the source of each data point in the team data files: "[Source: Investigation — @username]" vs "[Source: Web research — URL]"
 
 ---
 
@@ -668,12 +668,12 @@ For LinkedIn:
 
 ### Smart Recommendations
 
-Sherlock recommends extraction settings based on the squad type:
+Sherlock recommends extraction settings based on the team type:
 
-- **Content creation squads** (writing, copywriting, posts): Recommend "Carousels + Reels" on Instagram, "Threads only" on Twitter, "Long-form posts" on LinkedIn. These content types have the highest signal for writing patterns.
-- **Video squads** (YouTube, TikTok, Reels): Recommend "Reels only" on Instagram, "Most recent videos" on YouTube. Focus on video content and transcriptions.
-- **Strategy/analysis squads**: Recommend "All types" with "deep dive" quantity. Maximum data for pattern analysis.
-- **General squads**: Recommend "standard" quantity with "all types." Balanced approach.
+- **Content creation teams** (writing, copywriting, posts): Recommend "Carousels + Reels" on Instagram, "Threads only" on Twitter, "Long-form posts" on LinkedIn. These content types have the highest signal for writing patterns.
+- **Video teams** (YouTube, TikTok, Reels): Recommend "Reels only" on Instagram, "Most recent videos" on YouTube. Focus on video content and transcriptions.
+- **Strategy/analysis teams**: Recommend "All types" with "deep dive" quantity. Maximum data for pattern analysis.
+- **General teams**: Recommend "standard" quantity with "all types." Balanced approach.
 
 ### Timeout and Error Handling
 

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DIR = path.join(__dirname, 'squads', 'conectese-case');
+const DIR = path.join(__dirname, 'teams', 'conectese-case');
 if (!fs.existsSync(DIR)) {
   fs.mkdirSync(DIR, { recursive: true });
 }
@@ -61,7 +61,7 @@ stages:
 fs.writeFileSync(path.join(DIR, 'pipeline.yaml'), pipelineYaml, 'utf8');
 
 const stateJson = {
-  "squad": "conectese-case",
+  "team": "conectese-case",
   "status": "idle",
   "step": { "current": 0, "total": 6, "label": "Pipeline Pronto" },
   "agents": [

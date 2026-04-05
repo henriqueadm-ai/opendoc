@@ -1,4 +1,4 @@
-# Changes-2: Corrections After First Squad Test
+# Changes-2: Corrections After First Team Test
 
 **Date:** 2026-03-30
 **Source:** User testing feedback after changes-1 implementation
@@ -12,7 +12,7 @@
 
 **Solution:** Change Step 5 (Investigation) to always offer the option. Remove the conditional gate. The question should communicate the trade-off clearly:
 
-> "Want to investigate reference profiles before building the squad? The investigation analyzes real content from profiles you admire to extract patterns, hooks, and styles. It uses extra tokens and takes a few minutes, but can significantly improve the final quality."
+> "Want to investigate reference profiles before building the team? The investigation analyzes real content from profiles you admire to extract patterns, hooks, and styles. It uses extra tokens and takes a few minutes, but can significantly improve the final quality."
 >
 > 1. Yes, investigate profiles
 > 2. No, continue without investigation
@@ -28,7 +28,7 @@
 
 ## 2. Design Must Not Artificially Limit Agents (#2)
 
-**Problem:** The "Design Philosophy" added in changes-1 was too restrictive ("1-2 tasks per agent maximum", "one creator agent, not per-platform specialists"). Result: a squad with 3 agents where a copywriter accumulated design responsibilities.
+**Problem:** The "Design Philosophy" added in changes-1 was too restrictive ("1-2 tasks per agent maximum", "one creator agent, not per-platform specialists"). Result: a team with 3 agents where a copywriter accumulated design responsibilities.
 
 **Solution:** Rewrite the Design Philosophy to be about quality without being artificially limiting.
 
@@ -40,7 +40,7 @@
 
 **Replace with:**
 
-> "Recruit all agents necessary for the job. If the squad needs a designer, create a designer. If it needs a researcher and a copywriter, create both with distinct responsibilities. What you should NOT do is create redundant agents or unnecessary optimization passes. Each agent must have a clear responsibility and the tasks needed to fulfill it."
+> "Recruit all agents necessary for the job. If the team needs a designer, create a designer. If it needs a researcher and a copywriter, create both with distinct responsibilities. What you should NOT do is create redundant agents or unnecessary optimization passes. Each agent must have a clear responsibility and the tasks needed to fulfill it."
 
 **Keep:** "Avoid redundant passes, cascading reviews, or separate optimization tasks" — this remains valid as guidance against bloat, not a cap on agent count.
 
@@ -97,8 +97,8 @@ This applies to all questions where an example helps the user understand the cho
 **New workflow:**
 1. Read context (discovery, design, company, investigations, best-practices)
 2. Read the 3 base templates from `base-templates/`
-3. Generate 3 adapted HTML variations for the squad
-4. Save each HTML to `squads/{code}/_build/template-a.html`, `template-b.html`, `template-c.html`
+3. Generate 3 adapted HTML variations for the team
+4. Save each HTML to `teams/{code}/_build/template-a.html`, `template-b.html`, `template-c.html`
 5. Use `image-creator` skill to render each HTML as PNG
 6. Present the image file paths to the user for review
 7. Iterate with feedback until approval
@@ -132,11 +132,11 @@ This applies to all questions where an example helps the user understand the cho
 
 **Solution:** Add a rule to the relevant prompts:
 
-> "Whenever you ask the user to approve or review generated content, always include the full file path so the user can open and review it. Example: 'Review the content at `squads/my-squad/output/2026-03-30/v1/content.md` and let me know if it looks good.'"
+> "Whenever you ask the user to approve or review generated content, always include the full file path so the user can open and review it. Example: 'Review the content at `teams/my-team/output/2026-03-30/v1/content.md` and let me know if it looks good.'"
 
 This applies to:
 - Pipeline runner checkpoints (generated content, research, angles)
-- Design phase approval (squad design presentation)
+- Design phase approval (team design presentation)
 - Build phase summary
 - Template designer approval
 

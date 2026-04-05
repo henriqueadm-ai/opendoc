@@ -31,9 +31,9 @@ Major release with security, transparency, and token optimization improvements â
 - `/conectese` command files for Cursor and OpenCode IDEs
 - OpenCode template with AGENTS.md
 - Template designer skill with image-based design and guidelines
-- Squad memory system (`memories.md` + `runs.md` per squad)
+- Team memory system (`memories.md` + `runs.md` per team)
 - File links included when requesting user approval
-- All squad creation options contextualized with examples
+- All team creation options contextualized with examples
 - Investigation always offered as an option during discovery
 
 ### Changed
@@ -42,7 +42,7 @@ Major release with security, transparency, and token optimization improvements â
 - Gender-aware character assignment with proper sprite sheets
 - Image hosting migrated from catbox.moe to imgBB (user-owned API key)
 - Sherlock refactored from monolithic prompt into platform-specific extractors
-- Squad creation refactored into phased orchestration (discovery â†’ design â†’ build)
+- Team creation refactored into phased orchestration (discovery â†’ design â†’ build)
 - Investigation depth reduced from 5-10 to max 3 posts per profile
 - Checkpoint description rewritten (semantic instructions, not programmatic guards)
 - Antigravity templates rewritten (rules + workflows, inline subagent fallback)
@@ -59,7 +59,7 @@ Major release with security, transparency, and token optimization improvements â
 - `.bak` backups created before overwriting on update
 
 ### Fixed
-- Squad name collisions prevented; template preview links fixed
+- Team name collisions prevented; template preview links fixed
 - Round-robin gender-aware character assignment in dashboard
 - Template designer runs server in background on Windows
 
@@ -71,9 +71,9 @@ Major release with security, transparency, and token optimization improvements â
 - AgentSprite with avatar animations and status badges
 - Template designer skill with HTTP server, image guidelines, and base templates
 - Platform-specific Sherlock extractors (split from monolithic prompt)
-- Phased squad creation workflow (discovery, design, build)
+- Phased team creation workflow (discovery, design, build)
 - Gender-aware sprite selection with male/female character sets
-- Memory system: auto-generated `memories.md` and `runs.md` per squad
+- Memory system: auto-generated `memories.md` and `runs.md` per team
 - Dashboard design skill Phase 7: full sprite review workflow
 - Pre-step input validation and post-step output validation bash gates in runner
 
@@ -152,7 +152,7 @@ _Tag-only release._
 - Missing `skills/` directory entry in Cursor rules template
 - Architect: blocking outputFile path check in Gate 3
 - Pipeline PATH RULE: researcher outputFile must use `output/`, not `pipeline/data/`
-- Architect: creator owns angle generation for news-based squads
+- Architect: creator owns angle generation for news-based teams
 
 ## [0.1.4] - 2026-03-05
 
@@ -174,7 +174,7 @@ _Tag-only release._
 - Initial release
 - npm package with `npx conectese init` CLI
 - Architect agent (Atlas) and Pipeline Runner
-- Instagram Content Creator squad (definition, 4 agents, 6-step pipeline)
+- Instagram Content Creator team (definition, 4 agents, 6-step pipeline)
 - Prompt templates: researcher, writer, reviewer, analyst
 - SquadOS skill entry point and CLAUDE.md instructions
 - 30 template files with full test coverage

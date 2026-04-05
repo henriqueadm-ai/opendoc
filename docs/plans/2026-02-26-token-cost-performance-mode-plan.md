@@ -20,7 +20,7 @@
 Replace lines 101-113 with:
 
 ```yaml
-      6. **Performance Mode**: "What quality level do you want for this squad?"
+      6. **Performance Mode**: "What quality level do you want for this team?"
          Use AskUserQuestion with these options:
          - Alta Performance (Recommended) — Pipeline completo com análise profunda, múltiplos
            formatos por plataforma, tarefas dedicadas de otimização e revisão completa.
@@ -35,11 +35,11 @@ Replace lines 101-113 with:
            dedicated review tasks with separate scoring and feedback, and A/B variant generation
          - Econômico: reduced token consumption with single-pass creation and lightweight review
 
-         This choice affects how the Architect designs the squad:
+         This choice affects how the Architect designs the team:
          - Alta Performance: 3-5 tasks per agent, platform-specific creators, optimization tasks, full review with separate scoring and feedback
          - Econômico: 1-2 tasks per agent, single creator (or generic writer), combined optimization in create task, lightweight single-pass review
 
-         Save the user's choice as `performance_mode`. Use it in Phase 4 to determine squad design depth.
+         Save the user's choice as `performance_mode`. Use it in Phase 4 to determine team design depth.
 ```
 
 **Step 2: Rename remaining "Rápido" references in the same file**

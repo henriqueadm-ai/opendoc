@@ -2,7 +2,7 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Replace Figma MCP with Canva Connect MCP in the Conectese tools registry so the Architect auto-suggests Canva for design/content squads.
+**Goal:** Replace Figma MCP with Canva Connect MCP in the Conectese tools registry so the Architect auto-suggests Canva for design/content teams.
 
 **Architecture:** Swap the Figma tool definition YAML for a Canva one in both the live registry and the template registry. Update the commented example in the Architect agent. No structural changes to the tools engine — the existing category-based discovery handles the rest.
 
@@ -223,4 +223,4 @@ Expected: Both contain `apify.tool.yaml` and `canva.tool.yaml`
 
 **Step 3: Done**
 
-No further action needed. The Architect's Phase 3.5 tool discovery uses `categories` and `useful_for` fields to match tools to squad needs. The Canva tool has `[design, ui, assets, automation]` categories and `[content-design, brand-guidelines, visual-content, social-media-content, presentations]` use cases, so it will be auto-suggested for any squad needing design/visual content.
+No further action needed. The Architect's Phase 3.5 tool discovery uses `categories` and `useful_for` fields to match tools to team needs. The Canva tool has `[design, ui, assets, automation]` categories and `[content-design, brand-guidelines, visual-content, social-media-content, presentations]` use cases, so it will be auto-suggested for any team needing design/visual content.

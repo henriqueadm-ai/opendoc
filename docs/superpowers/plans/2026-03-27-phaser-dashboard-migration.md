@@ -472,7 +472,7 @@ import { RoomBuilder } from './RoomBuilder';
 import { AgentSprite } from './AgentSprite';
 import type { SquadState, Agent } from '@/types/state';
 
-// Demo agents for preview when no squad is active
+// Demo agents for preview when no team is active
 const DEMO_AGENTS: Agent[] = [
   { id: '1', name: 'Researcher', icon: '', status: 'working', deliverTo: null, desk: { col: 1, row: 1 } },
   { id: '2', name: 'Writer', icon: '', status: 'idle', deliverTo: null, desk: { col: 2, row: 1 } },

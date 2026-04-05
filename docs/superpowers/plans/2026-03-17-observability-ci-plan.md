@@ -546,13 +546,13 @@ In both `_conectese/core/runner.pipeline.md` and `templates/_conectese/core/runn
 ```markdown
 ### Post-Completion Cleanup
 
-After writing the final "completed" state to `squads/{name}/state.json` and waiting 10 seconds (so the dashboard can display the completed state), **delete** `squads/{name}/state.json`:
+After writing the final "completed" state to `teams/{name}/state.json` and waiting 10 seconds (so the dashboard can display the completed state), **delete** `teams/{name}/state.json`:
 
 \`\`\`bash
-rm squads/{name}/state.json
+rm teams/{name}/state.json
 \`\`\`
 
-This ensures the squad no longer appears as active in the centralized dashboard.
+This ensures the team no longer appears as active in the centralized dashboard.
 ```
 
 Replace with:
@@ -560,20 +560,20 @@ Replace with:
 ```markdown
 ### Post-Completion Cleanup
 
-After writing the final "completed" state to `squads/{name}/state.json`:
+After writing the final "completed" state to `teams/{name}/state.json`:
 
 1. Add the `completedAt` field (or `failedAt` if status is `failed`) with the current ISO timestamp
 2. Copy `state.json` to the run output folder for permanent history:
    ```bash
-   cp squads/{name}/state.json squads/{name}/output/{run_id}/state.json
+   cp teams/{name}/state.json teams/{name}/output/{run_id}/state.json
    ```
 3. Wait 10 seconds (so the dashboard can display the completed state)
 4. Delete the working copy:
    ```bash
-   rm squads/{name}/state.json
+   rm teams/{name}/state.json
    ```
 
-This archives the run state for the `runs` command while keeping the squad root clean.
+This archives the run state for the `runs` command while keeping the team root clean.
 ```
 
 - [ ] **Step 2: Also update step 1b to include completedAt/failedAt**
@@ -622,7 +622,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { listRuns, formatDuration } from '../src/runs.js';
 
-test('listRuns returns empty array when no squads exist', async () => {
+test('listRuns returns empty array when no teams exist', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'osq-runs-'));
   try {
     const runs = await listRuns(null, dir);
@@ -635,10 +635,10 @@ test('listRuns returns empty array when no squads exist', async () => {
 test('listRuns finds state.json in output directories', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'osq-runs-'));
   try {
-    const runDir = join(dir, 'squads', 'my-squad', 'output', '2026-03-17-120000');
+    const runDir = join(dir, 'teams', 'my-team', 'output', '2026-03-17-120000');
     await mkdir(runDir, { recursive: true });
     await writeFile(join(runDir, 'state.json'), JSON.stringify({
-      squad: 'my-squad',
+      team: 'my-team',
       status: 'completed',
       step: { current: 3, total: 3 },
       startedAt: '2026-03-17T12:00:00Z',
@@ -647,28 +647,28 @@ test('listRuns finds state.json in output directories', async () => {
 
     const runs = await listRuns(null, dir);
     assert.equal(runs.length, 1);
-    assert.equal(runs[0].squad, 'my-squad');
+    assert.equal(runs[0].team, 'my-team');
     assert.equal(runs[0].status, 'completed');
   } finally {
     await rm(dir, { recursive: true, force: true });
   }
 });
 
-test('listRuns filters by squad name', async () => {
+test('listRuns filters by team name', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'osq-runs-'));
   try {
-    for (const name of ['squad-a', 'squad-b']) {
-      const runDir = join(dir, 'squads', name, 'output', '2026-03-17-120000');
+    for (const name of ['team-a', 'team-b']) {
+      const runDir = join(dir, 'teams', name, 'output', '2026-03-17-120000');
       await mkdir(runDir, { recursive: true });
       await writeFile(join(runDir, 'state.json'), JSON.stringify({
-        squad: name, status: 'completed', step: { current: 1, total: 1 },
+        team: name, status: 'completed', step: { current: 1, total: 1 },
         startedAt: '2026-03-17T12:00:00Z', completedAt: '2026-03-17T12:01:00Z',
       }), 'utf-8');
     }
 
-    const runs = await listRuns('squad-a', dir);
+    const runs = await listRuns('team-a', dir);
     assert.equal(runs.length, 1);
-    assert.equal(runs[0].squad, 'squad-a');
+    assert.equal(runs[0].team, 'team-a');
   } finally {
     await rm(dir, { recursive: true, force: true });
   }
@@ -677,7 +677,7 @@ test('listRuns filters by squad name', async () => {
 test('listRuns returns unknown for runs without state.json', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'osq-runs-'));
   try {
-    const runDir = join(dir, 'squads', 'my-squad', 'output', '2026-03-17-120000');
+    const runDir = join(dir, 'teams', 'my-team', 'output', '2026-03-17-120000');
     await mkdir(runDir, { recursive: true });
     // No state.json — just an empty run folder
 
@@ -692,7 +692,7 @@ test('listRuns returns unknown for runs without state.json', async () => {
 test('listRuns handles malformed state.json', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'osq-runs-'));
   try {
-    const runDir = join(dir, 'squads', 'my-squad', 'output', '2026-03-17-120000');
+    const runDir = join(dir, 'teams', 'my-team', 'output', '2026-03-17-120000');
     await mkdir(runDir, { recursive: true });
     await writeFile(join(runDir, 'state.json'), 'not json', 'utf-8');
 
@@ -708,10 +708,10 @@ test('listRuns sorts by runId descending', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'osq-runs-'));
   try {
     for (const ts of ['2026-03-17-100000', '2026-03-17-120000', '2026-03-17-080000']) {
-      const runDir = join(dir, 'squads', 'my-squad', 'output', ts);
+      const runDir = join(dir, 'teams', 'my-team', 'output', ts);
       await mkdir(runDir, { recursive: true });
       await writeFile(join(runDir, 'state.json'), JSON.stringify({
-        squad: 'my-squad', status: 'completed', step: { current: 1, total: 1 },
+        team: 'my-team', status: 'completed', step: { current: 1, total: 1 },
         startedAt: `2026-03-17T${ts.slice(11, 13)}:00:00Z`,
         completedAt: `2026-03-17T${ts.slice(11, 13)}:01:00Z`,
       }), 'utf-8');
@@ -731,7 +731,7 @@ test('listRuns limits to 20 results', async () => {
   try {
     for (let i = 0; i < 25; i++) {
       const ts = `2026-03-${String(i + 1).padStart(2, '0')}-120000`;
-      const runDir = join(dir, 'squads', 'my-squad', 'output', ts);
+      const runDir = join(dir, 'teams', 'my-team', 'output', ts);
       await mkdir(runDir, { recursive: true });
     }
 
@@ -753,10 +753,10 @@ test('formatDuration formats milliseconds', () => {
 test('listRuns calculates duration from timestamps', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'osq-runs-'));
   try {
-    const runDir = join(dir, 'squads', 'my-squad', 'output', '2026-03-17-120000');
+    const runDir = join(dir, 'teams', 'my-team', 'output', '2026-03-17-120000');
     await mkdir(runDir, { recursive: true });
     await writeFile(join(runDir, 'state.json'), JSON.stringify({
-      squad: 'my-squad', status: 'completed',
+      team: 'my-team', status: 'completed',
       step: { current: 3, total: 3 },
       startedAt: '2026-03-17T12:00:00Z',
       completedAt: '2026-03-17T12:05:30Z',
@@ -772,7 +772,7 @@ test('listRuns calculates duration from timestamps', async () => {
 test('listRuns ignores non-directory entries in output', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'osq-runs-'));
   try {
-    const outputDir = join(dir, 'squads', 'my-squad', 'output');
+    const outputDir = join(dir, 'teams', 'my-team', 'output');
     await mkdir(outputDir, { recursive: true });
     await writeFile(join(outputDir, 'random-file.txt'), 'not a run', 'utf-8');
 
@@ -800,7 +800,7 @@ import { join } from 'node:path';
 const MAX_RUNS = 20;
 
 export async function listRuns(squadName, targetDir = process.cwd()) {
-  const squadsDir = join(targetDir, 'squads');
+  const squadsDir = join(targetDir, 'teams');
   let squadNames;
 
   try {
@@ -827,7 +827,7 @@ export async function listRuns(squadName, targetDir = process.cwd()) {
     }
 
     for (const runId of runDirs) {
-      const run = { squad: name, runId, status: 'unknown', steps: null, duration: null };
+      const run = { team: name, runId, status: 'unknown', steps: null, duration: null };
 
       try {
         const raw = await readFile(join(outputDir, runId, 'state.json'), 'utf-8');
@@ -871,8 +871,8 @@ export function printRuns(runs) {
 
   let currentSquad = null;
   for (const run of runs) {
-    if (run.squad !== currentSquad) {
-      currentSquad = run.squad;
+    if (run.team !== currentSquad) {
+      currentSquad = run.team;
       console.log(`\n  ${currentSquad}`);
       console.log('  ' + '─'.repeat(50));
     }
@@ -910,7 +910,7 @@ Before the `else` block (line 48), add a new condition:
 
 Also add the `runs` command to the help text:
 ```
-    npx conectese runs [squad-name]     View execution history
+    npx conectese runs [team-name]     View execution history
 ```
 
 - [ ] **Step 6: Run full test suite**
@@ -934,7 +934,7 @@ git commit -m "feat: add observability — CLI logger, persistent state.json, ru
 
 - CLI logger records operations to _conectese/logs/cli.log (JSONL, silent on failure)
 - Pipeline runner now archives state.json to output/{run_id}/ after completion
-- New command: npx conectese runs [squad-name] shows execution history
+- New command: npx conectese runs [team-name] shows execution history
 - 20 new tests across logger and runs modules"
 ```
 

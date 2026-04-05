@@ -1,5 +1,5 @@
 {
-  "squad": "sim-3-agentes",
+  "team": "sim-3-agentes",
   "status": "running",
   "step": { "current": 3, "total": 7, "label": "Criando imagens" },
   "agents": [

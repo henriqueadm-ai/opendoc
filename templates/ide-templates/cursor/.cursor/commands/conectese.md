@@ -1,5 +1,5 @@
 ---
-description: Conectese — Multi-agent orchestration framework. Create and run AI squads.
+description: Conectese — Multi-agent orchestration framework. Create and run AI teams.
 ---
 
 Activate the Conectese system. Read `.cursor/rules/conectese.mdc` for full instructions, then follow the Initialization and Command Routing steps defined there.

@@ -215,7 +215,7 @@ Natural language equivalents of CLI commands:
 
 ### Missing skill at pipeline runtime
 
-1. Pipeline reads `skills:` from `squad.yaml`
+1. Pipeline reads `skills:` from `team.yaml`
 2. Checks if `_conectese/skills/<name>/` exists
 3. If not → "Skill `canva` not found. Install now? (y/n)"
 4. If yes → run installation flow
@@ -233,7 +233,7 @@ Replaces `tools.engine.md`. Responsibilities:
 
 ### 1. Resolution
 
-- Read `skills:` from `squad.yaml`
+- Read `skills:` from `team.yaml`
 - Load `_conectese/skills/<name>/SKILL.md` for each skill
 - Check type (mcp, script, prompt, hybrid)
 - Validate env vars are configured
@@ -302,7 +302,7 @@ conectese-skill-creator/
 | Creates prompt-only skills | Creates 4 types: mcp, script, hybrid, prompt |
 | Description optimization (trigger matching) | Removed — skills are referenced explicitly |
 | Skill goes to `.claude/skills/` | Skill goes to `_conectese/skills/` |
-| Tested by running Claude with/without skill | Tested within squad agent context |
+| Tested by running Claude with/without skill | Tested within team agent context |
 | `package_skill.py` generates `.skill` file | Not needed — skill stays in final directory |
 
 ### What stays the same
@@ -332,7 +332,7 @@ New document the creator consults, documenting:
 ### Files renamed/replaced
 
 - `tools.engine.md` → `skills.engine.md` (rewritten)
-- In `squad.yaml`: `tools:` → `skills:`
+- In `team.yaml`: `tools:` → `skills:`
 - In `.agent.md`: `tools:` → `skills:`
 
 ### Files requiring "tools" → "skills" reference updates

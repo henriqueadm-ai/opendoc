@@ -4,9 +4,9 @@
 
 **Goal:** Make all agent names follow an alliterative "FirstName LastName" pattern where the last name is a humorous professional reference, in the user's language.
 
-**Architecture:** Add naming convention instructions to the Architect's Phase 4 (Design) workflow. Rename existing template agents to Portuguese alliterative names. Update squad-party.csv to match.
+**Architecture:** Add naming convention instructions to the Architect's Phase 4 (Design) workflow. Rename existing template agents to Portuguese alliterative names. Update team-party.csv to match.
 
-**Tech Stack:** YAML (architect config), Markdown (agent files), CSV (squad manifest)
+**Tech Stack:** YAML (architect config), Markdown (agent files), CSV (team manifest)
 
 ---
 
@@ -51,7 +51,7 @@ git commit -m "refactor: rename Architect agent from Atlas to Arquiteto"
 In `templates/_conectese/core/architect.agent.yaml`, find this block (lines 288-294):
 
 ```yaml
-      1. Design the squad with appropriate agents:
+      1. Design the team with appropriate agents:
          - Each agent needs: memorable name, icon, clear single role
          - Follow the deep .agent.md format with full sections: Persona (Role, Identity,
            Communication Style), Principles, Operational Framework, Voice Guidance,
@@ -63,7 +63,7 @@ In `templates/_conectese/core/architect.agent.yaml`, find this block (lines 288-
 Replace with:
 
 ```yaml
-      1. Design the squad with appropriate agents:
+      1. Design the team with appropriate agents:
          - Follow the deep .agent.md format with full sections: Persona (Role, Identity,
            Communication Style), Principles, Operational Framework, Voice Guidance,
            Output Examples, Anti-Patterns, Quality Criteria, Integration
@@ -78,7 +78,7 @@ Replace with:
          - **Format:** "FirstName LastName" — both words start with the SAME letter (alliteration)
          - **First name:** A common human name in the user's Output Language
          - **Last name:** A playful, witty reference to the agent's specialty or profession
-         - **Uniqueness:** Each agent in the squad MUST use a different initial letter
+         - **Uniqueness:** Each agent in the team MUST use a different initial letter
          - **Icon:** Each agent also gets an emoji icon that represents their role
 
          Examples by language (DO NOT reuse these — generate original names every time):
@@ -128,7 +128,7 @@ git commit -m "feat: add alliterative agent naming convention to Architect Phase
 ### Task 3: Rename researcher agent (Scout → Pedro Pesquisa)
 
 **Files:**
-- Modify: `templates/squads/instagram-content/agents/researcher.agent.md`
+- Modify: `templates/teams/instagram-content/agents/researcher.agent.md`
 
 **Step 1: Update front matter name field**
 
@@ -156,13 +156,13 @@ Replace with:
 
 **Step 3: Verify**
 
-Run: `grep -n "Pedro Pesquisa" templates/squads/instagram-content/agents/researcher.agent.md`
+Run: `grep -n "Pedro Pesquisa" templates/teams/instagram-content/agents/researcher.agent.md`
 Expected: Two matches — one in front matter (`name:`), one in heading (`#`).
 
 **Step 4: Commit**
 
 ```bash
-git add templates/squads/instagram-content/agents/researcher.agent.md
+git add templates/teams/instagram-content/agents/researcher.agent.md
 git commit -m "refactor: rename researcher agent Scout → Pedro Pesquisa"
 ```
 
@@ -171,7 +171,7 @@ git commit -m "refactor: rename researcher agent Scout → Pedro Pesquisa"
 ### Task 4: Rename ideator agent (Spark → Ivan Ideia)
 
 **Files:**
-- Modify: `templates/squads/instagram-content/agents/ideator.agent.md`
+- Modify: `templates/teams/instagram-content/agents/ideator.agent.md`
 
 **Step 1: Update front matter name field**
 
@@ -199,13 +199,13 @@ Replace with:
 
 **Step 3: Verify**
 
-Run: `grep -n "Ivan Ideia" templates/squads/instagram-content/agents/ideator.agent.md`
+Run: `grep -n "Ivan Ideia" templates/teams/instagram-content/agents/ideator.agent.md`
 Expected: Two matches — one in front matter, one in heading.
 
 **Step 4: Commit**
 
 ```bash
-git add templates/squads/instagram-content/agents/ideator.agent.md
+git add templates/teams/instagram-content/agents/ideator.agent.md
 git commit -m "refactor: rename ideator agent Spark → Ivan Ideia"
 ```
 
@@ -214,7 +214,7 @@ git commit -m "refactor: rename ideator agent Spark → Ivan Ideia"
 ### Task 5: Rename copywriter agent (Quill → Carlos Carrossel)
 
 **Files:**
-- Modify: `templates/squads/instagram-content/agents/copywriter.agent.md`
+- Modify: `templates/teams/instagram-content/agents/copywriter.agent.md`
 
 **Step 1: Update front matter name field**
 
@@ -242,13 +242,13 @@ Replace with:
 
 **Step 3: Verify**
 
-Run: `grep -n "Carlos Carrossel" templates/squads/instagram-content/agents/copywriter.agent.md`
+Run: `grep -n "Carlos Carrossel" templates/teams/instagram-content/agents/copywriter.agent.md`
 Expected: Two matches — one in front matter, one in heading.
 
 **Step 4: Commit**
 
 ```bash
-git add templates/squads/instagram-content/agents/copywriter.agent.md
+git add templates/teams/instagram-content/agents/copywriter.agent.md
 git commit -m "refactor: rename copywriter agent Quill → Carlos Carrossel"
 ```
 
@@ -257,7 +257,7 @@ git commit -m "refactor: rename copywriter agent Quill → Carlos Carrossel"
 ### Task 6: Rename reviewer agent (Eagle → Renata Revisão)
 
 **Files:**
-- Modify: `templates/squads/instagram-content/agents/reviewer.agent.md`
+- Modify: `templates/teams/instagram-content/agents/reviewer.agent.md`
 
 **Step 1: Update front matter name field**
 
@@ -285,22 +285,22 @@ Replace with:
 
 **Step 3: Verify**
 
-Run: `grep -n "Renata Revisão" templates/squads/instagram-content/agents/reviewer.agent.md`
+Run: `grep -n "Renata Revisão" templates/teams/instagram-content/agents/reviewer.agent.md`
 Expected: Two matches — one in front matter, one in heading.
 
 **Step 4: Commit**
 
 ```bash
-git add templates/squads/instagram-content/agents/reviewer.agent.md
+git add templates/teams/instagram-content/agents/reviewer.agent.md
 git commit -m "refactor: rename reviewer agent Eagle → Renata Revisão"
 ```
 
 ---
 
-### Task 7: Update squad-party.csv with new names
+### Task 7: Update team-party.csv with new names
 
 **Files:**
-- Modify: `templates/squads/instagram-content/squad-party.csv`
+- Modify: `templates/teams/instagram-content/team-party.csv`
 
 **Step 1: Replace all agent names in the CSV**
 
@@ -317,7 +317,7 @@ For each row, the `name` and `displayName` columns (columns 1 and 2) change. All
 
 **Step 2: Verify**
 
-Run: `cut -d',' -f1,2 templates/squads/instagram-content/squad-party.csv`
+Run: `cut -d',' -f1,2 templates/teams/instagram-content/team-party.csv`
 Expected:
 ```
 name,displayName
@@ -330,8 +330,8 @@ Renata Revisão,Renata Revisão
 **Step 3: Commit**
 
 ```bash
-git add templates/squads/instagram-content/squad-party.csv
-git commit -m "refactor: update squad-party.csv with alliterative agent names"
+git add templates/teams/instagram-content/team-party.csv
+git commit -m "refactor: update team-party.csv with alliterative agent names"
 ```
 
 ---
@@ -340,13 +340,13 @@ git commit -m "refactor: update squad-party.csv with alliterative agent names"
 
 **Step 1: Verify no old names remain in template files**
 
-Run: `grep -rn "Scout\|Spark\|Quill\|Eagle\|Atlas" templates/squads/instagram-content/agents/ templates/squads/instagram-content/squad-party.csv templates/_conectese/core/architect.agent.yaml | grep -v "^Binary"`
+Run: `grep -rn "Scout\|Spark\|Quill\|Eagle\|Atlas" templates/teams/instagram-content/agents/ templates/teams/instagram-content/team-party.csv templates/_conectese/core/architect.agent.yaml | grep -v "^Binary"`
 
 Expected: No matches for Scout, Spark, Quill, Eagle, or Atlas in those files. (Ignore any matches inside long-form text content that coincidentally contains these English words — only `name:` fields and CSV name columns matter.)
 
 **Step 2: Verify new names are present**
 
-Run: `grep -rn "Pedro Pesquisa\|Ivan Ideia\|Carlos Carrossel\|Renata Revisão\|Arquiteto" templates/squads/instagram-content/agents/ templates/squads/instagram-content/squad-party.csv templates/_conectese/core/architect.agent.yaml`
+Run: `grep -rn "Pedro Pesquisa\|Ivan Ideia\|Carlos Carrossel\|Renata Revisão\|Arquiteto" templates/teams/instagram-content/agents/ templates/teams/instagram-content/team-party.csv templates/_conectese/core/architect.agent.yaml`
 
 Expected: At least 2 matches per agent name (front matter + heading) plus CSV entries, plus Arquiteto in architect.agent.yaml.
 

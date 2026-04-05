@@ -26,7 +26,7 @@ const TEMPLATES_DIR = join(__dirname, '..', 'templates');
 const PROTECTED_PATHS = [
   '_conectese/_memory',
   'agents',
-  'squads',
+  'teams',
 ];
 
 function isProtected(relativePath) {

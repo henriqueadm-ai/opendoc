@@ -23,7 +23,7 @@
   "updateStartingUnknown": "Atualizando Conectese (versão desconhecida) → {new}...",
   "updatedFile": "📄 Atualizado {path}",
   "updateSuccess": "✅ Conectese {version} instalado com sucesso!",
-  "updatePreserved": "✓ Preservado: _memory/, _investigations/, squads/",
+  "updatePreserved": "✓ Preservado: _memory/, _investigations/, teams/",
   "updateFileCount": "✓ Atualizados: {count} arquivos do sistema",
   "updateLatestHint": "💡 Dica: Use 'npx conectese@latest update' para sempre obter a versão mais recente.",
   "skillsNotInitialized": "Instalação Conectese não encontrada. Execute 'init' primeiro.",
@@ -68,5 +68,5 @@
   "step1VsCodeCopilot": "1. Abra este diretório no VS Code",
   "step2VsCodeCopilot": "2. Abra o Copilot Chat (Ctrl+Alt+I)",
   "step3VsCodeCopilot": "3. Digite /conectese para começar",
-  "tokenCostWarning": "Executar squads consome tokens de IA (pagos). Monitore seu consumo na sua IDE ou no dashboard do provedor de IA."
+  "tokenCostWarning": "Executar times consome tokens de IA (pagos). Monitore seu consumo na sua IDE ou no dashboard do provedor de IA."
 }

@@ -89,7 +89,7 @@ The `constraints` in YAML frontmatter are parseable — enables future automated
 agent: copywriter
 format: instagram-feed    # new optional field
 execution: inline
-outputFile: squads/my-squad/output/caption.md
+outputFile: teams/my-team/output/caption.md
 ---
 ```
 
@@ -102,7 +102,7 @@ When executing a step with `format:`:
 
 ```
 {base agent content}
-{squad overlay (.custom.md) if applicable}
+{team overlay (.custom.md) if applicable}
 
 --- FORMAT: Instagram Feed Post ---
 
@@ -115,11 +115,11 @@ When executing a step with `format:`:
 
 **Context injection order:**
 ```
-Base Agent → Squad Overlay (.custom.md) → Format → Skill Instructions
+Base Agent → Team Overlay (.custom.md) → Format → Skill Instructions
 ```
 
 #### Architect
-During squad creation (Phase 1 — Discovery), the Architect:
+During team creation (Phase 1 — Discovery), the Architect:
 1. Asks about target platforms and content types
 2. Lists available formats from `_conectese/core/formats/`
 3. Selects relevant formats
@@ -135,7 +135,7 @@ Any agent that receives a format context interprets it through their role:
 ### Scope Rules
 - **One format per step.** Multiple formats = separate steps in the pipeline
 - **Format is optional.** Steps without format work as before
-- **Formats are reusable.** The same format file is used across all squads
+- **Formats are reusable.** The same format file is used across all teams
 
 ### Deprecation
 The existing `_conectese/core/platforms/` directory is **deprecated**. Platform-specific content is migrated into the relevant format files. Each format is self-contained — it includes both platform rules and format-specific instructions.
@@ -146,5 +146,5 @@ The existing `_conectese/core/platforms/` directory is **deprecated**. Platform-
 3. Migrate content from other platform files similarly
 4. Add deprecation notice to `_conectese/core/platforms/*.md`
 5. Update Pipeline Runner to support `format:` field in step frontmatter
-6. Update Architect to ask about formats during squad creation
+6. Update Architect to ask about formats during team creation
 7. Add new platforms not previously covered (WhatsApp, Email, Blog)

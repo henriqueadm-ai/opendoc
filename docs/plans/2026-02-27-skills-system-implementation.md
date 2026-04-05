@@ -20,7 +20,7 @@ Convert the 6 existing `.tool.yaml` files into `SKILL.md` format in the `skills/
 - Create: `skills/apify/SKILL.md`
 - Create: `skills/canva/SKILL.md`
 - Create: `skills/instagram-publisher/SKILL.md`
-- Create: `skills/instagram-publisher/scripts/publish.js` (copy from `templates/squads/instagram-content/tools/publish.js`)
+- Create: `skills/instagram-publisher/scripts/publish.js` (copy from `templates/teams/instagram-content/tools/publish.js`)
 - Create: `skills/blotato/SKILL.md`
 - Create: `skills/asset-fetcher/SKILL.md`
 - Create: `skills/visual-renderer/SKILL.md`
@@ -95,7 +95,7 @@ Replace current README.md with a catalog documenting all available skills:
 ```markdown
 # Conectese Skills Catalog
 
-Available skills for Conectese squads. Install via CLI or chat.
+Available skills for Conectese teams. Install via CLI or chat.
 
 ## Installation
 
@@ -168,8 +168,8 @@ Adapt `temp/skill-creator/SKILL.md` with these changes:
 4. **Output location**: Skills go to `_conectese/skills/<name>/` (not `.claude/skills/`)
 5. **Remove description optimization**: Delete the entire "Description Optimization" section and `run_loop` references
 6. **Remove packaging**: Delete `package_skill.py` references — skills stay in-place
-7. **Adapt testing**: Instead of "run Claude with skill", test within squad agent context:
-   - Create a temporary test squad
+7. **Adapt testing**: Instead of "run Claude with skill", test within team agent context:
+   - Create a temporary test team
    - Assign the skill to a test agent
    - Run the agent with the skill injected
 8. Keep: Core loop, eval system, grader/comparator/analyzer, benchmark viewer, iteration philosophy
@@ -267,7 +267,7 @@ Create `_conectese/core/skills.engine.md` based on the design doc's "Skills Engi
 Key differences from `tools.engine.md`:
 - **No registry**: Skills are installed directly as folders in `_conectese/skills/`
 - **No .installed.yaml bindings**: A skill is installed if its folder exists
-- **No squad overrides**: Override mechanism removed for simplicity
+- **No team overrides**: Override mechanism removed for simplicity
 - **Installation source**: GitHub raw content (`skills/<name>/`) instead of local registry
 - **Interactive install prompt**: When skill not found at runtime
 
@@ -276,7 +276,7 @@ Structure of `skills.engine.md`:
 ```markdown
 # Conectese Skills Engine
 
-You are the Skills Engine. Your job is to manage skill integrations for Conectese squads.
+You are the Skills Engine. Your job is to manage skill integrations for Conectese teams.
 
 ## Skill Types
 - **mcp**: MCP server integration
@@ -313,15 +313,15 @@ You are the Skills Engine. Your job is to manage skill integrations for Conectes
 
 ### 3. Remove a Skill
 1. User selects skill from installed list
-2. Warn which squads use this skill (scan squad.yaml files)
+2. Warn which teams use this skill (scan team.yaml files)
 3. If confirmed:
    a. Delete `_conectese/skills/<name>/`
    b. Remove MCP config from `.claude/settings.local.json` if applicable
-   c. Warn about dependent squads
+   c. Warn about dependent teams
 
 ### 4. Resolve Skills for Pipeline
 Called BEFORE pipeline execution:
-1. Read `squad.yaml` → `skills:` section
+1. Read `team.yaml` → `skills:` section
 2. Separate native skills (web_search, web_fetch)
 3. For each non-native skill:
    a. Check `_conectese/skills/<name>/` exists
@@ -343,10 +343,10 @@ For each skill declared in agent's `.agent.md` frontmatter `skills:`:
 
 ### 6. Skill Discovery (called by Architect in Phase 3.5)
 1. Fetch skills/README.md from GitHub (or list `_conectese/skills/` for already-installed)
-2. Match `categories` against squad needs
+2. Match `categories` against team needs
 3. Suggest relevant skills to user
 4. For each accepted → run Install flow
-5. Add to squad's `skills:` list
+5. Add to team's `skills:` list
 ```
 
 **Step 2: Commit**
@@ -582,7 +582,7 @@ const PROTECTED_PATHS = [
   '_conectese/_memory',
   '_conectese/_investigations',
   '_conectese/skills',     // Don't overwrite user-installed skills
-  'squads',
+  'teams',
 ];
 ```
 
@@ -615,14 +615,14 @@ Rename all "tool" references to "skill" and update Phase 3.5.
 Global replacements in the file:
 1. Line 15: `tools.` → `skills.` in persona role
 2. Line 31: `Research tools use subagent` → `Research skills use subagent`
-3. Line 42: `"Tool discovery: after extraction, scan _conectese/tools/registry/..."` → `"Skill discovery: after extraction, scan _conectese/skills/ for installed skills and check the GitHub catalog for additional skills matching the squad's needs"`
+3. Line 42: `"Tool discovery: after extraction, scan _conectese/tools/registry/..."` → `"Skill discovery: after extraction, scan _conectese/skills/ for installed skills and check the GitHub catalog for additional skills matching the team's needs"`
 4. Lines 303-322: Rewrite Phase 3.5 "Tool Discovery" → "Skill Discovery":
    - Read installed skills from `_conectese/skills/`
    - Also check GitHub catalog for available skills not yet installed
-   - Match `categories` against squad needs
+   - Match `categories` against team needs
    - If skill not installed → offer to install
    - Reference `skills.engine.md` Operation 2 (Install) instead of `tools.engine.md`
-5. Lines 467-475: `tools:` → `skills:` in squad.yaml template
+5. Lines 467-475: `tools:` → `skills:` in team.yaml template
 6. Line 509: Agent frontmatter `tools: []` → `skills: []`
 
 **Step 2: Commit**
@@ -646,7 +646,7 @@ Update the pipeline runner to resolve skills instead of tools.
 1. Lines 16-24 (Initialization step 3 "Resolve tools"):
    Replace entire block with:
    ```
-   3. **Resolve skills**: Read `squad.yaml` → `skills` section. For each non-native skill:
+   3. **Resolve skills**: Read `team.yaml` → `skills` section. For each non-native skill:
       a. Verify `_conectese/skills/{skill}/SKILL.md` exists
          - If missing → prompt user: "Skill '{skill}' is not installed. Install now? (y/n)"
          - If yes → read `_conectese/core/skills.engine.md`, follow Operation 2 (Install)
@@ -689,21 +689,21 @@ Remove tools, add skills, update all template files.
 **Files:**
 - Remove: `templates/_conectese/tools/` (entire directory)
 - Remove: `templates/_conectese/core/tools.engine.md`
-- Remove: `templates/squads/instagram-content/tools/` (directory)
+- Remove: `templates/teams/instagram-content/tools/` (directory)
 - Create: `templates/_conectese/skills/conectese-skill-creator/` (copy from `skills/conectese-skill-creator/`)
 - Create: `templates/_conectese/core/skills.engine.md` (copy from `_conectese/core/skills.engine.md`)
 - Modify: `templates/_conectese/core/architect.agent.yaml` (copy updated version)
 - Modify: `templates/_conectese/core/runner.pipeline.md` (copy updated version)
-- Modify: `templates/squads/instagram-content/squad.yaml` (`tools:` → `skills:`)
-- Modify: `templates/squads/instagram-content/squad-party.csv` (if it references tools)
-- Modify: `templates/squads/instagram-content/agents/*.agent.md` (`tools:` → `skills:` in frontmatter)
+- Modify: `templates/teams/instagram-content/team.yaml` (`tools:` → `skills:`)
+- Modify: `templates/teams/instagram-content/team-party.csv` (if it references tools)
+- Modify: `templates/teams/instagram-content/agents/*.agent.md` (`tools:` → `skills:` in frontmatter)
 
 **Step 1: Remove old tools directories**
 
 ```bash
 rm -rf templates/_conectese/tools/
 rm -f templates/_conectese/core/tools.engine.md
-rm -rf templates/squads/instagram-content/tools/
+rm -rf templates/teams/instagram-content/tools/
 ```
 
 **Step 2: Copy new skills files**
@@ -718,12 +718,12 @@ cp _conectese/core/architect.agent.yaml templates/_conectese/core/architect.agen
 cp _conectese/core/runner.pipeline.md templates/_conectese/core/runner.pipeline.md
 ```
 
-**Step 3: Update squad template files**
+**Step 3: Update team template files**
 
-In `templates/squads/instagram-content/squad.yaml`:
+In `templates/teams/instagram-content/team.yaml`:
 - Change `tools:` → `skills:`
 
-In each `templates/squads/instagram-content/agents/*.agent.md`:
+In each `templates/teams/instagram-content/agents/*.agent.md`:
 - Change `tools:` → `skills:` in frontmatter
 
 **Step 4: Commit**
@@ -754,13 +754,13 @@ This is the main `/conectese` skill with 200 lines. Changes:
 1. **Main Menu** (lines 39-51): Remove "Tools" as separate option. Merge into "Skills":
    ```
    **Primary menu:**
-   - Create a new squad
-   - Run an existing squad
-   - My squads
+   - Create a new team
+   - Run an existing team
+   - My teams
    - More options — Skills, company profile, settings, and help
 
    **More options:**
-   - Skills — Browse, install, and manage skills for your squads
+   - Skills — Browse, install, and manage skills for your teams
    - Company profile
    - Settings & Help
    ```

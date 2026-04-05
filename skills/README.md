@@ -1,6 +1,6 @@
 # Conectese Skill Catalog
 
-Browse available skills for your squads. Install any skill with:
+Browse available skills for your teams. Install any skill with:
 
 ```bash
 npx conectese install <skill-name>

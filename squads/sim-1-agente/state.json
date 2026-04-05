@@ -1,5 +1,5 @@
 {
-  "squad": "sim-1-agente",
+  "team": "sim-1-agente",
   "status": "running",
   "step": { "current": 1, "total": 5, "label": "Pesquisando" },
   "agents": [

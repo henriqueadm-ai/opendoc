@@ -1,5 +1,5 @@
 ---
-description: Conectese — Multi-agent orchestration framework. Create and run AI squads.
+description: Conectese — Multi-agent orchestration framework. Create and run AI teams.
 ---
 
 Activate the Conectese system. Read `AGENTS.md` at the project root and adopt the Conectese system role. Follow all initialization, command routing, and workflow instructions defined there.

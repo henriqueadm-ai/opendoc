@@ -11,7 +11,7 @@ Alternative to PR #7 (`feat/observability-ci`). Same goals, split into 3 focused
 
 ## Decisions
 
-- **Run logging reads `state.json` directly** — no separate `run-log.json`. The runner already writes `state.json` during execution; after completion, it copies `state.json` into the run's output directory (`squads/{name}/output/{run_id}/state.json`) for permanent history, then deletes the working copy from the squad root. Fewer files, fewer instructions, fewer tokens.
+- **Run logging reads `state.json` directly** — no separate `run-log.json`. The runner already writes `state.json` during execution; after completion, it copies `state.json` into the run's output directory (`teams/{name}/output/{run_id}/state.json`) for permanent history, then deletes the working copy from the team root. Fewer files, fewer instructions, fewer tokens.
 - **Run log is minimal** — only essential fields to avoid inflating token usage.
 - **Logger errors are silent** — never breaks the operation being logged.
 - **ESLint is error-only** — no style rules, just catches real bugs.
@@ -151,8 +151,8 @@ jobs:
 **Change:** Instead of deleting `state.json` after pipeline completion, the runner:
 
 1. Marks the final status with a `completedAt` or `failedAt` timestamp
-2. Copies `state.json` to `squads/{name}/output/{run_id}/state.json` for permanent history
-3. Deletes the working copy from the squad root (so it's clean for the next run)
+2. Copies `state.json` to `teams/{name}/output/{run_id}/state.json` for permanent history
+3. Deletes the working copy from the team root (so it's clean for the next run)
 
 Completed state example:
 ```json
@@ -178,7 +178,7 @@ Failed state example:
 **New file:** `src/runs.js`
 
 ```js
-// listRuns(squadName?) — scans squads/*/output/*/state.json
+// listRuns(squadName?) — scans teams/*/output/*/state.json
 // printRuns(runs) — formatted console output
 // formatDuration(ms) — "2m 30s" format
 ```
@@ -186,10 +186,10 @@ Failed state example:
 **Modified file:** `bin/conectese.js` — registers `runs` command
 
 **Behavior:**
-- `npx conectese runs` — all squads
-- `npx conectese runs my-squad` — filter by squad
-- Reads `state.json` from each `squads/*/output/*/` directory
-- Shows: squad name, run date, status, step count, duration
+- `npx conectese runs` — all teams
+- `npx conectese runs my-team` — filter by team
+- Reads `state.json` from each `teams/*/output/*/` directory
+- Shows: team name, run date, status, step count, duration
 - Fallback: runs without `state.json` show as "unknown"
 - Sorted by date descending, limit 20
 - Graceful handling of malformed JSON

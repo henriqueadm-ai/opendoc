@@ -28,7 +28,7 @@ const CANONICAL_SOURCES = [
   { src: join(PACKAGE_ROOT, 'dashboard'), dest: 'dashboard' },
 ];
 
-const DASHBOARD_EXCLUDES = ['node_modules', 'dist', 'tsconfig.tsbuildinfo', 'squads'];
+const DASHBOARD_EXCLUDES = ['node_modules', 'dist', 'tsconfig.tsbuildinfo', 'teams'];
 ```
 
 - [ ] **Step 2: Add the `copyCanonicalSources` function**

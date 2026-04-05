@@ -90,9 +90,9 @@ New subcommands registered in `bin/conectese.js`, logic in `src/skills.js`:
 New menu item added to the main conectese skill:
 
 ```
-  ❯ 1. Create a new squad
-    2. Run a squad
-    3. Edit a squad
+  ❯ 1. Create a new team
+    2. Run a team
+    3. Edit a team
     4. Skills — Browse & install
     5. Help
 ```

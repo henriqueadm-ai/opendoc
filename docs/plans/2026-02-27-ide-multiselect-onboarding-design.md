@@ -34,7 +34,7 @@ IDE-specific files are moved out of the generic `templates/` root into `template
 ```
 templates/
   _conectese/                                  ← always copied (unchanged)
-  squads/                                    ← always copied (unchanged)
+  teams/                                    ← always copied (unchanged)
   ide-templates/                             ← NEW — skipped by copyCommonTemplates()
     claude-code/
       CLAUDE.md                              ← MOVED from templates/CLAUDE.md

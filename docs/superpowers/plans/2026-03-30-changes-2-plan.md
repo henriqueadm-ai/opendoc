@@ -41,7 +41,7 @@ Find the Step 5 header and the two lines below it (around lines 100-102):
 This step is skipped entirely for non-content domains, or if the user never mentioned profiles, channels, or reference URLs.
 
 If the user mentioned reference profiles or examples during Step 1 or Step 3, ask:
-> "Do you have specific profiles or channels you'd like me to investigate? I can analyze their real content to extract patterns, hooks, structures, and engagement data to make your squad much smarter.
+> "Do you have specific profiles or channels you'd like me to investigate? I can analyze their real content to extract patterns, hooks, structures, and engagement data to make your team much smarter.
 >
 > Share 1–5 URLs (Instagram, YouTube, Twitter/X, LinkedIn) or type 'skip'."
 ```
@@ -52,7 +52,7 @@ Replace with:
 
 Offer the investigation option to the user. The investigation is powerful but consumes tokens and time — make the trade-off clear:
 
-> "Want to investigate reference profiles before building the squad? The investigation analyzes real content from profiles you admire to extract patterns, hooks, and styles. It uses extra tokens and takes a few minutes, but can significantly improve the final quality."
+> "Want to investigate reference profiles before building the team? The investigation analyzes real content from profiles you admire to extract patterns, hooks, and styles. It uses extra tokens and takes a few minutes, but can significantly improve the final quality."
 >
 > 1. Yes, investigate profiles
 > 2. No, continue without investigation
@@ -93,7 +93,7 @@ Find the Design Philosophy section (around lines 151-160):
 ```markdown
 ### Design Philosophy
 
-Build agile, objective squads. Each agent should have the minimum tasks necessary to fulfill its role. Avoid redundant passes, cascading reviews, or separate optimization tasks. A single well-crafted task that combines creation and basic optimization is better than three tasks that split the work artificially.
+Build agile, objective teams. Each agent should have the minimum tasks necessary to fulfill its role. Avoid redundant passes, cascading reviews, or separate optimization tasks. A single well-crafted task that combines creation and basic optimization is better than three tasks that split the work artificially.
 
 Guidelines:
 - 1-2 tasks per agent maximum
@@ -107,7 +107,7 @@ Replace with:
 ```markdown
 ### Design Philosophy
 
-Recruit all agents necessary for the job. If the squad needs a designer, create a designer. If it needs a researcher and a copywriter, create both with distinct responsibilities. Each agent must have a clear responsibility and the tasks needed to fulfill it.
+Recruit all agents necessary for the job. If the team needs a designer, create a designer. If it needs a researcher and a copywriter, create both with distinct responsibilities. Each agent must have a clear responsibility and the tasks needed to fulfill it.
 
 What you should NOT do is create redundant agents or unnecessary optimization passes. Avoid cascading reviews or separate optimization tasks that don't add clear value. But never consolidate distinct roles into a single agent just to reduce count — that produces worse results.
 
@@ -203,18 +203,18 @@ categories: [design, visual, templates]
 
 # Template Designer
 
-Visual template selection and refinement for squad creation and editing.
+Visual template selection and refinement for team creation and editing.
 
 ## When to Use
 
-- During squad creation: when the Design phase identifies an image design agent and the user opts to choose a template
-- During squad editing: when the user asks to define, edit, or change the visual identity / template of a design agent
-- Trigger: presence of `image-creator` skill (or similar image-producing skill) in the squad's skill list
+- During team creation: when the Design phase identifies an image design agent and the user opts to choose a template
+- During team editing: when the user asks to define, edit, or change the visual identity / template of a design agent
+- Trigger: presence of `image-creator` skill (or similar image-producing skill) in the team's skill list
 
 ## Prerequisites
 
-- A squad with a design agent that produces images (uses `image-creator` skill)
-- Squad's `_build/` directory must exist (created during Discovery/Design phases)
+- A team with a design agent that produces images (uses `image-creator` skill)
+- Team's `_build/` directory must exist (created during Discovery/Design phases)
 - `image-creator` skill installed (for rendering HTML to PNG)
 
 ## How It Works
@@ -269,10 +269,10 @@ Templates that violate these rules are rejected — no exceptions.
 
 ### Step 1: Read Context
 
-Read these files to understand the squad:
-- `squads/{code}/_build/discovery.yaml` — platform, domain, tone, language
-- `squads/{code}/_build/design.yaml` — agents, purpose, skills
-- `squads/{code}/_investigations/consolidated-analysis.md` (if exists) — visual patterns from reference profiles
+Read these files to understand the team:
+- `teams/{code}/_build/discovery.yaml` — platform, domain, tone, language
+- `teams/{code}/_build/design.yaml` — agents, purpose, skills
+- `teams/{code}/_investigations/consolidated-analysis.md` (if exists) — visual patterns from reference profiles
 - `_conectese/_memory/company.md` — company name, brand, industry, target audience
 - `_conectese/_memory/preferences.md` — user preferences (language, style, tone)
 
@@ -288,19 +288,19 @@ Read the 3 base templates from `skills/template-designer/base-templates/`:
 ### Step 3: Generate Adapted Variations
 
 For each base template, create an adapted version:
-- Adjust colors to match the squad's domain/brand (use Sherlock palette if available, company brand colors from company.md if available)
+- Adjust colors to match the team's domain/brand (use Sherlock palette if available, company brand colors from company.md if available)
 - Adjust typography following the platform-specific minimum font sizes from `image-design.md`
 - Replace example content with domain-relevant content that reflects the company's industry, audience, and language
 - Set the root container to the exact fixed dimensions from HARD RULES above. Never use percentage heights or auto heights.
-- Add any visual elements that match the squad's personality
+- Add any visual elements that match the team's personality
 - Apply proper white space, visual hierarchy, and spacing rhythm per `image-design.md` methodology
 
 Write each adapted template as a **complete, self-contained HTML file** (with `<!DOCTYPE html>`, inline CSS, and Google Fonts imports if needed).
 
 Save to:
-- `squads/{code}/_build/template-a.html`
-- `squads/{code}/_build/template-b.html`
-- `squads/{code}/_build/template-c.html`
+- `teams/{code}/_build/template-a.html`
+- `teams/{code}/_build/template-b.html`
+- `teams/{code}/_build/template-c.html`
 
 ### Step 4: Render as Images
 
@@ -309,19 +309,19 @@ Use the `image-creator` skill to render each HTML template as a PNG image:
 1. Read `skills/image-creator/SKILL.md` for rendering instructions
 2. Render each template HTML to PNG using the image-creator workflow
 3. Save rendered images to:
-   - `squads/{code}/_build/template-a.png`
-   - `squads/{code}/_build/template-b.png`
-   - `squads/{code}/_build/template-c.png`
+   - `teams/{code}/_build/template-a.png`
+   - `teams/{code}/_build/template-b.png`
+   - `teams/{code}/_build/template-c.png`
 
 ### Step 5: Present to User
 
 Present the 3 template options to the user with the file paths so they can open and review:
 
-> "Here are 3 template options for your squad's visual identity:
+> "Here are 3 template options for your team's visual identity:
 >
-> A: `squads/{code}/_build/template-a.png`
-> B: `squads/{code}/_build/template-b.png`
-> C: `squads/{code}/_build/template-c.png`
+> A: `teams/{code}/_build/template-a.png`
+> B: `teams/{code}/_build/template-b.png`
+> C: `teams/{code}/_build/template-c.png`
 >
 > Open the images and tell me which one you prefer. I can also mix elements from different templates or adjust colors, fonts, and layout."
 
@@ -339,13 +339,13 @@ When the user approves, create two files:
 
 ### 1. Template Reference HTML
 
-Save to: `squads/{code}/pipeline/data/template-reference.html`
+Save to: `teams/{code}/pipeline/data/template-reference.html`
 
 The complete, self-contained HTML/CSS of the approved template at full resolution (e.g., 1080x1440). This is the literal example the design agent will use.
 
 ### 2. Visual Identity Rules
 
-Save to: `squads/{code}/pipeline/data/visual-identity.md`
+Save to: `teams/{code}/pipeline/data/visual-identity.md`
 
 Extract structured rules from the approved template:
 
@@ -383,13 +383,13 @@ Extract structured rules from the approved template:
 - Color usage rules (when to use primary vs accent)
 ~~~
 
-### 3. Update Squad Files
+### 3. Update Team Files
 
-If the squad is being created (Build phase hasn't run yet):
+If the team is being created (Build phase hasn't run yet):
 - The design.yaml context now includes the template data — Build will pick it up
 
-If the squad already exists (editing flow):
-- Add `pipeline/data/template-reference.html` and `pipeline/data/visual-identity.md` to `squad.yaml` `data:` list
+If the team already exists (editing flow):
+- Add `pipeline/data/template-reference.html` and `pipeline/data/visual-identity.md` to `team.yaml` `data:` list
 - Update the design agent's `.agent.md` to reference both files
 - Update the design agent's tasks to include the rule: "always follow visual-identity.md and use template-reference.html as the base model"
 ```
@@ -426,7 +426,7 @@ Replace with:
 #### If `type: checkpoint`
 - Present the checkpoint message to the user
 - If the checkpoint requires a choice (numbered list), present options as a numbered list
-- **Always include the file path** of any generated content the user needs to review. Example: "Review the content at `squads/{name}/output/{run_id}/v1/content.md` and let me know if it looks good."
+- **Always include the file path** of any generated content the user needs to review. Example: "Review the content at `teams/{name}/output/{run_id}/v1/content.md` and let me know if it looks good."
 - Wait for user input before proceeding
 ```
 
@@ -449,7 +449,7 @@ In `_conectese/core/prompts/build.prompt.md`, find `## Step D: Present Summary`.
 
 ```markdown
 
-Include the file paths of key generated files (agent files, pipeline steps, reference materials) so the user can open and review them before running the squad.
+Include the file paths of key generated files (agent files, pipeline steps, reference materials) so the user can open and review them before running the team.
 ```
 
 - [ ] **Step 4: Commit**

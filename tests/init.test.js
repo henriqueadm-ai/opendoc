@@ -23,13 +23,13 @@ test('init creates _conectese directory structure', async () => {
   }
 });
 
-test('init creates empty squads directory', async () => {
+test('init creates empty teams directory', async () => {
   const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
 
-    await stat(join(tempDir, 'squads'));
+    await stat(join(tempDir, 'teams'));
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }

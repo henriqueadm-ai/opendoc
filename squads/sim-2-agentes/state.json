@@ -1,5 +1,5 @@
 {
-  "squad": "sim-2-agentes",
+  "team": "sim-2-agentes",
   "status": "running",
   "step": { "current": 2, "total": 6, "label": "Criando copy" },
   "agents": [

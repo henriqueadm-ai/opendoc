@@ -5,7 +5,7 @@
 
 ## Summary
 
-Reframe the Ideator agent (Spark) from a generic "idea generator" to a "Viral Angle Strategist" that identifies the best angles from researched news. The user selects an angle, and content is produced from that angle. This applies to both the Instagram template and the Architect's squad creation workflow.
+Reframe the Ideator agent (Spark) from a generic "idea generator" to a "Viral Angle Strategist" that identifies the best angles from researched news. The user selects an angle, and content is produced from that angle. This applies to both the Instagram template and the Architect's team creation workflow.
 
 ## Approach
 
@@ -39,19 +39,19 @@ Reframe the Ideator agent (Spark) from a generic "idea generator" to a "Viral An
 - Input: `selected-angle.md` (was `selected-idea.md`)
 - Instructions: "Read selected angle and develop it into a complete carousel"
 
-### 5. Instagram Template — Squad Party (`squad-party.csv`)
+### 5. Instagram Template — Team Party (`team-party.csv`)
 
 - Spark role: "Viral Angle Strategist who identifies the highest-potential angles from researched news and trends for content creation"
 
 ### 6. Architect (`architect.agent.yaml`)
 
-- Add "Content Squad Pattern" guidelines in Phase 2 of create-squad workflow
-- When designing content squads: always include Ideator as Viral Angle Strategist, always add angle selection checkpoint, follow the Research → Ideation (angles) → Checkpoint → Writing → Review → Final pattern
+- Add "Content Team Pattern" guidelines in Phase 2 of create-team workflow
+- When designing content teams: always include Ideator as Viral Angle Strategist, always add angle selection checkpoint, follow the Research → Ideation (angles) → Checkpoint → Writing → Review → Final pattern
 
 ### What Does NOT Change
 
 - Pipeline structure (6 steps)
-- `squad.yaml` pipeline definition
+- `team.yaml` pipeline definition
 - `researcher.agent.yaml`
 - `copywriter.agent.yaml`
 - `reviewer.agent.yaml`
@@ -62,9 +62,9 @@ Reframe the Ideator agent (Spark) from a generic "idea generator" to a "Viral An
 
 ## Files to Modify
 
-1. `templates/squads/instagram-content/agents/ideator.agent.yaml`
-2. `templates/squads/instagram-content/pipeline/steps/step-02-ideation.md`
-3. `templates/squads/instagram-content/pipeline/steps/step-03-user-choice.md`
-4. `templates/squads/instagram-content/pipeline/steps/step-04-writing.md`
-5. `templates/squads/instagram-content/squad-party.csv`
+1. `templates/teams/instagram-content/agents/ideator.agent.yaml`
+2. `templates/teams/instagram-content/pipeline/steps/step-02-ideation.md`
+3. `templates/teams/instagram-content/pipeline/steps/step-03-user-choice.md`
+4. `templates/teams/instagram-content/pipeline/steps/step-04-writing.md`
+5. `templates/teams/instagram-content/team-party.csv`
 6. `templates/_conectese/core/architect.agent.yaml`

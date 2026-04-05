@@ -28,7 +28,7 @@ Antes de começar, assista ao [vídeo de lançamento](https://www.youtube.com/wa
 
 ## A Regra de Ouro: Verticalize, Não Complique
 
-A maneira certa de contribuir é **verticalizando**: criando novas skills, agents, squads e guias de best practices que expandem o que o conectese pode fazer para empresas e criadores de conteúdo.
+A maneira certa de contribuir é **verticalizando**: criando novas skills, agents, times e guias de best practices que expandem o que o conectese pode fazer para empresas e criadores de conteúdo.
 
 O conectese roda com `npx conectese init` e pronto. Um gerente de equipe, um dono de empresa, um criador de conteúdo precisa conseguir usar sem ser técnico. Queremos manter essa simplicidade.
 
@@ -41,7 +41,7 @@ O framework é intencionalmente baseado em arquivos e leve em dependências.
 - **Novas skills** - Integrações com plataformas, APIs, serviços (o principal tipo de contribuição)
 - **Novos guias de best practices** - Expertise de domínio: copywriting, design, SEO, email marketing, redes sociais, análise de dados...
 - **Novos agents** - Definições reutilizáveis de agentes especializados
-- **Templates de squads** - Squads prontos para casos de uso comuns que a comunidade pode importar e usar
+- **Templates de times** - Times prontos para casos de uso comuns que a comunidade pode importar e usar
 - **Bug fixes** - Correções de comportamento quebrado
 - **Melhorias de performance** - Tornar funcionalidades existentes mais rápidas
 - **Documentação** - Melhorias no README, exemplos, guias
@@ -70,7 +70,7 @@ Exemplos do que geralmente não se encaixa:
 
 ## Ideias de contribuição
 
-Não sabe por onde começar? Aqui estão algumas ideias de skills e squads que a comunidade adoraria ter:
+Não sabe por onde começar? Aqui estão algumas ideias de skills e times que a comunidade adoraria ter:
 
 **Skills:**
 - `tiktok-publisher` - Publicar vídeos no TikTok via API
@@ -93,11 +93,11 @@ Não sabe por onde começar? Aqui estão algumas ideias de skills e squads que a
 - Roteiros para podcasts
 - Apresentações e pitch decks
 
-**Squads prontos:**
-- Squad de produção de conteúdo para LinkedIn
-- Squad de geração de leads por email
-- Squad de análise de métricas de redes sociais
-- Squad de criação de materiais de treinamento
+**Times prontos:**
+- Time de produção de conteúdo para LinkedIn
+- Time de geração de leads por email
+- Time de análise de métricas de redes sociais
+- Time de criação de materiais de treinamento
 
 ## Primeira contribuição
 
@@ -150,7 +150,7 @@ Skills são injetadas diretamente no contexto do agente em tempo de execução. 
 - Não inclui credenciais hardcoded ou tokens de acesso
 - Não executa comandos destrutivos sem confirmação explícita do usuário
 - Não faz upload de dados do usuário para serviços externos sem avisar claramente no `SKILL.md`
-- Não modifica arquivos fora do escopo do squad (`squads/<nome>/output/`)
+- Não modifica arquivos fora do escopo do time (`teams/<nome>/output/`)
 - Documenta no `SKILL.md` quais serviços externos são acessados e quais dados são transmitidos
 
 Skills submetidas pela comunidade passam por review de código antes de serem aceitas no catálogo oficial.
@@ -165,13 +165,13 @@ O conectese já vem com guias de copywriting, design de carrosséis, SEO e mais.
 
 Após criar, registre o guia no [`_conectese/core/best-practices/_catalog.yaml`](_conectese/core/best-practices/_catalog.yaml). Verifique se já não existe um guia similar antes de criar.
 
-### Criando um Squad Template
+### Criando um Team Template
 
-Squads prontos que a comunidade pode importar e usar direto. Para contribuir com um squad template:
+Times prontos que a comunidade pode importar e usar direto. Para contribuir com um team template:
 
-1. Crie o squad usando `/conectese create`
+1. Crie o time usando `/conectese create`
 2. Teste-o pelo menos 2-3 vezes para garantir que funciona bem
-3. Coloque na pasta `squads/` do seu PR com uma descrição no `squad.yaml`
+3. Coloque na pasta `teams/` do seu PR com uma descrição no `team.yaml`
 
 ### Bug Fixes & Performance
 
@@ -281,13 +281,13 @@ Seja respeitoso, construtivo e colaborativo. Estamos aqui para construir algo in
 
 Thanks for your interest in contributing! conectese is a multi-agent orchestration framework **focused on automating real business work** - generating social media content, creating carousels, turning long videos into short clips, writing tutorials, planning product launches. It is not a software development framework.
 
-conectese's strength comes from the **ecosystem** - skills, agents, squads, and best-practice guides - not from framework complexity.
+conectese's strength comes from the **ecosystem** - skills, agents, teams, and best-practice guides - not from framework complexity.
 
 Before you start, watch the [launch video](https://www.youtube.com/watch?v=CL1ppI4qHeU) and read the [README](README.md) to understand the project.
 
 ## The Golden Rule: Verticalize, Don't Complicate
 
-The right way to contribute is by **verticalizing**: creating new skills, agents, squads, and best-practice guides that expand what conectese can do for businesses and content creators.
+The right way to contribute is by **verticalizing**: creating new skills, agents, teams, and best-practice guides that expand what conectese can do for businesses and content creators.
 
 conectese runs with `npx conectese init` and that's it.
 
@@ -300,7 +300,7 @@ The framework is intentionally file-based and dependency-light. **This is by des
 - **New skills** - Platform integrations, APIs, services (the primary contribution type)
 - **New best-practice guides** - Domain expertise: copywriting, design, SEO, email marketing, social media, data analysis...
 - **New agents** - Reusable specialized agent definitions
-- **Squad templates** - Ready-to-use squads for common use cases that the community can import and use
+- **Team templates** - Ready-to-use teams for common use cases that the community can import and use
 - **Bug fixes** - Fixing actual broken behavior
 - **Performance improvements** - Making existing features faster
 - **Documentation** - README improvements, examples, guides
@@ -329,7 +329,7 @@ Examples of what generally doesn't fit:
 
 ## Contribution Ideas
 
-Not sure where to start? Here are some skills and squads the community would love to have:
+Not sure where to start? Here are some skills and teams the community would love to have:
 
 **Skills:**
 - `tiktok-publisher` - Publish videos to TikTok via API
@@ -352,11 +352,11 @@ Not sure where to start? Here are some skills and squads the community would lov
 - Podcast scripts
 - Presentations and pitch decks
 
-**Ready-to-use squads:**
-- LinkedIn content production squad
-- Email lead generation squad
-- Social media metrics analysis squad
-- Training materials creation squad
+**Ready-to-use teams:**
+- LinkedIn content production team
+- Email lead generation team
+- Social media metrics analysis team
+- Training materials creation team
 
 ## First Contribution
 
@@ -409,7 +409,7 @@ Skills are injected directly into the agent context at runtime. There is no cryp
 - It does not include hardcoded credentials or access tokens
 - It does not execute destructive commands without explicit user confirmation
 - It does not upload user data to external services without clearly stating so in `SKILL.md`
-- It does not modify files outside the squad scope (`squads/<name>/output/`)
+- It does not modify files outside the team scope (`teams/<name>/output/`)
 - It documents in `SKILL.md` which external services are accessed and what data is transmitted
 
 Community-submitted skills go through code review before being accepted into the official catalog.
@@ -424,13 +424,13 @@ conectese ships with guides for copywriting, carousel design, SEO, and more. But
 
 After creating, register the guide in [`_conectese/core/best-practices/_catalog.yaml`](_conectese/core/best-practices/_catalog.yaml). Check for overlap with existing guides before creating a new one.
 
-### Creating a Squad Template
+### Creating a Team Template
 
-Ready-to-use squads that the community can import and use right away. To contribute a squad template:
+Ready-to-use teams that the community can import and use right away. To contribute a team template:
 
-1. Create the squad using `/conectese create`
+1. Create the team using `/conectese create`
 2. Test it at least 2-3 times to make sure it works well
-3. Place it in the `squads/` folder of your PR with a description in `squad.yaml`
+3. Place it in the `teams/` folder of your PR with a description in `team.yaml`
 
 ### Bug Fixes & Performance
 

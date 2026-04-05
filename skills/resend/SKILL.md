@@ -28,9 +28,9 @@ categories: [email, automation, communication]
 
 ## When to use
 
-Use this skill when a squad needs to send emails — welcome messages, notifications,
+Use this skill when a team needs to send emails — welcome messages, notifications,
 reports, newsletters, or any transactional/marketing email. Resend handles delivery
-so the squad only needs to compose the content and call the MCP tools.
+so the team only needs to compose the content and call the MCP tools.
 
 ## Instructions
 

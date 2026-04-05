@@ -124,7 +124,7 @@ The runner reads the bash command output and acts on the marker string. It does 
 **After (with bash gates):**
 1. Sherlock subagent dispatched
 2. Sherlock fails to log in, fabricates analysis, returns
-3. Runner executes `test -s "squads/.../raw-content.md"` → `VALIDATION:FAIL`
+3. Runner executes `test -s "teams/.../raw-content.md"` → `VALIDATION:FAIL`
 4. Runner retries Sherlock once
 5. If still `VALIDATION:FAIL` → user is asked: retry, skip, or abort
 6. Pipeline does NOT advance with empty data

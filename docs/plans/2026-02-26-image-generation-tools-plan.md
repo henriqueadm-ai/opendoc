@@ -2,9 +2,9 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Add two new tools (`asset-fetcher` and `visual-renderer`) to the Conectese registry and update the Architect to suggest them for visual output squads.
+**Goal:** Add two new tools (`asset-fetcher` and `visual-renderer`) to the Conectese registry and update the Architect to suggest them for visual output teams.
 
-**Architecture:** Two `.tool.yaml` files in `_conectese/tools/registry/` following the existing schema (matching `canva.tool.yaml` and `apify.tool.yaml` format). Both use Playwright MCP. The Architect agent gets a new "Visual Output Squad Pattern" in Phase 4 to guide squad design when these tools are installed.
+**Architecture:** Two `.tool.yaml` files in `_conectese/tools/registry/` following the existing schema (matching `canva.tool.yaml` and `apify.tool.yaml` format). Both use Playwright MCP. The Architect agent gets a new "Visual Output Team Pattern" in Phase 4 to guide team design when these tools are installed.
 
 **Tech Stack:** YAML (tool definitions), Markdown (Architect agent config), Playwright MCP (runtime dependency)
 
@@ -27,7 +27,7 @@ type: hybrid
 description: >
   Acquires visual assets from multiple sources: web image search,
   live website screenshots via Playwright, and user-provided files.
-  Organizes assets in the squad's reference folder.
+  Organizes assets in the team's reference folder.
 
 mcp:
   server_name: playwright
@@ -45,7 +45,7 @@ instructions: |
      set viewport dimensions, and capture a screenshot.
 
   3. **Asset Organization** — Save all acquired assets with descriptive
-     filenames in the squad's reference/ or output/ folder.
+     filenames in the team's reference/ or output/ folder.
 
   ## Screenshot Modes
 
@@ -165,7 +165,7 @@ instructions: |
      inline CSS. The HTML IS the design — all styling, layout, fonts,
      colors, and content must be embedded.
 
-  2. **Save HTML** — Write the HTML file to the squad's output folder
+  2. **Save HTML** — Write the HTML file to the team's output folder
      (e.g., `output/slides/slide-01.html`)
 
   3. **Render** — Use Playwright to:
@@ -186,7 +186,7 @@ instructions: |
   - Twitter/X Post: 1200 x 675
   - LinkedIn Post: 1200 x 627
   - YouTube Thumbnail: 1280 x 720
-  - Custom: as specified by the squad
+  - Custom: as specified by the team
 
   ## HTML Template Guidelines
 
@@ -254,7 +254,7 @@ Generic engine — visual format defined entirely by HTML templates."
 
 ---
 
-### Task 3: Update Architect — add Visual Output Squad Pattern
+### Task 3: Update Architect — add Visual Output Team Pattern
 
 **Files:**
 - Modify: `_conectese/core/architect.agent.yaml:26-42` (principles section)
@@ -266,7 +266,7 @@ In the `principles` array (line ~42 of `architect.agent.yaml`), add a new princi
 
 Find:
 ```yaml
-      - "Tool discovery: after extraction, scan _conectese/tools/registry/ for tools matching the squad's needs and offer relevant integrations to the user before designing the squad"
+      - "Tool discovery: after extraction, scan _conectese/tools/registry/ for tools matching the team's needs and offer relevant integrations to the user before designing the team"
 ```
 
 Add after it:
@@ -274,12 +274,12 @@ Add after it:
       - "Visual output: when visual-renderer and/or asset-fetcher tools are selected, add design/render steps to the pipeline and ensure at least one agent has design capability (HTML/CSS generation for visual-renderer, asset sourcing for asset-fetcher)"
 ```
 
-**Step 2: Add Visual Output Squad Pattern in Phase 4**
+**Step 2: Add Visual Output Team Pattern in Phase 4**
 
-In Phase 4 Design section, after the Content Squad Pattern (item 4, which ends around line 439), add a new item 4.5 for Visual Output Pattern. Find the line that says:
+In Phase 4 Design section, after the Content Team Pattern (item 4, which ends around line 439), add a new item 4.5 for Visual Output Pattern. Find the line that says:
 
 ```
-         Note: For non-content squads (data analysis, automation, etc.), the traditional pattern still applies:
+         Note: For non-content teams (data analysis, automation, etc.), the traditional pattern still applies:
          researcher + analyst + writer/executor + reviewer, without platform-specific creators.
 ```
 
@@ -289,7 +289,7 @@ Add after it:
 
       4.5. **Visual Output Pattern** (when visual-renderer or asset-fetcher tools are installed):
 
-         When the squad's tools list includes `visual-renderer` and/or `asset-fetcher`
+         When the team's tools list includes `visual-renderer` and/or `asset-fetcher`
          (installed during Phase 3.5), modify the pipeline to include visual output steps:
 
          a. **Asset Acquisition step** (if `asset-fetcher` is installed):
@@ -307,10 +307,10 @@ Add after it:
               - Branding from company.md (colors, logo, fonts)
               - Platform viewport dimensions from visual-renderer instructions
             - Agent uses visual-renderer to capture HTML as PNG screenshots
-            - Output: PNG files in squad output folder + HTML source files for re-rendering
+            - Output: PNG files in team output folder + HTML source files for re-rendering
             - CHECKPOINT after rendering: user reviews generated images
 
-         c. **Agent design for visual squads**:
+         c. **Agent design for visual teams**:
             - Option A: Add a **dedicated Designer agent** with HTML/CSS expertise
               - Alliterative name following convention (e.g., "Diana Design", "Vitor Visual")
               - Tools: [visual-renderer] (and optionally asset-fetcher)
@@ -318,7 +318,7 @@ Add after it:
             - Option B: Extend the **Creator agent** with design capability
               - Add visual-renderer to the creator's tools list
               - Add design tasks to the creator's task list
-              - Use when the squad is simple and doesn't warrant a separate designer
+              - Use when the team is simple and doesn't warrant a separate designer
             - Choose Option A for Alta Performance mode, Option B for Econômico mode
 
          d. **Pipeline integration**:
@@ -352,8 +352,8 @@ If yaml parser not available, do a basic sanity check: read the file and verify 
 git add _conectese/core/architect.agent.yaml
 git commit -m "feat: teach Architect about visual output tools
 
-Add Visual Output Squad Pattern to Phase 4 and a new principle
-for designing squads that use visual-renderer and asset-fetcher."
+Add Visual Output Team Pattern to Phase 4 and a new principle
+for designing teams that use visual-renderer and asset-fetcher."
 ```
 
 ---
@@ -374,9 +374,9 @@ Expected: 4 files:
 - `canva.tool.yaml`
 - `visual-renderer.tool.yaml`
 
-**Step 2: Verify useful_for tags match content squad needs**
+**Step 2: Verify useful_for tags match content team needs**
 
-Check that both new tools have `useful_for` entries that would match content creation squads:
+Check that both new tools have `useful_for` entries that would match content creation teams:
 
 Run: `grep -A1 "useful_for:" _conectese/tools/registry/asset-fetcher.tool.yaml _conectese/tools/registry/visual-renderer.tool.yaml`
 

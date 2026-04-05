@@ -1,5 +1,5 @@
 {
-  "squad": "sim-8-agentes",
+  "team": "sim-8-agentes",
   "status": "running",
   "step": { "current": 7, "total": 12, "label": "Agendando publicação" },
   "agents": [

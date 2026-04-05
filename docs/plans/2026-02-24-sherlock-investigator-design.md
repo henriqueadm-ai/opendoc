@@ -6,11 +6,11 @@
 
 ## Overview
 
-Sherlock is a content investigation feature for Conectese that extracts and analyzes real content from social media profiles during squad creation. Instead of relying solely on generic web research, Sherlock navigates to reference profiles, extracts actual content, and identifies patterns that feed into richer squad design.
+Sherlock is a content investigation feature for Conectese that extracts and analyzes real content from social media profiles during team creation. Instead of relying solely on generic web research, Sherlock navigates to reference profiles, extracts actual content, and identifies patterns that feed into richer team design.
 
 ## Trigger & Placement
 
-Sherlock runs during **squad creation** (Architect agent), as a new Phase 1.5 (Investigation Setup) that feeds into Phase 2 (Research).
+Sherlock runs during **team creation** (Architect agent), as a new Phase 1.5 (Investigation Setup) that feeds into Phase 2 (Research).
 
 - **When:** After Discovery questions, before Research
 - **How:** Architect asks "Do you have reference profiles?" → dispatches Sherlock subagents in parallel with WebSearch
@@ -49,10 +49,10 @@ Sherlock runs during **squad creation** (Architect agent), as a new Phase 1.5 (I
 
 ### Smart Recommendations
 
-Based on squad type:
-- Carousel squad → recommend carousels + reels
-- Video squad → recommend long-form videos
-- Generic content squad → recommend diverse mix
+Based on team type:
+- Carousel team → recommend carousels + reels
+- Video team → recommend long-form videos
+- Generic content team → recommend diverse mix
 
 ### Platform-Specific Defaults
 
@@ -102,7 +102,7 @@ Based on squad type:
 ### Per Profile
 
 ```
-_conectese/_investigations/{squad-code}/
+_conectese/_investigations/{team-code}/
 ├── {platform}-{username}/
 │   ├── raw-content.md        # All extracted content
 │   └── pattern-analysis.md   # Identified patterns
@@ -146,13 +146,13 @@ Total contents: {N}
 
 ## Engagement Patterns
 
-## Recommendations for Squad
+## Recommendations for Team
 ```
 
 ### Consolidated Analysis (multiple profiles)
 
 ```markdown
-# Consolidated Investigation: {squad-name}
+# Consolidated Investigation: {team-name}
 
 ## Profiles Analyzed
 ## Universal Patterns (common to all)
@@ -183,16 +183,16 @@ Total contents: {N}
 ### Persistence & Reuse
 
 Investigations saved in `_conectese/_investigations/`. Enables:
-- Reuse between similar squads
+- Reuse between similar teams
 - Re-investigate profiles later (compare evolution)
 - Architect can ask: "Found previous investigations for this niche. Reuse?"
 
 ## Complete Flow
 
 ```
-User: /conectese create "Instagram carousel squad"
+User: /conectese create "Instagram carousel team"
 
-Phase 1: Discovery → 5 questions about the squad
+Phase 1: Discovery → 5 questions about the team
 Phase 1.5: Investigation Setup
   → "Have reference profiles?"
   → User provides URLs + configures types/quantity

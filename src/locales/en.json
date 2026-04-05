@@ -24,7 +24,7 @@
   "updateStartingUnknown": "Updating Conectese (unknown version) → {new}...",
   "updatedFile": "📄 Updated {path}",
   "updateSuccess": "✅ Conectese {version} installed successfully!",
-  "updatePreserved": "✓ Preserved: _memory/, _investigations/, squads/",
+  "updatePreserved": "✓ Preserved: _memory/, _investigations/, teams/",
   "updateFileCount": "✓ Updated: {count} system files",
   "updateLatestHint": "💡 Tip: Use 'npx conectese@latest update' to always get the newest version.",
   "skillsNotInitialized": "No Conectese installation found. Run 'init' first.",
@@ -69,5 +69,5 @@
   "step1VsCodeCopilot": "1. Open this directory in VS Code",
   "step2VsCodeCopilot": "2. Open Copilot Chat (Ctrl+Alt+I)",
   "step3VsCodeCopilot": "3. Type /conectese to get started",
-  "tokenCostWarning": "Running squads consumes AI tokens (paid). Monitor your usage in your IDE or AI provider dashboard."
+  "tokenCostWarning": "Running teams consumes AI tokens (paid). Monitor your usage in your IDE or AI provider dashboard."
 }

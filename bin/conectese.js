@@ -47,8 +47,8 @@ if (command === 'init') {
   const result = await agentsCli(subcommand, args, process.cwd());
   if (!result.success) process.exitCode = 1;
 } else if (command === 'runs') {
-  const squadName = positionals[1] || null;
-  const runs = await listRuns(squadName, process.cwd());
+  const teamName = positionals[1] || null;
+  const runs = await listRuns(teamName, process.cwd());
   printRuns(runs);
 } else {
   console.log(`
@@ -65,7 +65,7 @@ if (command === 'init') {
     npx conectese agents install <name>   Install a predefined agent
     npx conectese agents remove <name>    Remove an agent
     npx conectese agents update           Update all agents
-    npx conectese runs [squad-name]     View execution history
+    npx conectese runs [team-name]     View execution history
 
   Learn more: https://github.com/henriqueadm-ai/conectese
   `);

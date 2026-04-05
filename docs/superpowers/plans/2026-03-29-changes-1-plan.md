@@ -45,11 +45,11 @@ Replace the entire Step 4 section (lines 81-92) with:
 Do NOT ask the user about tools. Instead:
 
 1. Silently scan the `skills/` directory to find installed skills
-2. Based on the squad's purpose and target formats, select which skills are relevant:
-   - Content squads targeting Instagram → check for: image-creator, image-ai-generator, template-designer, instagram-publisher
-   - Content squads targeting any platform → check for: image-fetcher, blotato
-   - Research squads → check for: apify
-   - Any squad → note built-in capabilities: web browsing, file reading/writing, code execution
+2. Based on the team's purpose and target formats, select which skills are relevant:
+   - Content teams targeting Instagram → check for: image-creator, image-ai-generator, template-designer, instagram-publisher
+   - Content teams targeting any platform → check for: image-fetcher, blotato
+   - Research teams → check for: apify
+   - Any team → note built-in capabilities: web browsing, file reading/writing, code execution
 3. Save the auto-selected tools in `tools_needed` — they will appear in the Step 8 summary where the user can adjust them
 
 ---
@@ -116,7 +116,7 @@ Replace with:
 Add new rule:
 ```
 - **NEVER ask about tools** — auto-detect from installed skills and include in the summary
-- **NEVER ask about performance mode** — squads are always built lean and agile
+- **NEVER ask about performance mode** — teams are always built lean and agile
 ```
 
 - [ ] **Step 7: Commit**
@@ -171,21 +171,21 @@ git commit -m "feat(architect): update communication style to natural language"
 
 In `## Context Loading` (line 15), replace:
 ```
-- `squads/{code}/_build/discovery.yaml` — Discovery phase output (purpose, audience, domains, performance mode, formats, references)
+- `teams/{code}/_build/discovery.yaml` — Discovery phase output (purpose, audience, domains, performance mode, formats, references)
 ```
 With:
 ```
-- `squads/{code}/_build/discovery.yaml` — Discovery phase output (purpose, audience, domains, formats, references)
+- `teams/{code}/_build/discovery.yaml` — Discovery phase output (purpose, audience, domains, formats, references)
 ```
 
 - [ ] **Step 2: Add agile design philosophy to Phase E**
 
-At the start of `## Phase E: Agent Design` (after line 149), add a new subsection before "Design the squad":
+At the start of `## Phase E: Agent Design` (after line 149), add a new subsection before "Design the team":
 
 ```markdown
 ### Design Philosophy
 
-Build agile, objective squads. Each agent should have the minimum tasks necessary to fulfill its role. Avoid redundant passes, cascading reviews, or separate optimization tasks. A single well-crafted task that combines creation and basic optimization is better than three tasks that split the work artificially.
+Build agile, objective teams. Each agent should have the minimum tasks necessary to fulfill its role. Avoid redundant passes, cascading reviews, or separate optimization tasks. A single well-crafted task that combines creation and basic optimization is better than three tasks that split the work artificially.
 
 Guidelines:
 - 1-2 tasks per agent maximum
@@ -195,9 +195,9 @@ Guidelines:
 - Research agents must be direct and focused — no exhaustive surveys
 ```
 
-- [ ] **Step 3: Remove all performance mode branching from Content Squad Pattern**
+- [ ] **Step 3: Remove all performance mode branching from Content Team Pattern**
 
-In `#### Agent Roles in Content Squads` section:
+In `#### Agent Roles in Content Teams` section:
 
 Replace the researcher tasks block (around lines 273-276):
 ```markdown
@@ -212,13 +212,13 @@ With:
 
 Replace the creator tasks block (around lines 280-288):
 ```markdown
-- **For news-based squads**: the creator is responsible for angle generation. Prepend `generate-angles.md` as the creator's FIRST task. This task runs in a dedicated pipeline step AFTER the news selection checkpoint — it generates 5 distinct angles from the ONE selected story. An angle selection checkpoint follows immediately. The content creation tasks run in a SEPARATE pipeline step AFTER angle selection.
+- **For news-based teams**: the creator is responsible for angle generation. Prepend `generate-angles.md` as the creator's FIRST task. This task runs in a dedicated pipeline step AFTER the news selection checkpoint — it generates 5 distinct angles from the ONE selected story. An angle selection checkpoint follows immediately. The content creation tasks run in a SEPARATE pipeline step AFTER angle selection.
   - Alta Performance (news-based): `generate-angles.md` [step A, after news selection] → Angle Selection checkpoint → `create-{format}.md` → `optimize-{format}.md` [step B, after angle selection]
   - Economico (news-based): `generate-angles.md` [step A, after news selection] → Angle Selection checkpoint → `create-{format}.md` [step B, optimization embedded]
 ```
 With:
 ```markdown
-- **For news-based squads**: the creator is responsible for angle generation. Prepend `generate-angles.md` as the creator's FIRST task. This task runs in a dedicated pipeline step AFTER the news selection checkpoint — it generates 5 distinct angles from the ONE selected story. An angle selection checkpoint follows immediately. The content creation tasks run in a SEPARATE pipeline step AFTER angle selection.
+- **For news-based teams**: the creator is responsible for angle generation. Prepend `generate-angles.md` as the creator's FIRST task. This task runs in a dedicated pipeline step AFTER the news selection checkpoint — it generates 5 distinct angles from the ONE selected story. An angle selection checkpoint follows immediately. The content creation tasks run in a SEPARATE pipeline step AFTER angle selection.
   - Pipeline: `generate-angles.md` [step A, after news selection] → Angle Selection checkpoint → `create-{format}.md` [step B, optimization embedded in creation]
 ```
 
@@ -478,10 +478,10 @@ In `skills/template-designer/SKILL.md`, replace the `### On Windows (Git Bash)` 
 The script auto-detects Windows and runs in foreground mode. Use `run_in_background: true` on the Bash tool call:
 
 ~~~bash
-bash skills/template-designer/scripts/start-server.sh --session-dir "squads/{code}/_build/template-session"
+bash skills/template-designer/scripts/start-server.sh --session-dir "teams/{code}/_build/template-session"
 ~~~
 
-Then read `squads/{code}/_build/template-session/state/server-info.json` on your next turn to get the URL and port.
+Then read `teams/{code}/_build/template-session/state/server-info.json` on your next turn to get the URL and port.
 ```
 
 With:
@@ -491,10 +491,10 @@ With:
 The server runs in the background on all platforms:
 
 ~~~bash
-bash skills/template-designer/scripts/start-server.sh --session-dir "squads/{code}/_build/template-session"
+bash skills/template-designer/scripts/start-server.sh --session-dir "teams/{code}/_build/template-session"
 ~~~
 
-The script prints the server info JSON on success. If it doesn't appear, read `squads/{code}/_build/template-session/state/server-info.json`.
+The script prints the server info JSON on success. If it doesn't appear, read `teams/{code}/_build/template-session/state/server-info.json`.
 ```
 
 - [ ] **Step 3: Commit**
@@ -614,11 +614,11 @@ With:
 
 Update the following step numbering:
 ```markdown
-3. **Write working state** — Write `squads\{name}\state.json` again with:
+3. **Write working state** — Write `teams\{name}\state.json` again with:
 ```
 To:
 ```markdown
-2. **Write working state** — Write `squads/{name}/state.json` again with:
+2. **Write working state** — Write `teams/{name}/state.json` again with:
 ```
 
 (Also fix the backslash to forward slash while we're here.)
@@ -738,7 +738,7 @@ With:
 ```markdown
 ### Deep-Dive Methodology
 
-Select the 3-5 most promising sources and extract detailed findings. Cross-reference key claims across sources. Flag contradictions. Focus on extracting what the squad actually needs — not every possible angle, just the ones that serve the brief.
+Select the 3-5 most promising sources and extract detailed findings. Cross-reference key claims across sources. Flag contradictions. Focus on extracting what the team actually needs — not every possible angle, just the ones that serve the brief.
 ```
 
 - [ ] **Step 4: Commit**

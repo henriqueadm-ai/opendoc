@@ -1,7 +1,7 @@
 {
   "name": "conectese",
   "version": "0.1.15",
-  "description": "Multi-agent orchestration framework — create AI squads that work together",
+  "description": "Multi-agent orchestration framework — create AI teams that work together",
   "type": "module",
   "bin": {
     "conectese": "bin/conectese.js"
@@ -17,7 +17,7 @@
     "ai-agents",
     "multi-agent",
     "orchestration",
-    "squads"
+    "teams"
   ],
   "author": "Carlos Henrique (https://github.com/henriqueadm-ai)",
   "homepage": "https://github.com/henriqueadm-ai/conectese#readme",

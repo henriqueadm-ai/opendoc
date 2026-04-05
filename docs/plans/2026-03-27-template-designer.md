@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Create a self-contained skill that opens a local visual companion for interactive image template selection during squad creation.
+**Goal:** Create a self-contained skill that opens a local visual companion for interactive image template selection during team creation.
 
-**Architecture:** Pure Node.js HTTP server (zero deps) serves HTML templates in a browser. The agent adapts 3 base models to squad context, shows them to the user, iterates on feedback, then saves the approved template as HTML reference + structured style rules into the squad's pipeline data.
+**Architecture:** Pure Node.js HTTP server (zero deps) serves HTML templates in a browser. The agent adapts 3 base models to team context, shows them to the user, iterates on feedback, then saves the approved template as HTML reference + structured style rules into the team's pipeline data.
 
 **Tech Stack:** Node.js (http, fs, path modules only), HTML/CSS, Bash scripts
 
@@ -411,7 +411,7 @@ git commit -m "feat(template-designer): add HTTP server, frame template, and hel
 
 - [ ] **Step 1: Create `start-server.sh`**
 
-Handles session directory creation, Windows detection, foreground/background modes. Accepts `--session-dir <path>` (required — the squad's `_build/template-session` path).
+Handles session directory creation, Windows detection, foreground/background modes. Accepts `--session-dir <path>` (required — the team's `_build/template-session` path).
 
 ```bash
 #!/usr/bin/env bash
@@ -676,25 +676,25 @@ Then the markdown body with full instructions for the agent. This is the longest
 ```markdown
 # Template Designer
 
-Interactive visual companion for selecting and refining image templates during squad creation.
+Interactive visual companion for selecting and refining image templates during team creation.
 
 ## When to Use
 
-- During squad creation: when the Design phase identifies an image design agent and the user opts to choose a template
-- During squad editing: when the user asks to define, edit, or change the visual identity / template of a design agent
-- Trigger: presence of `image-creator` skill (or similar image-producing skill) in the squad's skill list
+- During team creation: when the Design phase identifies an image design agent and the user opts to choose a template
+- During team editing: when the user asks to define, edit, or change the visual identity / template of a design agent
+- Trigger: presence of `image-creator` skill (or similar image-producing skill) in the team's skill list
 
 ## Prerequisites
 
-- A squad with a design agent that produces images (uses `image-creator` skill)
-- Squad's `_build/` directory must exist (created during Discovery/Design phases)
+- A team with a design agent that produces images (uses `image-creator` skill)
+- Team's `_build/` directory must exist (created during Discovery/Design phases)
 - Node.js available in PATH
 
 ## How It Works
 
 1. You start a local HTTP server that shows HTML templates in the browser
 2. You read the base templates from `skills/template-designer/base-templates/`
-3. You adapt them to the squad's context (platform, domain, tone, Sherlock data)
+3. You adapt them to the team's context (platform, domain, tone, Sherlock data)
 4. The user views templates in the browser and gives feedback in the terminal
 5. You iterate until the user approves
 6. You save the approved template as HTML reference + structured style rules
@@ -707,22 +707,22 @@ Interactive visual companion for selecting and refining image templates during s
 The script auto-detects Windows and runs in foreground mode. Use `run_in_background: true` on the Bash tool call:
 
 ~~~
-bash skills/template-designer/scripts/start-server.sh --session-dir "squads/{code}/_build/template-session"
+bash skills/template-designer/scripts/start-server.sh --session-dir "teams/{code}/_build/template-session"
 ~~~
 
-Then read `squads/{code}/_build/template-session/state/server-info.json` on your next turn to get the URL and port.
+Then read `teams/{code}/_build/template-session/state/server-info.json` on your next turn to get the URL and port.
 
 ### On macOS/Linux
 
 ~~~
-bash skills/template-designer/scripts/start-server.sh --session-dir "squads/{code}/_build/template-session"
+bash skills/template-designer/scripts/start-server.sh --session-dir "teams/{code}/_build/template-session"
 ~~~
 
 The script backgrounds the server and prints the JSON with URL.
 
 ### Server Info
 
-After starting, read `squads/{code}/_build/template-session/state/server-info.json`:
+After starting, read `teams/{code}/_build/template-session/state/server-info.json`:
 ~~~json
 {"type":"server-started","port":52341,"url":"http://localhost:52341","content_dir":"...","state_dir":"..."}
 ~~~
@@ -733,10 +733,10 @@ Tell the user to open the URL in their browser.
 
 ### Step 1: Read Context
 
-Read these files to understand the squad:
-- `squads/{code}/_build/discovery.yaml` — platform, domain, tone, language
-- `squads/{code}/_build/design.yaml` — agents, purpose, skills
-- `squads/{code}/_investigations/consolidated-analysis.md` (if exists) — visual patterns from reference profiles
+Read these files to understand the team:
+- `teams/{code}/_build/discovery.yaml` — platform, domain, tone, language
+- `teams/{code}/_build/design.yaml` — agents, purpose, skills
+- `teams/{code}/_investigations/consolidated-analysis.md` (if exists) — visual patterns from reference profiles
 
 ### Step 2: Read Base Templates
 
@@ -748,11 +748,11 @@ Read the 3 base templates from `skills/template-designer/base-templates/`:
 ### Step 3: Generate Adapted Variations
 
 For each base template, create an adapted version:
-- Adjust colors to match the squad's domain/brand (use Sherlock palette if available)
+- Adjust colors to match the team's domain/brand (use Sherlock palette if available)
 - Adjust typography for the target platform
 - Replace example content with domain-relevant content
 - Resize viewport if the target is not 1080x1440 (e.g., 1080x1080 for posts, 1080x1920 for stories)
-- Add any visual elements that match the squad's personality
+- Add any visual elements that match the team's personality
 
 Write each adapted template as a **content fragment** (no `<!DOCTYPE>` or `<html>` — the server wraps it in the frame template automatically).
 
@@ -812,13 +812,13 @@ When the user approves, create two files:
 
 ### 1. Template Reference HTML
 
-Save to: `squads/{code}/pipeline/data/template-reference.html`
+Save to: `teams/{code}/pipeline/data/template-reference.html`
 
 The complete, self-contained HTML/CSS of the approved template at full resolution (e.g., 1080x1440). This is the literal example the design agent will use.
 
 ### 2. Visual Identity Rules
 
-Save to: `squads/{code}/pipeline/data/visual-identity.md`
+Save to: `teams/{code}/pipeline/data/visual-identity.md`
 
 Extract structured rules from the approved template:
 
@@ -856,13 +856,13 @@ Extract structured rules from the approved template:
 - Color usage rules (when to use primary vs accent)
 ~~~
 
-### 3. Update Squad Files
+### 3. Update Team Files
 
-If the squad is being created (Build phase hasn't run yet):
+If the team is being created (Build phase hasn't run yet):
 - The design.yaml context now includes the template data — Build will pick it up
 
-If the squad already exists (editing flow):
-- Add `pipeline/data/template-reference.html` and `pipeline/data/visual-identity.md` to `squad.yaml` `data:` list
+If the team already exists (editing flow):
+- Add `pipeline/data/template-reference.html` and `pipeline/data/visual-identity.md` to `team.yaml` `data:` list
 - Update the design agent's `.agent.md` to reference both files
 - Update the design agent's tasks to include the rule: "always follow visual-identity.md and use template-reference.html as the base model"
 
@@ -871,7 +871,7 @@ If the squad already exists (editing flow):
 The server auto-stops after 30 minutes of inactivity. For manual stop:
 
 ~~~
-bash skills/template-designer/scripts/stop-server.sh "squads/{code}/_build/template-session"
+bash skills/template-designer/scripts/stop-server.sh "teams/{code}/_build/template-session"
 ~~~
 
 ## Checking Server Status
@@ -894,7 +894,7 @@ git commit -m "feat(template-designer): add SKILL.md with full agent instruction
 
 **Files:**
 - Modify: `_conectese/core/prompts/design.prompt.md` (add template selection offer after Phase G)
-- Modify: `_conectese/core/architect.agent.yaml` (add template-designer awareness to edit-squad workflow)
+- Modify: `_conectese/core/architect.agent.yaml` (add template-designer awareness to edit-team workflow)
 
 - [ ] **Step 1: Read current `design.prompt.md`**
 
@@ -911,7 +911,7 @@ After the Design Presentation section (Phase G), add a conditional section:
 
 If this condition is met, after the user approves the design in Phase G, present:
 
-> "O squad inclui um agente de design de imagens. Quer escolher um template visual agora para definir a identidade visual? Você pode fazer isso depois também, pedindo para editar o template do designer."
+> "O team inclui um agente de design de imagens. Quer escolher um template visual agora para definir a identidade visual? Você pode fazer isso depois também, pedindo para editar o template do designer."
 
 - **If Yes:** Read and follow the instructions in `skills/template-designer/SKILL.md`. The template selection process takes over until the user approves a template. The approved template data (template-reference.html path and visual-identity.md path) should be included in the design.yaml output so the Build phase can reference them.
 
@@ -922,18 +922,18 @@ After template selection completes (or is skipped), proceed to output design.yam
 
 - [ ] **Step 3: Add template-designer awareness to `architect.agent.yaml`**
 
-In the `edit-squad` workflow section, add awareness that the user might ask to edit templates:
+In the `edit-team` workflow section, add awareness that the user might ask to edit templates:
 
 ```markdown
-    edit-squad: |
-      ## Edit Squad Workflow
-      1. Ask which squad to edit (list available squads if not specified)
-      2. Read the squad's squad.yaml to understand current structure
+    edit-team: |
+      ## Edit Team Workflow
+      1. Ask which team to edit (list available teams if not specified)
+      2. Read the team's team.yaml to understand current structure
       3. Ask what changes the user wants
       4. **If the user asks to edit/define/change the visual template or identity of a design agent:**
          - Read and follow `skills/template-designer/SKILL.md`
-         - If `template-reference.html` and `visual-identity.md` already exist in the squad's `pipeline/data/`, load them as the starting point
-      5. Modify the relevant files (agent .md files, pipeline steps, squad.yaml)
+         - If `template-reference.html` and `visual-identity.md` already exist in the team's `pipeline/data/`, load them as the starting point
+      5. Modify the relevant files (agent .md files, pipeline steps, team.yaml)
       6. Present summary of changes
       7. Confirm with user
 ```
@@ -999,7 +999,7 @@ ls "$TEST_DIR/state/server-stopped"
 - [ ] **Step 3: Verify architect integration**
 
 Read `_conectese/core/prompts/design.prompt.md` and confirm Phase G.5 is present and correctly placed.
-Read `_conectese/core/architect.agent.yaml` and confirm edit-squad workflow includes template-designer awareness.
+Read `_conectese/core/architect.agent.yaml` and confirm edit-team workflow includes template-designer awareness.
 
 - [ ] **Step 4: Clean up test artifacts**
 

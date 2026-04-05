@@ -1,5 +1,5 @@
 {
-  "squad": "sim-6-agentes",
+  "team": "sim-6-agentes",
   "status": "running",
   "step": { "current": 5, "total": 10, "label": "Definindo estratégia" },
   "agents": [

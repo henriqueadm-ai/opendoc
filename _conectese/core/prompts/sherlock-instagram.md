@@ -77,12 +77,12 @@ npx playwright open --load-storage=_conectese/_browser_profile/instagram.json ht
 
 5. Download the audio for transcription using yt-dlp:
    ```bash
-   yt-dlp -x --audio-format wav -o "squads/{squad-name}/_investigations/{username}/reel-{id}.%(ext)s" "https://www.instagram.com/reel/{reel-id}/"
+   yt-dlp -x --audio-format wav -o "teams/{team-name}/_investigations/{username}/reel-{id}.%(ext)s" "https://www.instagram.com/reel/{reel-id}/"
    ```
 
 6. Transcribe the audio using whisper:
    ```bash
-   whisper "squads/{squad-name}/_investigations/{username}/reel-{id}.wav" --model small --output_dir "squads/{squad-name}/_investigations/{username}/" --output_format txt
+   whisper "teams/{team-name}/_investigations/{username}/reel-{id}.wav" --model small --output_dir "teams/{team-name}/_investigations/{username}/" --output_format txt
    ```
 
 7. Read the transcription file and include it in the raw content output.

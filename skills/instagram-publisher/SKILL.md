@@ -39,7 +39,7 @@ Use the Instagram Publisher when you need to publish carousel posts directly to 
 
 ### Workflow
 
-1. List JPEG files in `squads/{squad}/output/images/` sorted by name.
+1. List JPEG files in `teams/{team}/output/images/` sorted by name.
    If no files found: stop and ask the user to add images before continuing.
 2. Present the image list to the user with AskUserQuestion to confirm order.
 3. Extract the caption from the content draft:
@@ -47,7 +47,7 @@ Use the Instagram Publisher when you need to publish carousel posts directly to 
    - Max 2200 characters (Instagram limit)
 4. Run the publish script:
    ```
-   node --env-file=.env squads/{squad}/tools/publish.js \
+   node --env-file=.env teams/{team}/tools/publish.js \
      --images "<comma-separated-ordered-paths>" \
      --caption "<caption>"
    ```

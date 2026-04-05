@@ -4,7 +4,7 @@ This document describes how conectese handles security, privacy, and user data.
 
 ## Browser Sessions (Sherlock Investigator)
 
-When you provide reference profile URLs during squad creation, conectese dispatches the Sherlock investigator agent, which uses a headless Chromium browser (via Playwright) to navigate social media profiles and extract content patterns.
+When you provide reference profile URLs during team creation, conectese dispatches the Sherlock investigator agent, which uses a headless Chromium browser (via Playwright) to navigate social media profiles and extract content patterns.
 
 ### How sessions work
 
@@ -27,7 +27,7 @@ The `instagram-publisher` skill uploads images to [imgBB](https://imgbb.com) to 
 
 ## Checkpoints
 
-Checkpoints are points in the squad pipeline where the agent pauses and asks for your approval before continuing. They are implemented as **instructions in the agent pipeline** (prompt-level), not as programmatic guards in the framework code.
+Checkpoints are points in the team pipeline where the agent pauses and asks for your approval before continuing. They are implemented as **instructions in the agent pipeline** (prompt-level), not as programmatic guards in the framework code.
 
 The actual permission enforcement depends on the host IDE:
 - **Claude Code:** Has its own permission layer that gates tool use (file writes, bash commands, browser actions).
@@ -60,9 +60,9 @@ Skills are conectese's extension system. A skill is a directory containing a `SK
 
 ## Token Consumption
 
-conectese is free and open source software. However, running squads consumes AI tokens from your IDE or AI provider, which are typically paid.
+conectese is free and open source software. However, running teams consumes AI tokens from your IDE or AI provider, which are typically paid.
 
-- Every squad run consumes tokens. The amount depends on the number of agents, pipeline complexity, and model tier.
+- Every team run consumes tokens. The amount depends on the number of agents, pipeline complexity, and model tier.
 - Sherlock investigations and image generation are especially token-intensive.
 - The framework loads system prompts, best practices, and agent instructions into context on every run.
 - Each new skill or best-practice guide added to the project increases the base context size.

@@ -80,25 +80,25 @@ test('update preserves _investigations contents', async () => {
   }
 });
 
-test('update preserves squads contents', async () => {
+test('update preserves teams contents', async () => {
   const tempDir = await mkdtemp(join(tmpdir(), 'conectese-test-'));
 
   try {
     await init(tempDir, { _skipPrompts: true });
-    await mkdir(join(tempDir, 'squads', 'my-squad'), { recursive: true });
+    await mkdir(join(tempDir, 'teams', 'my-team'), { recursive: true });
     await writeFile(
-      join(tempDir, 'squads', 'my-squad', 'custom.md'),
-      'user squad content',
+      join(tempDir, 'teams', 'my-team', 'custom.md'),
+      'user team content',
       'utf-8'
     );
 
     await update(tempDir);
 
     const content = await readFile(
-      join(tempDir, 'squads', 'my-squad', 'custom.md'),
+      join(tempDir, 'teams', 'my-team', 'custom.md'),
       'utf-8'
     );
-    assert.equal(content, 'user squad content');
+    assert.equal(content, 'user team content');
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }

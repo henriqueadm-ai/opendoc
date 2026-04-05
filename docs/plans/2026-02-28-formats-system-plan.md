@@ -4,7 +4,7 @@
 
 **Goal:** Add a Formats system that injects platform+content-type-specific instructions into any agent's execution context, replacing the existing platform files.
 
-**Architecture:** Format files live in `_conectese/core/formats/` with `{platform}-{type}.md` naming. Pipeline steps declare `format: {name}` in their frontmatter. The Pipeline Runner injects the format content between agent overlays and skill instructions. The Architect asks about formats during squad creation and configures steps accordingly.
+**Architecture:** Format files live in `_conectese/core/formats/` with `{platform}-{type}.md` naming. Pipeline steps declare `format: {name}` in their frontmatter. The Pipeline Runner injects the format content between agent overlays and skill instructions. The Architect asks about formats during team creation and configures steps accordingly.
 
 **Tech Stack:** Markdown prompt engineering (YAML frontmatter + markdown body). No code changes — all modifications are to `.md` and `.yaml` prompt files.
 
@@ -462,7 +462,7 @@ Insert BEFORE that line (renumber 4 → 5):
    e. The final agent context composition order is:
       ```
       {base agent content}
-      {squad overlay (.custom.md) if applicable}
+      {team overlay (.custom.md) if applicable}
 
       --- FORMAT: {format name} ---
 
@@ -500,10 +500,10 @@ git commit -m "feat(runner): add format injection in agent loading"
 After the Performance Mode question (currently question 6, around line 99), add a new discovery question about target format:
 
 ```yaml
-      7. **Target Format** (for content squads only): After understanding the purpose,
-         if this is a content creation squad, ask about target formats.
+      7. **Target Format** (for content teams only): After understanding the purpose,
+         if this is a content creation team, ask about target formats.
 
-         "Para quais formatos/plataformas esse squad vai produzir conteúdo?"
+         "Para quais formatos/plataformas esse team vai produzir conteúdo?"
 
          List available formats by scanning `_conectese/core/formats/` directory.
          Group by platform and present as multiSelect:
@@ -527,7 +527,7 @@ After the Performance Mode question (currently question 6, around line 99), add 
          Save the selected format IDs (e.g., ["instagram-feed", "twitter-thread"]).
          These will be used in Phase 5 to assign `format:` to pipeline steps.
 
-         For NON-content squads (data analysis, automation, etc.): skip this question.
+         For NON-content teams (data analysis, automation, etc.): skip this question.
 ```
 
 **Step 2: Commit**
@@ -549,7 +549,7 @@ git commit -m "feat(architect): add format selection to Phase 1 Discovery"
 In the design presentation template (around line 528), add format information:
 
 ```
-I'll create a squad with N agents:
+I'll create a team with N agents:
 
 1. [Icon] [Name] — [Role description]
    Tasks: [task 1] → [task 2] → [task 3]
@@ -573,17 +573,17 @@ In the Pipeline Step Format section (around line 817), add `format:` to the step
 execution: subagent
 agent: {agent-id}
 format: {format-id}    # OPTIONAL — only for content creation steps. E.g., "instagram-feed"
-inputFile: squads/{code}/...
-outputFile: squads/{code}/...
+inputFile: teams/{code}/...
+outputFile: teams/{code}/...
 model_tier: fast
 ---
 ```
 
 Add a comment explaining: "The `format:` field is optional. When present, the Pipeline Runner automatically injects the format file from `_conectese/core/formats/{format}.md` into the agent's context. Use this for any step where platform-specific content rules should guide the agent."
 
-**Step 3: Update Content Squad Pattern**
+**Step 3: Update Content Team Pattern**
 
-In the Content Squad Pattern section (around line 466), update the creator agent instructions:
+In the Content Team Pattern section (around line 466), update the creator agent instructions:
 
 Replace the current reference to `_conectese/core/platforms/{platform}.md`:
 ```
