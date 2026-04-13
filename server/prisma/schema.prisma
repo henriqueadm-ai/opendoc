@@ -18,10 +18,44 @@ model Organization {
   storage_limit_mb Int      @default(5000)
   created_at       DateTime @default(now())
 
-  // Note: Users, ApiKeys, and Subscriptions will be added in subsequent feature implementations.
+  users            User[]
+  invites          Invite[]
 }
 
 enum Plan {
   LIGHT
   PRO
+}
+
+enum Role {
+  ADMIN
+  COORDINATOR
+  LAWYER
+}
+
+model User {
+  id              Int          @id @default(autoincrement())
+  email           String       @unique
+  password_hash   String       // Argon2id
+  oab_number      String?
+  role            Role
+  plan            Plan
+  totp_secret     String?
+  totp_enabled    Boolean      @default(false)
+  organization_id Int
+  organization    Organization @relation(fields: [organization_id], references: [id])
+  created_at      DateTime     @default(now())
+}
+
+model Invite {
+  id              Int          @id @default(autoincrement())
+  email           String
+  token           String       @unique
+  role            Role
+  plan            Plan
+  organization_id Int
+  organization    Organization @relation(fields: [organization_id], references: [id])
+  used            Boolean      @default(false)
+  expires_at      DateTime
+  created_at      DateTime     @default(now())
 }
