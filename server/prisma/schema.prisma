@@ -1,0 +1,27 @@
+generator client {
+  provider        = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id               Int      @id @default(autoincrement())
+  name             String
+  slug             String   @unique
+  schema_name      String   @unique
+  plan             Plan     @default(LIGHT)
+  logo_url         String?
+  colors           Json?    // { primary, secondary, accent }
+  storage_limit_mb Int      @default(5000)
+  created_at       DateTime @default(now())
+
+  // Note: Users, ApiKeys, and Subscriptions will be added in subsequent feature implementations.
+}
+
+enum Plan {
+  LIGHT
+  PRO
+}
