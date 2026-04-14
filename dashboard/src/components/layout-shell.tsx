@@ -3,7 +3,15 @@ import { CommandPalette } from "./command-palette";
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen w-full bg-background text-foreground overflow-hidden">
+    <div className="flex h-screen w-full bg-background text-foreground overflow-hidden relative">
+      {/* Skip Link Accessibility */}
+      <a 
+        href="#main-content" 
+        className="absolute left-4 top-4 z-[60] -translate-y-24 bg-primary text-primary-foreground focus:translate-y-0 px-4 py-2 font-bold rounded-md outline-none focus-visible:ring-2 focus-visible:ring-offset-2 transition-transform duration-200"
+      >
+        Pular para o conteúdo
+      </a>
+
       {/* Sidebar - Desktop */}
       <aside className="hidden lg:flex w-60 flex-col border-r border-border bg-card">
         <div className="flex h-14 items-center px-4 font-bold border-b border-border">
@@ -44,7 +52,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
         </header>
 
         {/* Content Area */}
-        <main className="flex-1 overflow-auto bg-muted/20 relative">
+        <main id="main-content" className="flex-1 overflow-auto bg-muted/20 relative outline-none" tabIndex={-1}>
           {children}
         </main>
       </div>
