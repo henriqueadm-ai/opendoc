@@ -43,8 +43,18 @@ model User {
   totp_secret     String?
   totp_enabled    Boolean      @default(false)
   organization_id Int
-  organization    Organization @relation(fields: [organization_id], references: [id])
-  created_at      DateTime     @default(now())
+  organization    Organization   @relation(fields: [organization_id], references: [id])
+  created_at      DateTime       @default(now())
+  refresh_tokens  RefreshToken[]
+}
+
+model RefreshToken {
+  id              Int      @id @default(autoincrement())
+  token           String   @unique
+  user_id         Int
+  user            User     @relation(fields: [user_id], references: [id])
+  expires_at      DateTime
+  created_at      DateTime @default(now())
 }
 
 model Invite {

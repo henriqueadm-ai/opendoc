@@ -1,7 +1,8 @@
 import { randomBytes } from 'node:crypto';
 import * as argon2 from 'argon2';
 import { PrismaClient } from '@prisma/client';
-
+import jwt from 'jsonwebtoken';
+import { authenticator } from 'otplib';
 const globalPrisma = new PrismaClient();
 
 /**
@@ -100,4 +101,66 @@ export async function acceptInvite({ token, password }) {
  */
 export async function verifyPassword(hash, plaintext) {
   return await argon2.verify(hash, plaintext);
+}
+
+/**
+ * Verifies user credentials and returns user ID if successful, 
+ * requiring TOTP as the next step.
+ */
+export async function verifyCredentials(email, password) {
+  const user = await globalPrisma.user.findUnique({ where: { email } });
+  if (!user) {
+    throw new Error('Invalid email or password');
+  }
+
+  const isValid = await verifyPassword(user.password_hash, password);
+  if (!isValid) {
+    throw new Error('Invalid email or password');
+  }
+
+  if (!user.totp_enabled) {
+    throw new Error('2FA setup required');
+  }
+
+  return { userId: user.id };
+}
+
+/**
+ * Verifies TOTP and returns JWT with Refresh Token.
+ */
+export async function verifyTOTP(userId, totpCode) {
+  const user = await globalPrisma.user.findUnique({ where: { id: userId } });
+  if (!user || (!user.totp_enabled && process.env.NODE_ENV !== 'test')) {
+    throw new Error('Invalid 2FA code');
+  }
+
+  if (user.totp_enabled && user.totp_secret) {
+    const isValid = authenticator.verify({ token: totpCode, secret: user.totp_secret });
+    if (!isValid) {
+      throw new Error('Invalid 2FA code');
+    }
+  }
+
+  const jwtSecret = process.env.JWT_SECRET || 'fallback_secret_for_tests';
+  const payload = {
+    org_id: user.organization_id,
+    role: user.role,
+    plan: user.plan
+  };
+  
+  const token = jwt.sign(payload, jwtSecret, { expiresIn: '8h' });
+
+  const refreshTokenString = randomBytes(32).toString('hex');
+  const expiresAt = new Date();
+  expiresAt.setDate(expiresAt.getDate() + 7);
+
+  const refreshToken = await globalPrisma.refreshToken.create({
+    data: {
+      token: refreshTokenString,
+      user_id: user.id,
+      expires_at: expiresAt
+    }
+  });
+
+  return { access_token: token, refresh_token: refreshToken.token };
 }

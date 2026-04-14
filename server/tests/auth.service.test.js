@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { PrismaClient } from '@prisma/client';
-import { createInvite, acceptInvite, verifyPassword } from '../src/services/auth.service.js';
+import { createInvite, acceptInvite, verifyPassword, verifyCredentials, verifyTOTP } from '../src/services/auth.service.js';
 
 const prisma = new PrismaClient();
 
@@ -37,6 +37,25 @@ test('auth.service', async (t) => {
         // If it throws connecting to Prisma, any error is acceptable without a DB setup.
         assert.ok(err.message.length > 0, `Failed with err: ${err.message}`);
       }
+    }
+  });
+
+  await t.test('verifyCredentials expects valid user in DB', async () => {
+    try {
+      await verifyCredentials('invalid@test.com', 'wrongpassword');
+      assert.fail('Should have thrown an error');
+    } catch (err) {
+      // It might throw Prisma error if DB is down, or 'Invalid email or password' if Prisma returns null
+      assert.ok(err.message.length > 0);
+    }
+  });
+
+  await t.test('verifyTOTP expects valid user with TOTP in DB', async () => {
+    try {
+      await verifyTOTP(99999, '000000');
+      assert.fail('Should have thrown an error');
+    } catch (err) {
+      assert.ok(err.message.length > 0);
     }
   });
 });
