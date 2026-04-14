@@ -8,6 +8,7 @@ import { useState } from "react";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { LayoutShell } from "@/components/layout-shell";
+import { Toaster } from "@/components/ui/sonner";
 
 export function App() {
   useTeamSocket();
@@ -30,6 +31,7 @@ export function App() {
         {showIngestion && <IngestionModal onClose={() => setShowIngestion(false)} />}
         <CheckpointModal />
       </LayoutShell>
+      <Toaster richColors closeButton />
     </ThemeProvider>
   );
 }
