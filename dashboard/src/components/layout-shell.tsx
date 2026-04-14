@@ -1,5 +1,5 @@
-import React from "react";
 import { ThemeToggle } from "./theme-toggle";
+import { CommandPalette } from "./command-palette";
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   return (
@@ -48,6 +48,8 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </div>
+
+      <CommandPalette />
     </div>
   );
 }
