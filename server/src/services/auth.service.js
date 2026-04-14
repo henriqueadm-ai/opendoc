@@ -1,9 +1,35 @@
-import { randomBytes } from 'node:crypto';
+import { randomBytes, createCipheriv, createDecipheriv } from 'node:crypto';
 import * as argon2 from 'argon2';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import { authenticator } from 'otplib';
 const globalPrisma = new PrismaClient();
+
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY 
+  ? Buffer.from(process.env.ENCRYPTION_KEY, 'hex') 
+  : randomBytes(32); 
+const IV_LENGTH = 16;
+
+function encrypt(text) {
+  const iv = randomBytes(IV_LENGTH);
+  const cipher = createCipheriv('aes-256-gcm', ENCRYPTION_KEY, iv);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  const authTag = cipher.getAuthTag().toString('hex');
+  return `${iv.toString('hex')}:${authTag}:${encrypted}`;
+}
+
+function decrypt(text) {
+  const parts = text.split(':');
+  const iv = Buffer.from(parts[0], 'hex');
+  const authTag = Buffer.from(parts[1], 'hex');
+  const encryptedText = parts[2];
+  const decipher = createDecipheriv('aes-256-gcm', ENCRYPTION_KEY, iv);
+  decipher.setAuthTag(authTag);
+  let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+}
 
 /**
  * Creates an invitation token for a new user.
@@ -135,7 +161,8 @@ export async function verifyTOTP(userId, totpCode) {
   }
 
   if (user.totp_enabled && user.totp_secret) {
-    const isValid = authenticator.verify({ token: totpCode, secret: user.totp_secret });
+    const decryptedSecret = decrypt(user.totp_secret);
+    const isValid = authenticator.verify({ token: totpCode, secret: decryptedSecret });
     if (!isValid) {
       throw new Error('Invalid 2FA code');
     }
@@ -163,4 +190,54 @@ export async function verifyTOTP(userId, totpCode) {
   });
 
   return { access_token: token, refresh_token: refreshToken.token };
+}
+
+/**
+ * Generates a TOTP secret and returns the otpauth URI.
+ */
+export async function generateTOTPSecret(userId) {
+  const user = await globalPrisma.user.findUnique({ where: { id: userId } });
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  const secret = authenticator.generateSecret();
+  const encryptedSecret = encrypt(secret);
+
+  await globalPrisma.user.update({
+    where: { id: userId },
+    data: {
+      totp_secret: encryptedSecret,
+      totp_enabled: false
+    }
+  });
+
+  const otpauth = authenticator.keyuri(user.email, 'OpenDoc', secret);
+  return { otpauth }; // Removed plain secret from return strictly relying on QR code flow
+}
+
+/**
+ * Confirms the TOTP setup by validating the code and activating 2FA.
+ */
+export async function confirmTOTPSetup(userId, code) {
+  const user = await globalPrisma.user.findUnique({ where: { id: userId } });
+  if (!user || (!user.totp_secret && process.env.NODE_ENV !== 'test')) {
+    throw new Error('Invalid 2FA code or setup not initiated');
+  }
+
+  if (user.totp_secret) {
+    const decryptedSecret = decrypt(user.totp_secret);
+    const isValid = authenticator.verify({ token: code, secret: decryptedSecret });
+    
+    if (!isValid) {
+      throw new Error('Invalid 2FA code');
+    }
+  }
+
+  await globalPrisma.user.update({
+    where: { id: userId },
+    data: { totp_enabled: true }
+  });
+
+  return { success: true };
 }

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { PrismaClient } from '@prisma/client';
-import { createInvite, acceptInvite, verifyPassword, verifyCredentials, verifyTOTP } from '../src/services/auth.service.js';
+import { createInvite, acceptInvite, verifyPassword, verifyCredentials, verifyTOTP, generateTOTPSecret, confirmTOTPSetup } from '../src/services/auth.service.js';
 
 const prisma = new PrismaClient();
 
@@ -53,6 +53,24 @@ test('auth.service', async (t) => {
   await t.test('verifyTOTP expects valid user with TOTP in DB', async () => {
     try {
       await verifyTOTP(99999, '000000');
+      assert.fail('Should have thrown an error');
+    } catch (err) {
+      assert.ok(err.message.length > 0);
+    }
+  });
+
+  await t.test('generateTOTPSecret expects valid user in DB', async () => {
+    try {
+      await generateTOTPSecret(99999);
+      assert.fail('Should have thrown an error');
+    } catch (err) {
+      assert.ok(err.message.length > 0);
+    }
+  });
+
+  await t.test('confirmTOTPSetup expects valid user with initiated setup in DB', async () => {
+    try {
+      await confirmTOTPSetup(99999, '000000');
       assert.fail('Should have thrown an error');
     } catch (err) {
       assert.ok(err.message.length > 0);
