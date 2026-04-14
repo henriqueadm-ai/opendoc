@@ -15,8 +15,9 @@ model Organization {
   plan             Plan     @default(LIGHT)
   logo_url         String?
   colors           Json?    // { primary, secondary, accent }
-  storage_limit_mb Int      @default(5000)
-  created_at       DateTime @default(now())
+  storage_limit_mb     Int      @default(5000)
+  onboarding_completed Boolean  @default(false)
+  created_at           DateTime @default(now())
 
   users            User[]
   invites          Invite[]
