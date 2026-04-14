@@ -1,6 +1,6 @@
-import type { SquadStatus } from "@/types/state";
+import type { TeamStatus } from "@/types/state";
 
-const STATUS_COLORS: Record<SquadStatus | "inactive", string> = {
+const STATUS_COLORS: Record<TeamStatus | "inactive", string> = {
   idle: "#888",
   running: "var(--accent-cyan)",
   completed: "var(--accent-green)",
@@ -9,7 +9,7 @@ const STATUS_COLORS: Record<SquadStatus | "inactive", string> = {
 };
 
 interface StatusBadgeProps {
-  status: SquadStatus | "inactive";
+  status: TeamStatus | "inactive";
 }
 
 export function StatusBadge({ status }: StatusBadgeProps) {

@@ -8,7 +8,7 @@ import {
 import { CELL_W, CELL_H, MARGIN, WALL_H } from './palette';
 import { RoomBuilder } from './RoomBuilder';
 import { AgentSprite } from './AgentSprite';
-import type { SquadState, Agent } from '@/types/state';
+import type { TeamState, Agent } from '@/types/state';
 
 function assignCharacters(agents: Agent[]): Map<string, CharacterName> {
   const assignments = new Map<string, CharacterName>();
@@ -80,14 +80,14 @@ export class OfficeScene extends Phaser.Scene {
 
     this.roomBuilder = new RoomBuilder(this);
 
-    this.events.on('stateUpdate', (state: SquadState | null) => {
+    this.events.on('stateUpdate', (state: TeamState | null) => {
       this.onStateUpdate(state);
     });
 
     this.renderScene(DEMO_AGENTS);
   }
 
-  private onStateUpdate(state: SquadState | null): void {
+  private onStateUpdate(state: TeamState | null): void {
     const agents = state?.agents ?? DEMO_AGENTS;
     this.renderScene(agents);
   }

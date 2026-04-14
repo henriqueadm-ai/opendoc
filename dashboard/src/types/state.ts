@@ -25,17 +25,18 @@ export interface Handoff {
   to: string;
   message: string;
   completedAt: string;
+  missingData?: string[];
 }
 
-export type SquadStatus =
+export type TeamStatus =
   | "idle"
   | "running"
   | "completed"
   | "checkpoint";
 
-export interface SquadState {
-  squad: string;
-  status: SquadStatus;
+export interface TeamState {
+  team: string;
+  status: TeamStatus;
   step: {
     current: number;
     total: number;
@@ -47,8 +48,8 @@ export interface SquadState {
   updatedAt: string;
 }
 
-// Squad metadata from squad.yaml
-export interface SquadInfo {
+// Team metadata from team.yaml
+export interface TeamInfo {
   code: string;
   name: string;
   description: string;
@@ -58,6 +59,6 @@ export interface SquadInfo {
 
 // WebSocket messages
 export type WsMessage =
-  | { type: "SNAPSHOT"; squads: SquadInfo[]; activeStates: Record<string, SquadState> }
-  | { type: "SQUAD_UPDATE"; squad: string; state: SquadState }
-  | { type: "SQUAD_INACTIVE"; squad: string };
+  | { type: "SNAPSHOT"; teams: TeamInfo[]; activeStates: Record<string, TeamState> }
+  | { type: "TEAM_UPDATE"; team: string; state: TeamState }
+  | { type: "TEAM_INACTIVE"; team: string };

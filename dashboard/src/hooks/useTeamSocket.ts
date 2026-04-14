@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useSquadStore } from "@/store/useSquadStore";
+import { useTeamStore } from "@/store/useTeamStore";
 import type { WsMessage } from "@/types/state";
 
 const RECONNECT_BASE_MS = 1000;
@@ -7,14 +7,14 @@ const RECONNECT_MAX_MS = 30000;
 const WS_FAIL_THRESHOLD = 3;
 const POLL_INTERVAL_MS = 3000;
 
-export function useSquadSocket() {
+export function useTeamSocket() {
   const wsRef = useRef<WebSocket | null>(null);
   const pollTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const setConnected = useSquadStore((s) => s.setConnected);
-  const setSnapshot = useSquadStore((s) => s.setSnapshot);
-  const updateSquadState = useSquadStore((s) => s.updateSquadState);
-  const setSquadInactive = useSquadStore((s) => s.setSquadInactive);
+  const setConnected = useTeamStore((s) => s.setConnected);
+  const setSnapshot = useTeamStore((s) => s.setSnapshot);
+  const updateTeamState = useTeamStore((s) => s.updateTeamState);
+  const setTeamInactive = useTeamStore((s) => s.setTeamInactive);
 
   useEffect(() => {
     let disposed = false;
@@ -26,13 +26,13 @@ export function useSquadSocket() {
       if (disposed) return;
       switch (msg.type) {
         case "SNAPSHOT":
-          setSnapshot(msg.squads, msg.activeStates);
+          setSnapshot(msg.teams, msg.activeStates);
           break;
-        case "SQUAD_UPDATE":
-          updateSquadState(msg.squad, msg.state);
+        case "TEAM_UPDATE":
+          updateTeamState(msg.team, msg.state);
           break;
-        case "SQUAD_INACTIVE":
-          setSquadInactive(msg.squad);
+        case "TEAM_INACTIVE":
+          setTeamInactive(msg.team);
           break;
       }
     }
@@ -78,7 +78,7 @@ export function useSquadSocket() {
 
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const ws = new WebSocket(
-        `${protocol}//${window.location.host}/__squads_ws`,
+        `${protocol}//${window.location.host}/__teams_ws`,
       );
       wsRef.current = ws;
 
@@ -131,5 +131,5 @@ export function useSquadSocket() {
       wsRef.current?.close();
       wsRef.current = null;
     };
-  }, [setConnected, setSnapshot, updateSquadState, setSquadInactive]);
+  }, [setConnected, setSnapshot, updateTeamState, setTeamInactive]);
 }

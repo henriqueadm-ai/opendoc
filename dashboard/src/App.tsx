@@ -1,12 +1,13 @@
-import { useSquadSocket } from "@/hooks/useSquadSocket";
-import { SquadSelector } from "@/components/SquadSelector";
+import { useTeamSocket } from "@/hooks/useTeamSocket";
+import { TeamSelector } from "@/components/TeamSelector";
 import { PhaserGame } from "@/office/PhaserGame";
 import { StatusBar } from "@/components/StatusBar";
 import { IngestionModal } from "@/components/IngestionModal";
+import { CheckpointModal } from "@/components/CheckpointModal";
 import { useState } from "react";
 
 export function App() {
-  useSquadSocket();
+  useTeamSocket();
   const [showIngestion, setShowIngestion] = useState(false);
 
   return (
@@ -74,7 +75,7 @@ export function App() {
 
       {/* Main content */}
       <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
-        <SquadSelector />
+        <TeamSelector />
         <PhaserGame />
       </div>
 
@@ -83,6 +84,7 @@ export function App() {
 
       {/* Overlays */}
       {showIngestion && <IngestionModal onClose={() => setShowIngestion(false)} />}
+      <CheckpointModal />
     </div>
   );
 }

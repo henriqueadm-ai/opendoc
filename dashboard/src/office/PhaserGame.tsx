@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import { OfficeScene } from './OfficeScene';
-import { useSquadStore } from '@/store/useSquadStore';
+import { useTeamStore } from '@/store/useTeamStore';
 
 export function PhaserGame() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,18 +52,18 @@ export function PhaserGame() {
 
   // Bridge React state → Phaser scene
   useEffect(() => {
-    return useSquadStore.subscribe((state) => {
+    return useTeamStore.subscribe((state) => {
       const game = gameRef.current;
       if (!game) return;
       const scene = game.scene.getScene('OfficeScene') as OfficeScene | null;
       if (!scene || !scene.scene.isActive()) return;
 
-      const selectedSquad = state.selectedSquad;
-      const squadState = selectedSquad
-        ? state.activeStates.get(selectedSquad) ?? null
+      const selectedTeam = state.selectedTeam;
+      const teamState = selectedTeam
+        ? state.activeStates.get(selectedTeam) ?? null
         : null;
 
-      scene.events.emit('stateUpdate', squadState);
+      scene.events.emit('stateUpdate', teamState);
     });
   }, []);
 

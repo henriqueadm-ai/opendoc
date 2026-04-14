@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { useSquadStore } from "@/store/useSquadStore";
+import { useTeamStore } from "@/store/useTeamStore";
 import { formatElapsed } from "@/lib/formatTime";
 
 export function StatusBar() {
-  const selectedSquad = useSquadStore((s) => s.selectedSquad);
-  const state = useSquadStore((s) =>
-    s.selectedSquad ? s.activeStates.get(s.selectedSquad) : undefined
+  const selectedTeam = useTeamStore((s) => s.selectedTeam);
+  const state = useTeamStore((s) =>
+    s.selectedTeam ? s.activeStates.get(s.selectedTeam) : undefined
   );
-  const isConnected = useSquadStore((s) => s.isConnected);
+  const isConnected = useTeamStore((s) => s.isConnected);
 
   // Elapsed timer
   const [elapsed, setElapsed] = useState(0);
@@ -25,11 +25,11 @@ export function StatusBar() {
     return () => clearInterval(interval);
   }, [state?.startedAt]);
 
-  if (!selectedSquad || !state) {
+  if (!selectedTeam || !state) {
     return (
       <footer style={footerStyle}>
         <span style={{ color: "var(--text-secondary)" }}>
-          Select an active squad to monitor
+          Select an active team to monitor
         </span>
         <ConnectionDot connected={isConnected} />
       </footer>

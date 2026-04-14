@@ -1,14 +1,14 @@
-import { useSquadStore } from "@/store/useSquadStore";
-import { SquadCard } from "./SquadCard";
+import { useTeamStore } from "@/store/useTeamStore";
+import { TeamCard } from "./TeamCard";
 
-export function SquadSelector() {
-  const squads = useSquadStore((s) => s.squads);
-  const activeStates = useSquadStore((s) => s.activeStates);
-  const selectedSquad = useSquadStore((s) => s.selectedSquad);
-  const selectSquad = useSquadStore((s) => s.selectSquad);
+export function TeamSelector() {
+  const teams = useTeamStore((s) => s.teams);
+  const activeStates = useTeamStore((s) => s.activeStates);
+  const selectedTeam = useTeamStore((s) => s.selectedTeam);
+  const selectTeam = useTeamStore((s) => s.selectTeam);
 
-  // Sort: active squads first, then alphabetical
-  const squadList = Array.from(squads.values()).sort((a, b) => {
+  // Sort: active teams first, then alphabetical
+  const teamList = Array.from(teams.values()).sort((a, b) => {
     const aActive = activeStates.has(a.code) ? 0 : 1;
     const bActive = activeStates.has(b.code) ? 0 : 1;
     if (aActive !== bActive) return aActive - bActive;
@@ -41,18 +41,18 @@ export function SquadSelector() {
         Squads
       </div>
       <div style={{ flex: 1, overflowY: "auto" }}>
-        {squadList.length === 0 && (
+        {teamList.length === 0 && (
           <div style={{ padding: "16px 12px", color: "var(--text-secondary)", fontSize: 12 }}>
-            No squads found
+            No teams found
           </div>
         )}
-        {squadList.map((squad) => (
-          <SquadCard
-            key={squad.code}
-            squad={squad}
-            state={activeStates.get(squad.code)}
-            isSelected={selectedSquad === squad.code}
-            onSelect={() => selectSquad(squad.code)}
+        {teamList.map((team) => (
+          <TeamCard
+            key={team.code}
+            team={team}
+            state={activeStates.get(team.code)}
+            isSelected={selectedTeam === team.code}
+            onSelect={() => selectTeam(team.code)}
           />
         ))}
       </div>

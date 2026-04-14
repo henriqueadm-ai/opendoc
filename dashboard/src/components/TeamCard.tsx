@@ -1,14 +1,14 @@
-import type { SquadInfo, SquadState } from "@/types/state";
+import type { TeamInfo, TeamState } from "@/types/state";
 import { StatusBadge } from "./StatusBadge";
 
-interface SquadCardProps {
-  squad: SquadInfo;
-  state: SquadState | undefined;
+interface TeamCardProps {
+  team: TeamInfo;
+  state: TeamState | undefined;
   isSelected: boolean;
   onSelect: () => void;
 }
 
-export function SquadCard({ squad, state, isSelected, onSelect }: SquadCardProps) {
+export function TeamCard({ team, state, isSelected, onSelect }: TeamCardProps) {
   const isActive = !!state;
   const status = state?.status ?? "inactive";
 
@@ -33,9 +33,9 @@ export function SquadCard({ squad, state, isSelected, onSelect }: SquadCardProps
       }}
     >
       <StatusBadge status={status} />
-      <span style={{ marginRight: 4 }}>{squad.icon}</span>
+      <span style={{ marginRight: 4 }}>{team.icon}</span>
       <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-        {squad.name}
+        {team.name}
       </span>
       {state?.step && (
         <span style={{ fontSize: 11, color: "var(--text-secondary)" }}>
