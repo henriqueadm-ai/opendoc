@@ -1,0 +1,282 @@
+generator client {
+  provider        = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Process {
+  id            Int            @id @default(autoincrement())
+  case_id       String         @unique   // ex: "13_04_2026_0001"
+  type          PetitionType
+  brief         String
+  status        ProcessStatus
+  created_by    Int            // ID do usuário (relacionado ao public.users, mas mantido logicamente)
+  assigned_to   Int?           // ID do coordenador em caso de transferência
+  total_tokens  Int            @default(0)
+  total_cost    Decimal        @default(0)
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+
+  documents     Document[]
+  pipeline_run  PipelineRun?
+  discussions   Discussion[]
+  audit_logs    AuditLog[]
+  deadlines     Deadline[]
+  fees          Fee[]
+}
+
+model Document {
+  id              Int          @id @default(autoincrement())
+  filename        String
+  mime_type       String
+  size_bytes      Int
+  storage_mode    StorageMode  // EPHEMERAL_RAM, LOCAL_SYNC
+  sync_local_path String?      // Path local (se aplicável ao self-hosted)
+  extracted_text  String?      // Texto bruto (destruído após o Pipeline)
+  anonymized_text String?      // Mantido a longo prazo
+  process_id      Int
+  process         Process      @relation(fields: [process_id], references: [id], onDelete: Cascade)
+}
+
+enum StorageMode {
+  EPHEMERAL_RAM
+  LOCAL_SYNC
+}
+
+model PipelineRun {
+  id           Int              @id @default(autoincrement())
+  process_id   Int              @unique
+  process      Process          @relation(fields: [process_id], references: [id], onDelete: Cascade)
+  status       PipelineStatus   // RUNNING, PAUSED, COMPLETED, ERROR
+  current_stage Int             @default(1)
+  started_at   DateTime         @default(now())
+  completed_at DateTime?
+
+  stages       PipelineStage[]
+}
+
+model PipelineStage {
+  id            Int          @id @default(autoincrement())
+  pipeline_id   Int
+  pipeline      PipelineRun  @relation(fields: [pipeline_id], references: [id], onDelete: Cascade)
+  stage_number  Int          // 1 a 13
+  stage_name    String       // ex: "conversao"
+  agent_name    String       // ex: "doc-converter"
+  status        StageStatus  // PENDING, RUNNING, DONE, ERROR, VETOED
+  tokens_used   Int          @default(0)
+  cost          Decimal      @default(0)
+  duration_ms   Int?
+  error_message String?
+  started_at    DateTime?
+  completed_at  DateTime?
+}
+
+model AnonymizationDict {
+  id             Int       @id @default(autoincrement())
+  process_id     Int       @unique
+  encrypted_dict String    // AES-256-GCM ({"[PESSOA_1]": "João"})
+  iv             String
+  created_at     DateTime  @default(now())
+}
+
+model AuditLog {
+  id          Int      @id @default(autoincrement())
+  process_id  Int
+  process     Process  @relation(fields: [process_id], references: [id], onDelete: Cascade)
+  event_type  String
+  agent_name  String?
+  description String
+  hash        String
+  prev_hash   String?
+  user_id     Int?
+  metadata    Json?
+  created_at  DateTime @default(now())
+  
+  @@index([process_id, created_at])
+}
+
+model Discussion {
+  id          Int         @id @default(autoincrement())
+  process_id  Int
+  process     Process     @relation(fields: [process_id], references: [id], onDelete: Cascade)
+  sender      SenderType
+  message     String
+  diff_old    String?
+  diff_new    String?
+  diff_status DiffStatus?
+  created_at  DateTime    @default(now())
+}
+
+enum PetitionType {
+  INICIAL
+  CONTESTACAO
+  IMPUGNACAO
+  RECURSO
+  MANIFESTACAO
+  OUTRO
+}
+
+enum ProcessStatus {
+  DRAFT
+  PIPELINE
+  DISCUSSION
+  FORMATTING
+  COMPLETED
+  TRANSFERRED
+}
+
+enum PipelineStatus {
+  RUNNING
+  PAUSED
+  COMPLETED
+  ERROR
+}
+
+enum StageStatus {
+  PENDING
+  RUNNING
+  DONE
+  ERROR
+  VETOED
+}
+
+enum SenderType {
+  AI
+  HUMAN
+}
+
+enum DiffStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+// ─── Epic 6: Admin Settings ────────────────────────────────────────────────
+
+model ApiKey {
+  id             Int         @id @default(autoincrement())
+  provider       LlmProvider
+  encrypted_key  String      // AES-256-GCM ciphertext
+  iv             String      // IV hex para decriptação
+  alias          String?     // ex: "OpenAI Principal"
+  is_active      Boolean     @default(true)
+  last_used_at   DateTime?
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
+}
+
+model TenantSettings {
+  id              Int      @id @default(1)  // Singleton por tenant (1 row)
+  primary_color   String   @default("#4F46E5")
+  logo_url        String?
+  org_name        String   @default("Minha Organização")
+  disclaimer_text String   @default("Documento gerado com IA. Revisar antes de usar.")
+  updated_at      DateTime @updatedAt
+}
+
+enum LlmProvider {
+  OPENAI
+  GOOGLE
+  ANTHROPIC
+  OPENROUTER
+  CUSTOM
+}
+
+// ─── Epic 7: WhatsApp & Instagram ──────────────────────────────────────────
+
+model Conversation {
+  id            Int                   @id @default(autoincrement())
+  client_name   String?
+  client_phone  String
+  channel       String                // 'whatsapp' | 'instagram'
+  status        ConversationStatus    @default(ACTIVE)
+  sentiment     String?               // último sentimento detectado
+  org_id        Int                   // referência lógica à org
+  created_at    DateTime              @default(now())
+  updated_at    DateTime              @updatedAt
+
+  messages      ConversationMessage[]
+}
+
+model ConversationMessage {
+  id              Int          @id @default(autoincrement())
+  conversation_id Int
+  conversation    Conversation @relation(fields: [conversation_id], references: [id], onDelete: Cascade)
+  sender          String       // 'CLIENT' | 'AI' | 'HUMAN'
+  message         String
+  user_id         Int?         // ID do coordenador (se sender=HUMAN)
+  sentiment_data  Json?        // resultado do analyzeSentiment
+  created_at      DateTime     @default(now())
+}
+
+enum ConversationStatus {
+  ACTIVE
+  ESCALATED
+  CLOSED
+}
+
+// ─── Epic 8: Gestão Processual & Financeiro ────────────────────────────────
+
+model Deadline {
+  id            Int          @id @default(autoincrement())
+  process_id    Int
+  process       Process      @relation(fields: [process_id], references: [id], onDelete: Cascade)
+  title         String
+  description   String?
+  due_date      DateTime
+  priority      DeadlinePriority @default(NORMAL)
+  status        DeadlineStatus   @default(PENDING)
+  notified_48h  Boolean      @default(false)
+  notified_24h  Boolean      @default(false)
+  created_by    Int
+  created_at    DateTime     @default(now())
+
+  @@index([due_date])
+}
+
+model CourtNotification {
+  id            Int      @id @default(autoincrement())
+  email_from    String
+  email_subject String
+  raw_body      String
+  parsed_data   Json?    // { process_number, deadline, court, etc. }
+  deadline_id   Int?     // link auto-gerado
+  status        String   @default("PENDING") // PENDING, PROCESSED, IGNORED
+  received_at   DateTime @default(now())
+}
+
+model Fee {
+  id          Int      @id @default(autoincrement())
+  process_id  Int
+  process     Process  @relation(fields: [process_id], references: [id], onDelete: Cascade)
+  type        FeeType
+  description String
+  amount      Decimal
+  paid        Boolean  @default(false)
+  due_date    DateTime?
+  created_by  Int
+  created_at  DateTime @default(now())
+}
+
+enum DeadlinePriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum DeadlineStatus {
+  PENDING
+  COMPLETED
+  OVERDUE
+}
+
+enum FeeType {
+  HONORARIO
+  CUSTA
+  TAXA
+  OUTRO
+}
