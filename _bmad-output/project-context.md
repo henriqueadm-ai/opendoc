@@ -1,11 +1,11 @@
 ---
 project_name: 'opendoc'
 user_name: 'Henrique'
-date: '2026-04-12T23:52:22-03:00'
+date: '2026-04-15T11:07:36-03:00'
 sections_completed:
   ['technology_stack', 'language_rules', 'framework_rules', 'testing_rules', 'quality_rules', 'workflow_rules', 'anti_patterns']
 status: 'complete'
-rule_count: 47
+rule_count: 62
 optimized_for_llm: true
 ---
 
@@ -17,209 +17,216 @@ _Este arquivo contém regras críticas e padrões que agentes de IA devem seguir
 
 ## Technology Stack & Versions
 
-- **Runtime:** Node.js >= 20.0.0
-- **Módulo:** ESM puro (`"type": "module"` em package.json) — NÃO usar `require()`
-- **CLI entrypoint:** `bin/conectese.js` (shebang `#!/usr/bin/env node`)
-- **Package name:** `conectese` v0.2.0
-- **Test runner:** `node --test` nativo (Node.js built-in test runner)
-- **Linter:** ESLint v10 (`eslint.config.js` flat config) com `@eslint/js` recommended + `globals.node`
-- **Argument parsing:** `node:util` `parseArgs` (zero dependências externas para CLI arg parsing)
+### Server (Express Backend)
+- **Runtime:** Node.js >= 20 (ESM puro, `"type": "module"`)
+- **Framework:** Express 4 com `express.json({ limit: '10mb' })`
+- **ORM:** Prisma 6.19.3 (dual schema: `schema.prisma` público + `schema-tenant.prisma` por tenant)
+- **Fila:** BullMQ + Redis 7 (pipeline 13 estágios)
+- **Auth:** Argon2id (senhas) + TOTP (2FA) + JWT (sessions 8h)
+- **Crypto:** AES-256-GCM nativo (API keys, dicionários de anonimização)
+- **PDF:** pdf-lib (geração server-side Visual Law)
+- **WebSocket:** ws nativo (pipeline real-time hub)
 
-### Dashboard (Sub-projeto `dashboard/`)
-
+### Dashboard (React Frontend)
 - **Framework:** React 19 + TypeScript 5.8
 - **Bundler:** Vite 6.3 com `@vitejs/plugin-react`
-- **State:** Zustand 5
-- **Visualização:** Phaser 3.90 (escritório isométrico com sprites de agentes)
-- **YAML parsing:** `yaml` v2.7 (apenas no dashboard — CLI parseia YAML com regex)
-- **Real-time:** WebSocket nativo (`ws` v8) via Vite plugin customizado (`teamWatcher`)
-- **Upload:** `busboy` v1 para multipart form parsing
+- **State:** Zustand 5 (useAuthStore, usePipelineStore)
+- **UI:** shadcn/ui (21 componentes) + Tailwind CSS v4
+- **Routing:** React Router DOM 7
+- **Visualização:** Phaser 3.90 (escritório isométrico)
+- **Real-time:** WebSocket nativo via hook `usePipelineSocket`
 
-### Dependências de Produção (CLI)
+### Infra
+- **Database:** PostgreSQL 16 (multi-tenant via schemas isolados)
+- **Cache/Queue:** Redis 7 Alpine
+- **Deploy:** Docker Compose (PG + Redis + Server + Nginx)
+- **Proxy:** Nginx Alpine (SPA fallback + reverse proxy API/WS)
 
+### Dependências CLI (conectese)
 | Pacote | Versão | Propósito |
 |--------|--------|-----------|
-| `@google/genai` | ^1.48.0 | Integração com Google AI |
-| `@inquirer/checkbox` | ^5.1.0 | Prompts interativos multi-seleção |
-| `@inquirer/input` | ^5.0.0 | Prompts interativos texto |
-| `@inquirer/select` | ^5.1.0 | Prompts interativos seleção |
-| `@modelcontextprotocol/sdk` | ^1.29.0 | Protocolo MCP |
-| `cheerio` | ^1.2.0 | Parsing HTML |
-| `cloudscraper` | ^4.6.0 | Web scraping com anti-bot bypass |
+| `@google/genai` | ^1.48.0 | Google AI |
 | `dotenv` | ^17.4.0 | Variáveis de ambiente |
-| `html-to-docx` | ^1.8.0 | Conversão HTML → DOCX |
-| `marked` | ^17.0.5 | Markdown parser |
 | `pdf-parse` | ^2.4.5 | Extração de texto de PDFs |
-
-### Dependências Opcionais
-
-| Pacote | Versão | Propósito |
-|--------|--------|-----------|
-| `puppeteer` | ^24.40.0 | Automação de browser |
-| `puppeteer-extra` | ^3.3.6 | Plugins para Puppeteer |
-| `puppeteer-extra-plugin-stealth` | ^2.11.2 | Stealth mode para scraping |
+| `marked` | ^17.0.5 | Markdown parser |
+| `cheerio` | ^1.2.0 | Parsing HTML |
 
 ---
 
 ## Regras Críticas de Implementação
 
-### Regras Específicas da Linguagem (JavaScript ESM)
+### Regras Específicas da Linguagem (JavaScript ESM + TypeScript)
 
-#### Imports e Módulos
-- **OBRIGATÓRIO:** Usar apenas `import`/`export` — `require()` é proibido (ESM puro)
-- **Imports de Node.js:** Sempre usar o prefixo `node:` — ex: `import { readFile } from 'node:fs/promises'`
-- **`__dirname` não existe em ESM.** Recriá-lo manualmente:
-  ```js
-  const __dirname = dirname(fileURLToPath(import.meta.url));
-  ```
-  Requer: `import { dirname } from 'node:path'` e `import { fileURLToPath } from 'node:url'`
-- **Imports de @inquirer:** São feitos com dynamic `import()` dentro das funções (lazy loading), não no topo do arquivo. Ver padrão em `src/prompt.js`
+#### Server (JavaScript ESM)
+- **OBRIGATÓRIO:** `import`/`export` apenas — `require()` proibido
+- **Node.js builtins:** Prefixo `node:` — `import { readFile } from 'node:fs/promises'`
+- **`__dirname` em ESM:** Recriar manualmente com `dirname(fileURLToPath(import.meta.url))`
+- **Async/Await exclusivo:** Sem callbacks, sem `.then()` chains
+- **Tratamento de erros:** `try/catch` com `{ cause: err }` em Error wrapping
+- **env vars:** Sempre via `process.env` — nunca hardcodar credenciais
+- **Prisma tenantPrisma:** Injetado via middleware `req.tenantPrisma` — nunca instanciar PrismaClient direto nos routers
 
-#### Tratamento de Erros
-- **Padrão silencioso para operações não-críticas:** Blocos `catch` vazios são **intencionais** em logging, leitura de preferências e verificação de arquivos. Logging NUNCA deve quebrar a operação principal
-- **`{ cause: err }` em Error wrapping:** Usar `new Error('mensagem', { cause: err })` — padrão nativo Node.js
-- **Verificação de existência via `stat()` + try/catch:** NÃO usar `existsSync()`. Tentar `stat()` e tratar `ENOENT` no catch
-- **Erros de filesystem:** Sempre verificar `err.code === 'ENOENT'` antes de propagar — retornar `[]`, `null` ou `''` como fallback
+#### Dashboard (TypeScript Strict)
+- **Named exports apenas:** `export function MinhaPage()` — nunca default export
+- **Path alias:** `@/` resolve para `dashboard/src/`
+- **useRef com tipo:** Sempre passar valor inicial — `useRef<T>(null)` ou `useRef<T | undefined>(undefined)`
+- **Imports de shadcn/ui:** Componentes ficam em `@/components/ui/` (código local, não node_modules)
+- **apiFetch helper:** Usar `apiFetch()` do `useAuthStore` — injeta Authorization header automaticamente
+- **Zustand patterns:** Actions e state no mesmo `create<Store>()`, imutabilidade com spread
 
-#### Parsing de YAML Frontmatter (CLI — NÃO no Dashboard)
-- **NÃO usar bibliotecas YAML no CLI.** O projeto parseia frontmatter manualmente com regex:
-  ```js
-  const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
-  ```
-- Campos extraídos com regex por linha: `fm.match(/^campo:\s*(.+)$/m)`
-- YAML folded scalar (`>`) suportado manualmente — ver `getAgentMeta()` e `getSkillMeta()`
-- **Normalização de line endings:** Sempre aplicar `.replace(/\r\n/g, '\n')` antes de parsear frontmatter
-
-#### Padrões Async/Await
-- **Todas as funções de I/O são `async`** — sem callbacks ou `.then()` chains
-- **`fs/promises`** exclusivamente — nunca usar a API síncrona (`readFileSync`, etc.)
-- **Top-level await** utilizado no entrypoint CLI (`bin/conectese.js`)
-- **Exceção:** `fs.existsSync()` e `fs.readdirSync()` são usados no `teamWatcher.ts` do dashboard em hot-path de upload
+#### Crypto (Padrão do Projeto)
+- **AES-256-GCM:** `createCipheriv`/`createDecipheriv` nativos — sem bibliotecas externas
+- **IV:** `randomBytes(16)` por operação — nunca reutilizar
+- **AuthTag:** Concatenado ao ciphertext (`Buffer.concat([encrypted, authTag])`)
+- **ENCRYPTION_KEY:** 64 hex chars (32 bytes) via `process.env.ENCRYPTION_KEY`
 
 ---
 
-### Regras do Framework (Dashboard React/Vite)
+### Regras do Framework
 
-#### Arquitetura do Dashboard
-- **Vite plugin customizado** (`src/plugin/teamWatcher.ts`) serve como backend — NÃO existe server Express/Fastify separado
-- O plugin cria um WebSocket em `/__teams_ws` dentro do HTTP server do Vite, coexistindo com o HMR
-- **REST API** embutida no middleware Vite: `/api/upload`, `/api/snapshot`, `/api/team/:name/checkpoint`
-- **File watcher** usa `chokidar` com `awaitWriteFinish` para evitar leituras de arquivos parciais
+#### Express Backend (Padrões de Router)
+- **Router pattern:** Cada domínio é um arquivo em `server/src/api/<domain>.js`
+- **Middlewares em cadeia:** `requireAuth` → `tenantResolver` → router (nesta ordem)
+- **RBAC dentro do router:** `checkPermissions({ roles: ['ADMIN'] })` — não no index.js
+- **Respostas:** `{ success: true, data: ... }` ou `{ error: "mensagem" }` — nunca objetos soltos
+- **IDs de params:** Sempre `parseInt(req.params.id)` — Express params são strings
+- **mergeParams:** Routers aninhados (ex: discussion) usam `Router({ mergeParams: true })`
 
-#### State Management (Zustand)
-- Store em `src/store/useTeamStore.ts`
-- Usa `Map<string, T>` (não objetos) para teams e activeStates
-- Imutabilidade via `new Map(prev.map)` — nunca mutar Maps diretamente
-- Padrão: actions e state no mesmo `create<Store>()` call
+#### Multi-Tenancy (Prisma Schema Isolation)
+- **2 schemas Prisma:** `schema.prisma` (public: Org, User, Invite) + `schema-tenant.prisma` (tenant: Process, Discussion, etc.)
+- **PrismaClient pool:** `tenant.middleware.js` mantém `Map<string, PrismaClient>` — 1 client por schema
+- **req.tenantPrisma:** Todos os routers protegidos recebem o client correto via middleware
+- **Schema name:** Extraído do JWT do usuário (`req.user.schema`)
+- **Graceful shutdown:** `disconnectAllTenants()` no SIGINT/SIGTERM
 
-#### Componentes React
-- **Design System:** shadcn/ui (componentes copy-paste em `src/components/ui/`) + Tailwind CSS v4
-- **Tema:** shadcn/ui Zinc theme com CSS variables, dark mode via classe `.dark`
-- CSS variables: `var(--background)`, `var(--foreground)`, `var(--muted)`, `var(--border)`, `var(--accent)`
-- Path alias `@/` resolve para `dashboard/src/`
-- Componentes são funções exportadas nombradas (não default export)
+#### React Frontend (Padrões de Page)
+- **Pages:** Componentes em `dashboard/src/pages/<name>.tsx` — named export
+- **Routing:** `App.tsx` com `<ProtectedRoute>` → `<LayoutShell>` → `<Page />`
+- **Data fetching:** `useEffect` + `apiFetch()` no mount — sem React Query/SWR
+- **Forms:** Estado local com `useState` — sem form libraries
+- **Loading states:** `useState<boolean>(false)` com try/finally pattern
+- **WebSocket:** Hook dedicado (`usePipelineSocket`) com auto-reconnect 3s
 
-#### WebSocket (Frontend)
-- Hook `useTeamSocket` em `src/hooks/` gerencia conexão e reconexão
-- Mensagens tipadas: `SNAPSHOT`, `TEAM_UPDATE`, `TEAM_INACTIVE`
-- Frontend é read-only via WebSocket — mudanças de estado vêm dos watchers
+#### Zustand Stores
+- **useAuthStore:** JWT persist em localStorage, `apiFetch` helper, 2FA intermediate state
+- **usePipelineStore:** 13 stages tracking, alimentado via WebSocket, sem persistência
 
 ---
 
 ### Regras de Testes
 
-- **Framework:** `node:test` nativo (NÃO Jest, NÃO Vitest)
-- **Assertions:** `node:assert/strict` — sempre strict
-- **Comando:** `node --test 'tests/**/*.test.js' 'tests/*.test.js'`
-- **Padrão de nome:** `<módulo>.test.js` na pasta `tests/`
-- **Setup/Teardown:** Diretórios temporários criados com `mkdtemp(join(tmpdir(), 'conectese-test-'))` e limpos com `rm(dir, { recursive: true })` no `finally`
-- **Cache:** Sempre chamar `clearMetaCache()` no início de testes que tocam agents/skills
-- **Skip gracioso:** Testes que dependem de agentes/skills bundled fazem early return se `listAvailable().length === 0`
-- **Sem mocks de filesystem:** Testes usam o filesystem real (tmpdir) — sem stubs
+#### Status Atual
+- **Testes E2E:** Ainda não implementados (backlog Epic futura)
+- **Testes unitários CLI:** `node:test` nativo com `node:assert/strict`
+- **Dashboard:** Sem testes configurados (nem Vitest nem Jest instalados)
+
+#### Regras para Implementação Futura
+- **Backend API:** Testar com supertest contra Express app (não mockar Prisma — usar test schema)
+- **Frontend:** Vitest + React Testing Library (alinhado com Vite)
+- **E2E:** Playwright (preferido) ou Cypress
+- **Test DB:** Schema isolado `test_tenant` — nunca testar contra dados reais
+- **Fixtures:** Factory pattern para criar Process, Discussion, etc.
+- **Auth em testes:** Helper que gera JWT válido com role configurável
+- **Cleanup:** Truncar tabelas entre testes — nunca depender de estado anterior
 
 ---
 
 ### Regras de Qualidade e Estilo
 
-#### Organização de Arquivos (CLI)
+#### Organização de Arquivos
 ```
-bin/              → CLI entrypoints (shebang, parseArgs, routing)
-src/              → Core lógica (módulos puros, sem side-effects no import)
-src/locales/      → Arquivos i18n (en.json, pt-BR.json, es.json)
-tests/            → Testes unitários (espelham src/)
-agents/           → Definições de agentes bundled (AGENT.md com frontmatter YAML)
-skills/           → Skills bundled (SKILL.md + scripts/ + references/)
-templates/        → Templates copiados no `init` (incluindo ide-templates/)
-_conectese/       → Dados do projeto inicializado (core, config, _memory)
-teams/            → Times criados pelo usuário (team.yaml + state.json + output/)
+server/src/
+├── api/           → 1 router por domínio (auth.js, deadlines.js, etc.)
+├── services/      → Lógica de negócio (auth.service.js, pipeline.service.js)
+├── middlewares/    → Auth, RBAC, Tenant resolver
+├── queue/         → BullMQ workers (pipeline.queue.js)
+├── ws/            → WebSocket hub
+└── index.js       → Entry-point único (registra todas as rotas)
+
+dashboard/src/
+├── pages/         → 1 page por rota (login.tsx, analytics.tsx, etc.)
+├── store/         → Zustand stores (useAuthStore.ts, usePipelineStore.ts)
+├── hooks/         → Custom hooks (usePipelineSocket.ts)
+├── components/    → Componentes reutilizáveis + shadcn/ui
+├── office/        → Phaser game (PhaserGame.tsx, OfficeScene)
+└── styles/        → globals.css (Tailwind + CSS variables)
 ```
 
 #### Convenções de Naming
-- **Arquivos:** kebab-case para tudo (`agents-cli.js`, `skills-cli.js`)
-- **Funções exportadas:** camelCase (`listInstalled`, `installAgent`, `getAgentMeta`)
-- **Funções privadas:** camelCase com prefixo semântico (`validateAgentId`, `copyCommonTemplates`)
-- **IDs de agentes/skills:** kebab-case, regex: `/^[a-z0-9][a-z0-9_-]*$/` (agentes) ou `/^[a-z0-9][a-z0-9-]*$/` (skills)
-- **Constantes:** UPPER_SNAKE_CASE (`TEMPLATES_DIR`, `CANONICAL_SOURCES`, `MAX_RUNS`)
+- **Backend files:** kebab-case (`auth.service.js`, `tenant.middleware.js`)
+- **Frontend pages:** kebab-case (`admin-settings.tsx`, `new-petition.tsx`)
+- **Stores:** camelCase com prefixo `use` (`useAuthStore.ts`)
+- **Components:** PascalCase export, kebab-case file (`protected-route.tsx` → `ProtectedRoute`)
+- **API routes:** kebab-case plural (`/api/deadlines`, `/api/financials`)
+- **Prisma models:** PascalCase singular (`Process`, `Deadline`, `Fee`)
+- **Enums Prisma:** UPPER_SNAKE_CASE (`PENDING`, `COMPLETED`, `HONORARIO`)
 
-#### i18n (Internacionalização)
-- **3 locales suportados:** `en`, `pt-BR`, `es`
-- Função `t(key, vars)` com fallback para inglês quando key ausente
-- Variáveis interpoladas com `{key}` (não template literals)
-- **Descrições de agents/skills** usam campos separados: `description`, `description_pt-BR`, `description_es`
-- Linguagem do prompt inicial é sempre inglês, locale carregado após seleção do idioma
-
-#### Caching
-- Agents e Skills usam `Map` como cache de metadados (`metaCache`)
-- Cache invalidado manualmente em `install`, `remove` e `clearMetaCache()`
-- **NÃO usar TTL ou expiração automática** — invalidação explícita apenas
+#### Documentação
+- Comentários em português para lógica de negócio jurídica
+- JSDoc com `@param` e `@returns` em services exportados
+- Separadores visuais `// ─────` entre blocos de rotas no mesmo arquivo
 
 ---
 
 ### Regras de Workflow de Desenvolvimento
 
-#### Git & Branches
-- **Conventional Commits:** `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `perf:`, `test:`
-- **Branches:** `feat/minha-feature` ou `fix/meu-fix`
-- **PR ideal:** 200-400 linhas. Acima de 800 linhas deve ser dividido
+#### Git & Commits
+- **Conventional Commits:** `feat(server):`, `feat(dashboard):`, `feat(infra):`, `fix:`, `chore:`
+- **Scope por componente:** `server`, `dashboard`, `infra`, `agents`
+- **Push direto em master** (MVP — migrar para branches quando time crescer)
 
-#### Filosofia de Design
-- **File-based**: O filesystem é a fonte de verdade — sem bancos de dados
-- **Dependency-light**: Cada dependência nova é uma barreira — evitar ao máximo
-- **Zero setup além de Node.js**: O projeto deve funcionar com `npx conectese init`
-- **Verticalizar, não complicar**: Estender via skills/agents, não mudar o core
-- **Token-conscious**: Todo conteúdo adicionado (skills, agents, guides) aumenta consumo de tokens
+#### Prisma Workflow
+- **Alterar schema:** Editar `schema.prisma` ou `schema-tenant.prisma`
+- **Gerar client:** `npx prisma generate --schema=prisma/<schema>.prisma`
+- **Aplicar ao DB:** `npx prisma db push --schema=prisma/<schema>.prisma`
+- **NUNCA usar `prisma migrate`** em tenant schemas (multi-schema não suporta migrations nativas)
 
-#### Caminhos Protegidos (Update)
-- `_conectese/_memory`, `agents/`, `teams/` — NUNCA sobrescrevidos durante `update`
-- Backup automático (`.bak`) antes de sobrescrita durante update
+#### Adição de Novas Rotas (Checklist)
+1. Criar router em `server/src/api/<domain>.js`
+2. Importar e registrar no `server/src/index.js`
+3. Criar page em `dashboard/src/pages/<name>.tsx`
+4. Importar e adicionar `<Route>` no `dashboard/src/App.tsx`
+5. Se usar componente shadcn novo: `npx shadcn@latest add <component>`
+
+#### Deploy
+- **Dev:** `npm run dev` (server) + `npm run dev` (dashboard) — portas 3001 e 5173
+- **Produção:** `docker-compose up -d` — portas 3001 (API) e 3000 (Nginx)
+- **Variáveis:** Copiar `.env.example` → `.env` e preencher secrets reais
 
 ---
 
 ### Regras Críticas — Não Esquecer!
 
 #### Anti-Patterns a Evitar
+- ❌ **NUNCA** instanciar `new PrismaClient()` nos routers — usar `req.tenantPrisma`
+- ❌ **NUNCA** expor API keys em plaintext na resposta — sempre mascarar (`sk-••••`)
+- ❌ **NUNCA** enviar dados PII ao LLM — tudo passa por anonimização AES-256-GCM primeiro
 - ❌ **NUNCA** usar `require()` — projeto é ESM puro
-- ❌ **NUNCA** usar `existsSync()` no CLI — usar `stat()` + try/catch
-- ❌ **NUNCA** adicionar bibliotecas YAML no CLI — frontmatter é parseado com regex
-- ❌ **NUNCA** sobrescrever `_conectese/_memory/` ou `teams/` durante `update`
-- ❌ **NUNCA** quebrar operações por falha de logging — catch silencioso é design
-- ❌ **NUNCA** usar callbacks ou `.then()` chains — sempre async/await
 - ❌ **NUNCA** usar default exports — sempre named exports
+- ❌ **NUNCA** hardcodar credenciais — sempre `process.env.*`
+- ❌ **NUNCA** usar `existsSync()` no server — usar `stat()` + try/catch
+- ❌ **NUNCA** reutilizar IV em operações AES — `randomBytes(16)` cada vez
+
+#### Segurança (LGPD + CNJ)
+- **Disclaimer obrigatório:** Todo PDF exportado DEVE conter disclaimer no rodapé sobre revisão por advogado OAB
+- **Anonimização antes do LLM:** Dados pessoais → placeholders com dicionário criptografado reversível
+- **Audit trail imutável:** Hash chain SHA-256 — cada log aponta para hash do anterior
+- **2FA obrigatório:** 100% dos logins exigem TOTP após email+senha
+- **Tenant isolation:** Schemas PostgreSQL separados por organização — zero crossover
 
 #### Edge Cases Críticos
-- **Confirmação bilíngue:** `confirm()` aceita tanto `'y'` (English) quanto `'s'` (Português "sim")
-- **Self-copy protection:** `installSkill()` verifica se src === dest para evitar loops infinitos
-- **Path normalization:** Windows paths normalizados com `.replace(/\\/g, '/')` antes de comparação
-- **Dashboard PROCESSOS dir:** Resolve tanto `../PROCESSOS` (rodando de `dashboard/`) quanto `PROCESSOS` (rodando da raiz)
-- **Upload filename sanitization:** `filename.replace(/[^a-zA-Z0-9_.-]/g, '_')` — caracteres especiais substituídos por underscore
-- **Case ID sanitization:** `caseId.replace(/[^a-zA-Z0-9_-]/g, '')` — apenas alfanuméricos, underscore e hífens
-- **Case ID auto-gerado:** Formato `DD_MM_YYYY_NNNN` com sequencial baseado em contagem de diretórios existentes
+- **`req.params.id` é string:** Sempre `parseInt()` antes de passar ao Prisma
+- **Prisma Decimal:** Retorna string — `parseFloat()` para cálculos
+- **WebSocket reconnect:** 3 segundos de delay — não spam de reconexão
+- **clearTimeout(undefined):** Funciona sem erro — safe to call sem verificação
+- **DIFF parsing na Discussion:** Regex `DIFF_OLD:` e `DIFF_NEW:` — formato frágil, tratar ausência graciosamente
+- **Singleton TenantSettings:** `id: 1` fixo com upsert — nunca criar id > 1
 
-#### Segurança
-- Skills executam com permissões integrais do usuário local — **sem sandbox**
-- Skills MCP recebem tokens do `.env` — nunca hardcodar credenciais
-- Skills devem documentar quais serviços externos acessam
-- Upload de arquivos vai para `PROCESSOS/` — pasta excluída do git via `.gitignore`
+#### Performance
+- **PrismaClient pool:** Cache em Map — nunca criar novo client por request
+- **WebSocket hub:** Broadcast nativo sem Socket.io — sem overhead de rooms/namespaces
+- **Pipeline stages:** BullMQ com concurrency=1 por processo — sequencial por design
+- **PDF generation:** Server-side com pdf-lib — zero dependência de browser/puppeteer
 
 ---
 
@@ -239,4 +246,4 @@ teams/            → Times criados pelo usuário (team.yaml + state.json + outp
 - Revisar trimestralmente para remover regras obsoletas
 - Remover regras que se tornarem óbvias com o tempo
 
-Última atualização: 2026-04-12T23:52:22-03:00
+Última atualização: 2026-04-15T11:07:36-03:00
