@@ -354,6 +354,31 @@ Use the **stored transformed path** (after Output Path Transformation Steps 1 an
 
 **IMPORTANT**: Do NOT rely on reading the file with the Read tool to "verify" output. The Read tool returns content that can be misinterpreted. Use ONLY the bash `test -s` command — its output is binary and cannot be hallucinated.
 
+### Halt & Catch Protocol (REQUIRED_USER_INPUT)
+
+If any bash script returns **exit code 2**, it means `REQUIRED_USER_INPUT` (Halt & Catch protocol).
+This happens when a script (like `legal-pricing`) lacks mandatory information and needs the user to intervene via the Dashboard.
+
+If this happens, you MUST:
+1. Parse the `stderr` JSON output to identify the missing fields (e.g. `{"missing":["custasIniciais"]}`).
+2. **Write checkpoint state** — Write `teams/{name}/state.json` with:
+   - `"status": "checkpoint"`
+   - Current agent `"status": "checkpoint"`
+   - Add/update `"handoff"` with:
+     ```json
+     "handoff": {
+       "from": "{current agent id}",
+       "to": "USER",
+       "message": "Aguardando preenchimento no painel.",
+       "missingData": ["{field 1}", "{field 2}"],
+       "completedAt": "{ISO timestamp now}"
+     }
+     ```
+3. Halt execution and present a message to the user in the chat:
+   "⚠️ O script sinalizou Halt & Catch (dados faltantes). Por favor, preencha os dados no Dashboard. Quando concluir, responda esta mensagem."
+4. **Wait for user input**. Do not re-run the step until the user responds in chat.
+5. After the user responds (e.g. "Dados preenchidos"), read `teams/{name}/checkpoint_response.json` to get the injected values, incorporate them into the script's payload, and re-execute the step.
+
 ### Veto Condition Enforcement
 
 After an agent completes a step (before moving to the next step):
@@ -417,10 +442,10 @@ For reference, the complete execution order for each pipeline step is:
 1. Pre-Step Input Validation (bash gate)
 2. Read step file
 3. Check execution mode and execute (subagent / inline / checkpoint)
+    - *If exit code 2: Halt & Catch (Checkpoint state & wait)*
 4. Post-Step Output Validation (bash gate)
 5. Veto Condition Enforcement
 6. Dashboard Handoff (to next step)
-```
 
 Steps 1 and 4 are binary bash gates. If either fails, the pipeline does NOT advance — the user is consulted.
 

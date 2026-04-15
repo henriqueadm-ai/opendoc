@@ -1,13 +1,13 @@
 {
   "name": "conectese",
-  "version": "0.1.15",
+  "version": "0.2.0",
   "description": "Multi-agent orchestration framework — create AI teams that work together",
   "type": "module",
   "bin": {
     "conectese": "bin/conectese.js"
   },
   "scripts": {
-    "test": "node --test tests/*.test.js",
+    "test": "node --test 'tests/**/*.test.js' 'tests/*.test.js'",
     "lint": "eslint src/ bin/ tests/",
     "setup-admin": "node bin/setup_admin.js",
     "version": "node -e \"require('fs').writeFileSync('templates/_conectese/.conectese-version', require('./package.json').version + '\\n')\" && git add templates/_conectese/.conectese-version"
@@ -38,10 +38,10 @@
     "agents/",
     "skills/",
     "templates/",
-    "_conectese/",
     "dashboard/"
   ],
   "dependencies": {
+    "@google/genai": "^1.48.0",
     "@inquirer/checkbox": "^5.1.0",
     "@inquirer/input": "^5.0.0",
     "@inquirer/select": "^5.1.0",
@@ -51,6 +51,9 @@
     "dotenv": "^17.4.0",
     "html-to-docx": "^1.8.0",
     "marked": "^17.0.5",
+    "pdf-parse": "^2.4.5"
+  },
+  "optionalDependencies": {
     "puppeteer": "^24.40.0",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2"

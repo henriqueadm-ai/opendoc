@@ -2,7 +2,7 @@
 title: 'Story 1.1: Provisioning de Organização'
 type: 'feature'
 created: '2026-04-13T09:48:00-03:00'
-status: 'in-review'
+status: 'done'
 baseline_commit: '4388424a200b13d991737716b59e8a036d4fdd9a'
 context: ['_bmad-output/planning-artifacts/architecture.md', '_bmad-output/project-context.md', '_bmad-output/planning-artifacts/epics.md']
 ---
@@ -58,3 +58,25 @@ context: ['_bmad-output/planning-artifacts/architecture.md', '_bmad-output/proje
 **Commands:**
 - `cd server && npm run test` -- expected: `tenant.service.test.js` passes with green checkmarks.
 - `npx prisma migrate dev --name init` -- expected: builds and applies the migration cleanly.
+
+## Suggested Review Order
+
+**Database Schema Setup**
+
+- Master Prisma schema defining the core `Organization` structure and Enums.
+  [`schema.prisma:10`](../../server/prisma/schema.prisma#L10)
+
+**Service Core Logic**
+
+- Logic to safely insert the layout and dynamically `CREATE SCHEMA "tenant_{id}"`
+  [`tenant.service.js:23`](../../server/src/services/tenant.service.js#L23)
+
+**Test Coverage**
+
+- Full `node:test` suite verifying valid slugs and basic structure constraints.
+  [`tenant.service.test.js:1`](../../server/tests/tenant.service.test.js#L1)
+
+**Config**
+
+- Server workspace scaffolding with Prisma dependencies as ESM type module.
+  [`package.json:1`](../../server/package.json#L1)

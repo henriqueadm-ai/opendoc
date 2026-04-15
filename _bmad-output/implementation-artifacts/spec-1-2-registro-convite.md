@@ -2,7 +2,7 @@
 title: 'Story 1.2: Registro de Usuário via Convite'
 type: 'feature'
 created: '2026-04-13T13:55:00-03:00'
-status: 'in-progress'
+status: 'done'
 baseline_commit: 'e4f8c9f924d42bb4ca9cc7fe075ba255f391ffe7'
 context: ['_bmad-output/planning-artifacts/architecture.md', '_bmad-output/planning-artifacts/epics.md', '_bmad-output/project-context.md']
 ---
@@ -60,3 +60,23 @@ context: ['_bmad-output/planning-artifacts/architecture.md', '_bmad-output/plann
 **Commands:**
 - `cd server && npm run test` -- expected: `auth.service.test.js` passes.
 - `npx prisma format` -- expected: zero errors.
+
+## Suggested Review Order
+
+**Database Schema Setup**
+
+- Adiciona os modelos `User` e `Invite`, integrados ao modelo `Organization` existente com as Roles do sistema.
+  [`schema.prisma:29`](../../server/prisma/schema.prisma#L29)
+
+**Service Core Logic**
+
+- Token geração usando `node:crypto` de modo seguro, e configuração de validade rigorosa de 48h (NFR).
+  [`auth.service.js:20`](../../server/src/services/auth.service.js#L20)
+
+- Hashing nativo das credenciais usando `argon2id` atrelado a transações banco integradas (Atomicity).
+  [`auth.service.js:63`](../../server/src/services/auth.service.js#L63)
+
+**Test Coverage**
+
+- Bateria nativa para verificar os módulos de criptografia de senhas puros na pipeline.
+  [`auth.service.test.js:1`](../../server/tests/auth.service.test.js#L1)

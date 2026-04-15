@@ -34,25 +34,39 @@ stages:
     output: workspace/legal_skeleton.md
     instructions: "Analise os fatos sanitizados, defina as taticas macro, identifique principais teses e gere o esqueleto juridico do caso."
 
-  - id: task-routing
-    name: "D. Distribuicao de Teses"
-    agent: task-router
+  - id: jurisprudence-search
+    name: "D. Busca de Jurisprudencia"
+    agent: jurisprudencia-validator
     input: workspace/legal_skeleton.md
+    output: workspace/jurisprudence_data.md
+    instructions: "Raspe e valide teses nos tribunais (STJ, STF, TJ) fortalecendo o esqueleto juridico com jurisprudencias atualizadas."
+
+  - id: task-routing
+    name: "E. Distribuicao de Teses"
+    agent: task-router
+    input: workspace/jurisprudence_data.md
     output: workspace/expert_responses.md
     dynamic_routing: true
-    instructions: "Quebre o esqueleto em topicos juridicos e invoque os especialistas corretos para fundamentar."
+    instructions: "Quebre o esqueleto enriquecido em topicos juridicos e invoque os especialistas corretos para fundamentar."
 
   - id: synthesis
-    name: "E. Sintese e Redacao"
+    name: "F. Sintese e Redacao"
     agent: legal-synthesizer
     input: workspace/expert_responses.md
     output: workspace/draft_sanitized.md
     instructions: "Costure a fundamentacao em uma minuta coesa e forense. Mantenha as tags pseudonimizadas intocadas."
 
-  - id: lgpd-restoration
-    name: "F. Restauracao de Dados LGPD"
-    agent: lgpd-restorer
+  - id: visual-law
+    name: "G. Visual Law"
+    agent: legal-designer
     input: workspace/draft_sanitized.md
+    output: workspace/draft_formatted.md
+    instructions: "Aplique tecnicas de Visual Law e Legal Design estruturando o documento de forma limpa, com iconografias e diagramas onde aplicavel."
+
+  - id: lgpd-restoration
+    name: "H. Restauracao de Dados LGPD"
+    agent: lgpd-restorer
+    input: workspace/draft_formatted.md
     dictionary: workspace/lgpd_dictionary.json
     output: workspace/final_document.md
     instructions: "Substitua todas as tags pelas informacoes reais usando rigorosamente o dicionario gerado no passo B. Entregue a peca final."
@@ -63,13 +77,15 @@ fs.writeFileSync(path.join(DIR, 'pipeline.yaml'), pipelineYaml, 'utf8');
 const stateJson = {
   "team": "conectese-case",
   "status": "idle",
-  "step": { "current": 0, "total": 6, "label": "Pipeline Pronto" },
+  "step": { "current": 0, "total": 8, "label": "Pipeline Pronto" },
   "agents": [
     { "id": "data-extractor", "name": "Extrator", "icon": "📄", "status": "idle" },
     { "id": "lgpd-anonymizer", "name": "LGPD Anonimizador", "icon": "🛡️", "status": "idle" },
     { "id": "legal-analyst", "name": "Analista", "icon": "🔎", "status": "idle" },
+    { "id": "jurisprudencia-validator", "name": "Busca de Jurisprudencia", "icon": "⚖️", "status": "idle" },
     { "id": "task-router", "name": "Router", "icon": "🚦", "status": "idle" },
     { "id": "legal-synthesizer", "name": "Sintetizador", "icon": "✍️", "status": "idle" },
+    { "id": "legal-designer", "name": "Legal Designer", "icon": "🎨", "status": "idle" },
     { "id": "lgpd-restorer", "name": "LGPD Restaurador", "icon": "🔓", "status": "idle" }
   ],
   "startedAt": null,
