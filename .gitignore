@@ -26,3 +26,9 @@ tests/
 test-results/
 temp/squads/
 dashboards/test-results/
+
+# Agent/IDE tooling
+.agent/
+.claude/
+.DS_Store
+manual/.DS_Store
