@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import { OfficeScene } from './OfficeScene';
-import { useTeamStore } from '@/store/useTeamStore';
+import { usePipelineStore, STAGE_NAMES } from '@/store/usePipelineStore';
+import type { Agent, AgentStatus } from '@/types/state';
 
 export function PhaserGame() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,18 +53,31 @@ export function PhaserGame() {
 
   // Bridge React state → Phaser scene
   useEffect(() => {
-    return useTeamStore.subscribe((state) => {
+    return usePipelineStore.subscribe((state) => {
       const game = gameRef.current;
       if (!game) return;
       const scene = game.scene.getScene('OfficeScene') as OfficeScene | null;
       if (!scene || !scene.scene.isActive()) return;
 
-      const selectedTeam = state.selectedTeam;
-      const teamState = selectedTeam
-        ? state.activeStates.get(selectedTeam) ?? null
-        : null;
+      // Adapt stages to Agent objects for the Phaser engine
+      const agents: Agent[] = state.stages.map((stage, i) => {
+        let status: AgentStatus = 'idle';
+        if (stage.status === 'RUNNING') status = 'working';
+        else if (stage.status === 'DONE') status = 'done';
+        else if (stage.status === 'ERROR') status = 'idle';
+        else if (stage.status === 'VETOED') status = 'checkpoint';
+        
+        return {
+          id: String(stage.stage),
+          name: STAGE_NAMES[stage.stage] || stage.agentName,
+          icon: '',
+          status,
+          gender: i % 2 === 0 ? 'female' : 'male',
+          desk: { col: (i % 4) + 1, row: Math.floor(i / 4) + 1 }, // layout de 4 colunas
+        };
+      });
 
-      scene.events.emit('stateUpdate', teamState);
+      scene.events.emit('stateUpdate', { agents });
     });
   }, []);
 
