@@ -32,3 +32,5 @@ dashboards/test-results/
 .claude/
 .DS_Store
 manual/.DS_Store
+.opencode/
+_bmad/
